@@ -16,7 +16,17 @@ Resource types:
 This repository is **not** a promise that every Agent supports the same local installation format.
 It is also **not** a promise that every indexed resource should be installed by default.
 
-## 2. Required execution order
+## 2. Agent support levels
+
+Each agent in `manifest.json` carries a `support_level` field.
+
+| Level | Meaning |
+|---|---|
+| A | Fully validated on target OS. Adapter complete. All resource modes tested. |
+| B | Adapter defined. Basic install tested. Some modes may be untested. |
+| C | Adapter skeleton only. Experimental. Not for production use. |
+
+## 3. Required execution order
 
 When asked to configure, update, or validate local resources, follow this order:
 
@@ -30,7 +40,7 @@ When asked to configure, update, or validate local resources, follow this order:
 8. Validate results
 9. Output a summary
 
-## 3. Detecting the current Agent
+## 4. Detecting the current Agent
 
 Use the best available evidence:
 
@@ -45,7 +55,7 @@ If the current Agent type is unknown:
 - report `blocked`
 - do not guess a random adapter
 
-## 4. Adapter-first rule
+## 5. Adapter-first rule
 
 Never install directly from canonical paths unless the adapter explicitly says so.
 
@@ -57,7 +67,22 @@ Incorrect flow:
 
 `manifest.json -> copy files to a guessed location`
 
-## 5. Supported outcomes
+## 6. Install scope
+
+Each resource may define an `install_scope` field.
+
+| Value | Meaning |
+|---|---|
+| `global` (default) | Install to the user home directory under the agent's managed path |
+| `project` | Install into the current project directory, not the home directory |
+
+When `install_scope` is `project`:
+
+- Use `target_path_hint` from the manifest item as the destination path relative to the project root
+- Do not install to `~/.ai-registry/` or agent home paths
+- If no project directory can be determined, stop and report `blocked`
+
+## 7. Supported outcomes
 
 Per item, one of:
 
@@ -68,7 +93,7 @@ Per item, one of:
 - `skipped-missing-dependency`
 - `blocked`
 
-## 6. Resource policy roles
+## 8. Resource policy roles
 
 Each resource may define a policy role.
 
@@ -86,7 +111,7 @@ Interpretation:
 - `reference`: do not auto-install; only surface it as a relevant upstream resource
 - `optional`: available to install, but not required
 
-## 7. Action on missing
+## 9. Action on missing
 
 Each resource may define `action_on_missing`.
 
@@ -103,15 +128,16 @@ Recommended behavior:
 - `dependency` usually pairs with `install` or `block`
 - `reference` usually pairs with `suggest`
 
-## 6. Safety rules
+## 10. Safety rules
 
 - Do not overwrite user-owned config files
 - Do not delete unknown files
 - Use namespaced managed paths where possible
 - If a host file must reference managed content, make the change minimal, reversible, and identifiable
 - If you cannot safely merge, stop and report
+- If a resource has `checksum: "TBD"`, skip checksum verification but mark that item as `⚠ unverified` in the summary output
 
-## 8. Health checks
+## 11. Health checks
 
 When asked to validate local state:
 
@@ -122,7 +148,7 @@ When asked to validate local state:
 - check that installed versions match or exceed the local pinned state
 - if an item is `reference` only, do not fail health because it is not installed
 
-## 9. Prompt-first, helper-optional
+## 12. Prompt-first, helper-optional
 
 The preferred entrypoint is a prompt or repository URL.
 
@@ -136,7 +162,7 @@ then a helper script or minimal manual step is allowed as a fallback.
 
 Fallback must be clearly reported, not hidden.
 
-## 10. What not to do
+## 13. What not to do
 
 - Do not assume all Agents support `AGENTS.md`
 - Do not assume all Agents support `SKILL.md`
