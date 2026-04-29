@@ -20,6 +20,8 @@ Canonical Registry (GitHub)
   ├─ skills/
   ├─ scripts/
   ├─ wrappers/
+  ├─ addons/
+  ├─ references/
   └─ packs/
 
 Agent-specific adapters
@@ -292,6 +294,22 @@ product-ai-registry/
 - 标记默认角色或场景
 - 为不同 Agent 指定不同 materialization 目标
 
+### 8.5 addon
+
+规范化 addon 的职责：
+
+- 表示一个可安装的上游增强包
+- 自身可能不是单文件 skill 或脚本
+- 常见为外部 git 仓库、release 或 package manager 目标
+
+### 8.6 reference
+
+规范化 reference 的职责：
+
+- 表示一个可供 Agent 发现和引用的上游项目
+- 默认不自动安装
+- 用于“有没有这类能力可以参考”这种问题
+
 ## 9. Adapter 模型
 
 每个 Agent adapter 至少包含：
@@ -375,6 +393,8 @@ paths:
 - 支持的 Agent
 - 每个 Agent 的 materialization 方式
 - 依赖和版本信息
+- 上游来源信息
+- 资源角色和缺失时策略
 
 推荐结构：
 
@@ -409,6 +429,11 @@ paths:
       "id": "prd-review",
       "version": "1.0.3",
       "path": "skills/prd-review",
+      "source": { "kind": "local" },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      },
       "support": {
         "codex": { "mode": "native_skill_dir" },
         "opencode": { "mode": "native_skill_dir" },
@@ -421,6 +446,12 @@ paths:
   ]
 }
 ```
+
+Interpretation rules:
+
+- `baseline + install`: install proactively when compatible
+- `dependency + block/install`: only resolve when another item requires it
+- `reference + suggest`: never auto-install, only surface to the user or agent
 
 ## 13. REGISTRY.md 的职责
 
