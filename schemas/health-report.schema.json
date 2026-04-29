@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product-ai-registry/schemas/health-report.schema.json",
+  "title": "Health Report",
+  "type": "object",
+  "required": ["generated_at", "status", "checks"],
+  "properties": {
+    "generated_at": { "type": "string" },
+    "status": { "type": "string", "enum": ["ok", "warning", "blocked"] },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "status"],
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string", "enum": ["ok", "warning", "blocked"] },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}
