@@ -330,11 +330,15 @@ paths:
 | mode | 含义 |
 |---|---|
 | `native_skill_dir` | 原生 `SKILL.md` 技能目录 |
+| `project_native_skill_dir` | 写入目标仓库内部的技能目录 |
 | `generated_subagent` | 生成某 Agent 的 subagent 文件 |
+| `project_generated_subagent` | 在目标仓库上下文内生成 subagent 入口 |
 | `generated_rules` | 生成规则文件，例如 `.cursor/rules/*.mdc` |
+| `project_generated_rules` | 在目标仓库内生成规则文件 |
 | `memory_import` | 写入主 memory 文件并导入其他内容 |
 | `extension_bundle` | 生成原生 extension 包 |
 | `local_copy` | 复制脚本或 wrapper 到本地目录 |
+| `project_local_copy` | 复制脚本或 wrapper 到目标仓库路径 |
 
 例子：
 
@@ -343,6 +347,7 @@ paths:
 - Claude Code skill -> `generated_subagent` 或 `memory_import`
 - Cursor skill -> `generated_rules`
 - Gemini CLI skill pack -> `extension_bundle`
+- Repo-specific build assets -> `project_*` modes
 
 ## 11. Materialization 路径策略
 
