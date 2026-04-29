@@ -1,0 +1,19 @@
+id: oh-my-claudecode
+name: oh-my-claudecode
+version: 0.1.0
+description: Multi-agent orchestration and enhancement layer for Claude Code
+source:
+  kind: external_git
+  url: https://github.com/Yeachan-Heo/oh-my-claudecode
+  ref: main
+  install_method: external_git
+policy:
+  role: baseline
+  action_on_missing: install
+agents:
+  - claude-code
+os:
+  - linux
+notes:
+  - Baseline addon for Claude Code users
+  - Agent should install only if current agent is Claude Code-compatible and addon is absent
