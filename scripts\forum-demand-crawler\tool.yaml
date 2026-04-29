@@ -1,0 +1,22 @@
+id: forum-demand-crawler
+name: Forum Demand Crawler
+version: 0.1.0
+description: Crawl approved forums and export product demand findings
+entry: run.sh
+runtime: bash
+os:
+  - linux
+inputs:
+  - name: source
+    type: string
+    required: true
+outputs:
+  - type: csv
+  - type: markdown
+requires:
+  cli:
+    - curl
+    - python3
+permissions:
+  network: true
+  workspace_only: true
