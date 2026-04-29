@@ -1,0 +1,14 @@
+id: opencode-review
+name: OpenCode Review Wrapper
+version: 0.1.0
+description: Controlled local wrapper for repository review via opencode
+entry: run.sh
+runtime: bash
+os:
+  - linux
+requires:
+  cli:
+    - opencode
+dispatch:
+  runtime: opencode
+  mode: wrapper
