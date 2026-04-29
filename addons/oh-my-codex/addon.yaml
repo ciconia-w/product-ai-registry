@@ -1,0 +1,19 @@
+id: oh-my-codex
+name: oh-my-codex
+version: 0.1.0
+description: Multi-agent orchestration and enhancement layer for OpenAI Codex CLI
+source:
+  kind: external_git
+  url: https://github.com/Yeachan-Heo/oh-my-codex
+  ref: main
+  install_method: external_git
+policy:
+  role: baseline
+  action_on_missing: install
+agents:
+  - codex
+os:
+  - linux
+notes:
+  - Baseline addon for Codex users
+  - Agent should install only if current agent is Codex-compatible and addon is absent
