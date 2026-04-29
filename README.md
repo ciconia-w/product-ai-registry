@@ -8,6 +8,39 @@
 - 让不同本地 Agent 按统一规则读取、安装、更新这些资源
 - 让新成员只需要一个链接或一段提示词，就能让自己的 Agent 自行完成配置
 
+## 架构图
+
+```mermaid
+flowchart LR
+  Human["团队成员"]
+  Prompt["链接 / 固定提示词"]
+  Agent["本地 Agent\nClaude Code / Codex / Cursor / Gemini CLI / OpenCode"]
+  Entry["AGENTS.md / REGISTRY.md"]
+  Manifest["manifest.json"]
+  Adapter["adapters/<agent>/adapter.yaml"]
+  Registry["Registry 资源层\nskills / scripts / wrappers / packs / addons / references"]
+  Local["本地落地结果\n全局目录 / 项目目录 / rules / extension / scripts"]
+  Health["健康检查与结果摘要"]
+
+  Human --> Prompt
+  Prompt --> Agent
+  Agent --> Entry
+  Entry --> Manifest
+  Manifest --> Adapter
+  Manifest --> Registry
+  Adapter --> Local
+  Registry --> Local
+  Local --> Health
+  Health --> Agent
+  Agent --> Human
+```
+
+核心原则：
+
+- 注册表统一的是**资源源头**
+- 不同 Agent 通过各自 adapter 决定本地落地方式
+- 资源角色决定是默认安装、按依赖安装，还是只做参考返回
+
 ## 适合什么场景
 
 适合这种团队：
@@ -65,6 +98,7 @@
 适合：
 
 - `opencli`
+- `opencode`
 - 其他底层 CLI 或运行时
 
 ### reference
@@ -140,6 +174,10 @@ Agent 进入仓库后，按这个顺序工作：
 
 目前仓库里已经有这些示例：
 
+- `addon:oh-my-codex`
+- `addon:oh-my-claudecode`
+- `addon:superpowers`
+- `addon:opencli`
 - `pack:product-default`
 - `skill:prd-review`
 - `script:forum-demand-crawler`
@@ -148,6 +186,7 @@ Agent 进入仓库后，按这个顺序工作：
 - `skill:linglong-uab-shortest-path`
 - `script:reset-linglong-builder-env`
 - `script:rebuild-linglong-uab-shortest-path`
+- `reference:rag-anything`
 
 ## 重要原则
 
