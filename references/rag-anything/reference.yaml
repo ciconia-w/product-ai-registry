@@ -1,0 +1,26 @@
+id: rag-anything
+name: RAG-Anything
+version: 0.1.0
+description: Upstream multimodal RAG project for knowledge-base related capability discovery
+source:
+  kind: reference
+  url: https://github.com/HKUDS/RAG-Anything
+  ref: main
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this as a reference when the user asks for knowledge-base or RAG-related capabilities
