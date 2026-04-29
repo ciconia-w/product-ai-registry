@@ -8,6 +8,8 @@ This document defines the schema files used by the registry.
 - `schemas/tool.schema.json`
 - `schemas/adapter.schema.json`
 - `schemas/pack.schema.json`
+- `schemas/addon.schema.json`
+- `schemas/reference.schema.json`
 - `schemas/installed.schema.json`
 - `schemas/health-report.schema.json`
 
