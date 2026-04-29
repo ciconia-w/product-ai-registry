@@ -1,0 +1,23 @@
+id: opencli
+name: opencli
+version: 0.1.0
+description: Underlying CLI capability that may be required by wrappers, scripts, or other addons
+source:
+  kind: external_git
+  url: https://github.com/jackwener/opencli
+  ref: main
+  install_method: external_git
+policy:
+  role: dependency
+  action_on_missing: install
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Do not install proactively unless another item depends on it
+  - If a wrapper or script requires opencli, resolve this dependency first
