@@ -66,21 +66,15 @@ Agent 进入仓库后，按这个顺序工作：
 5. 读对应的 `adapters/<agent-id>/adapter.yaml`
 6. 再决定如何把资源落到本地
 
-## 当前支持范围
+## 目标兼容 Agent
 
-### 第一阶段正式支持
+当前注册表面向以下 Agent 设计兼容：
 
 - `codex`
-- `gemini-cli`
-- `opencode`
-
-### 第一阶段适配支持
-
 - `claude-code`
 - `cursor`
-
-### 第二阶段实验支持
-
+- `gemini-cli`
+- `opencode`
 - `openclaw`
 - `hermes`
 
@@ -89,6 +83,8 @@ Agent 进入仓库后，按这个顺序工作：
 - 这个仓库统一的是**资源源头**
 - 不同 Agent 的本地落地格式不一样
 - 不要假设所有 Agent 都支持同一种 `skill` 安装方式
+- 是否能在当前机器和当前 Agent 上实际安装、更新、运行，由执行中的 Agent 根据 `REGISTRY.md`、adapter、自检结果自行判断
+- 未通过自检时，Agent 必须报告阻断，而不是继续安装
 
 ## 当前示例资源
 
