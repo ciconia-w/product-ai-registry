@@ -1,0 +1,32 @@
+id: rebuild-linglong-uab-shortest-path
+name: Rebuild Linglong UAB Shortest Path
+version: 0.1.0
+description: Reset the local Linglong builder environment and rebuild the deepin-color-correction UAB using the shortest known-good path
+entry: run.sh
+runtime: bash
+os:
+  - linux
+install_scope: project
+target_path: scripts/rebuild-linglong-uab-shortest-path.sh
+agents:
+  - codex
+  - claude-code
+  - opencode
+description_scope: repo-specific
+requires:
+  cli:
+    - bash
+    - sha256sum
+    - find
+    - grep
+    - sort
+  scripts:
+    - reset-linglong-builder-env
+permissions:
+  workspace_only: false
+  network: false
+  destructive: true
+notes:
+  - Intended for the deepin-color-correction repository on Linux hosts
+  - Calls the repository's own build-linglong.sh after environment reset
+  - Adapters must materialize this file into the target repository at scripts/rebuild-linglong-uab-shortest-path.sh before execution
