@@ -25,6 +25,10 @@
   团队共享脚本
 - `wrappers/`
   对本地 CLI 的受控封装
+- `addons/`
+  可安装的上游增强包
+- `references/`
+  仅供发现和引用的外部项目或知识来源
 - `packs/`
   按角色或场景组合的资源包
 - `adapters/`
@@ -35,6 +39,46 @@
   给 Agent 的仓库入口
 - `REGISTRY.md`
   给 Agent 的操作合约
+
+## 资源角色
+
+仓库中的资源除了按 `type` 分类，还按 **角色** 分类。
+
+### baseline
+
+默认基线资源。
+
+如果当前 Agent 适用、而本地又缺失，Agent 可以直接安装。
+
+适合：
+
+- `oh-my-codex`
+- `oh-my-claudecode`
+- `superpowers`
+
+### dependency
+
+依赖资源。
+
+不需要上来就安装。只有当某个 `skill / script / wrapper / addon` 依赖它时，Agent 才需要检查或安装。
+
+适合：
+
+- `opencli`
+- `opencode`
+- 其他底层 CLI 或运行时
+
+### reference
+
+参考资源。
+
+不自动安装，只在用户问到相关能力或 Agent 在检索相似方案时返回。
+
+适合：
+
+- `RAG-Anything`
+- 外部知识库项目
+- 外部实现参考
 
 ## 怎么用
 
@@ -65,6 +109,10 @@ Agent 进入仓库后，按这个顺序工作：
 4. 识别自己是什么 Agent
 5. 读对应的 `adapters/<agent-id>/adapter.yaml`
 6. 再决定如何把资源落到本地
+7. 再根据资源角色决定：
+   - 直接安装
+   - 仅在依赖命中时安装
+   - 只作为参考返回
 
 ## 目标兼容 Agent
 
@@ -85,6 +133,9 @@ Agent 进入仓库后，按这个顺序工作：
 - 不要假设所有 Agent 都支持同一种 `skill` 安装方式
 - 是否能在当前机器和当前 Agent 上实际安装、更新、运行，由执行中的 Agent 根据 `REGISTRY.md`、adapter、自检结果自行判断
 - 未通过自检时，Agent 必须报告阻断，而不是继续安装
+- `baseline` 资源可以主动安装
+- `dependency` 资源只在命中依赖时处理
+- `reference` 资源只做发现和引用，不做默认安装
 
 ## 当前示例资源
 
