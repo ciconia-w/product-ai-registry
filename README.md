@@ -65,7 +65,6 @@
 适合：
 
 - `opencli`
-- `opencode`
 - 其他底层 CLI 或运行时
 
 ### reference
