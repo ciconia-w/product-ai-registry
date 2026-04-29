@@ -1,0 +1,51 @@
+name: validate-registry
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - beta
+      - dev
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate manifest and references
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+
+          assert "packs" in manifest, "manifest missing packs"
+          assert "items" in manifest, "manifest missing items"
+
+          item_ids = set()
+          for item in manifest["items"]:
+            item_ids.add(f'{item["type"]}:{item["id"]}')
+            item_path = root / item["path"]
+            assert item_path.exists(), f'missing path: {item["path"]}'
+            if item["type"] == "skill":
+              assert (item_path / "SKILL.md").exists(), f'missing SKILL.md for {item["id"]}'
+            if item["type"] in {"script", "wrapper"}:
+              assert (item_path / "tool.yaml").exists(), f'missing tool.yaml for {item["id"]}'
+
+          for pack in manifest["packs"]:
+            pack_path = root / pack["path"]
+            assert pack_path.exists(), f'missing pack file: {pack["path"]}'
+            pack_data = json.loads(pack_path.read_text(encoding="utf-8"))
+            for ref in pack_data["items"]:
+              assert ref in item_ids, f'pack {pack["id"]} references unknown item {ref}'
+
+          for adapter in (root / "adapters").glob("*/adapter.yaml"):
+            assert adapter.exists(), f'missing adapter file: {adapter}'
+
+          print("registry validation passed")
+          PY
