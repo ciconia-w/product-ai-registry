@@ -22,6 +22,17 @@
         "script:forum-demand-crawler",
         "wrapper:opencode-review"
       ]
+    },
+    {
+      "id": "deepin-color-correction-linglong",
+      "version": "0.1.0",
+      "description": "Repo-specific Linglong packaging pack for deepin-color-correction on Linux hosts",
+      "path": "packs/deepin-color-correction-linglong.json",
+      "items": [
+        "skill:linglong-uab-shortest-path",
+        "script:reset-linglong-builder-env",
+        "script:rebuild-linglong-uab-shortest-path"
+      ]
     }
   ],
   "items": [
@@ -72,6 +83,61 @@
       },
       "requires": {
         "cli": ["opencode"]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "linglong-uab-shortest-path",
+      "version": "0.1.0",
+      "path": "skills/linglong-uab-shortest-path",
+      "description": "Repo-specific playbook for rebuilding the deepin-color-correction Linglong UAB on Linux hosts",
+      "install_scope": "project",
+      "target_path_hint": ".agents/skills/linglong-uab-shortest-path/SKILL.md",
+      "support": {
+        "codex": { "mode": "project_native_skill_dir" },
+        "opencode": { "mode": "project_native_skill_dir" },
+        "claude-code": { "mode": "project_generated_subagent" },
+        "cursor": { "mode": "project_generated_rules" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "reset-linglong-builder-env",
+      "version": "0.1.0",
+      "path": "scripts/reset-linglong-builder-env",
+      "description": "Reset stale Linglong builder state before a deepin-color-correction rebuild",
+      "install_scope": "project",
+      "target_path_hint": "scripts/reset-linglong-builder-env.sh",
+      "support": {
+        "codex": { "mode": "project_local_copy" },
+        "claude-code": { "mode": "project_local_copy" },
+        "opencode": { "mode": "project_local_copy" }
+      },
+      "requires": {
+        "cli": ["bash", "pkill", "mount", "grep", "awk", "sort", "sudo"]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "rebuild-linglong-uab-shortest-path",
+      "version": "0.1.0",
+      "path": "scripts/rebuild-linglong-uab-shortest-path",
+      "description": "Rebuild deepin-color-correction Linglong UAB using the shortest known-good path",
+      "install_scope": "project",
+      "target_path_hint": "scripts/rebuild-linglong-uab-shortest-path.sh",
+      "support": {
+        "codex": { "mode": "project_local_copy" },
+        "claude-code": { "mode": "project_local_copy" },
+        "opencode": { "mode": "project_local_copy" }
+      },
+      "requires": {
+        "cli": ["bash", "sha256sum", "find", "grep", "sort"],
+        "scripts": ["reset-linglong-builder-env"]
       },
       "entry": "run.sh",
       "checksum": "TBD"
