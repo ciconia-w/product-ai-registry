@@ -6,6 +6,9 @@
 - [x] Add governance documents
 - [x] Add canonical spec and architecture docs
 - [x] Add initial manifest and default pack
+- [x] Add schema skeletons
+- [x] Add bootstrap helper skeletons
+- [x] Add adapter template skeletons
 - [ ] Add CI validation workflow
 - [ ] Protect `main`
 
@@ -19,6 +22,11 @@
 - [x] `scripts/reset-linglong-builder-env`
 - [x] `scripts/rebuild-linglong-uab-shortest-path`
 - [x] `packs/deepin-color-correction-linglong.json`
+- [x] `addon:oh-my-codex`
+- [x] `addon:oh-my-claudecode`
+- [x] `addon:superpowers`
+- [x] `addon:opencli`
+- [x] `reference:rag-anything`
 
 ## Phase 1 - Adapters
 
