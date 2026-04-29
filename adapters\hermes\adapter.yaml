@@ -1,0 +1,9 @@
+agent_id: hermes
+support_level: C
+instruction_mode: agents_md
+skill_mode: experimental
+script_mode: experimental
+wrapper_mode: experimental
+install_strategy: manual_validation_required
+supported_os:
+  - linux
