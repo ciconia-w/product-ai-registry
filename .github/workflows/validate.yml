@@ -36,6 +36,10 @@ jobs:
               assert (item_path / "SKILL.md").exists(), f'missing SKILL.md for {item["id"]}'
             if item["type"] in {"script", "wrapper"}:
               assert (item_path / "tool.yaml").exists(), f'missing tool.yaml for {item["id"]}'
+            if item["type"] == "addon":
+              assert (item_path / "addon.yaml").exists(), f'missing addon.yaml for {item["id"]}'
+            if item["type"] == "reference":
+              assert (item_path / "reference.yaml").exists(), f'missing reference.yaml for {item["id"]}'
 
           for pack in manifest["packs"]:
             pack_path = root / pack["path"]
