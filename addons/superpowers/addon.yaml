@@ -1,0 +1,20 @@
+id: superpowers
+name: Superpowers
+version: 0.1.0
+description: Shared enhancement plugin or addon layer commonly used with local coding agents
+source:
+  kind: external_git
+  url: https://github.com/obra/superpowers
+  ref: main
+  install_method: external_git
+policy:
+  role: baseline
+  action_on_missing: install
+agents:
+  - codex
+  - claude-code
+os:
+  - linux
+notes:
+  - Treat as a baseline addon when the current agent supports it
+  - If the current agent cannot use it directly, report as skipped-unsupported
