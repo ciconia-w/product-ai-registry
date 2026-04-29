@@ -1,0 +1,80 @@
+{
+  "registry_version": "1.0.0",
+  "generated_at": "2026-04-29T12:00:00Z",
+  "default_pack": "product-default",
+  "agents": {
+    "codex": { "support_level": "A" },
+    "claude-code": { "support_level": "B" },
+    "cursor": { "support_level": "B" },
+    "gemini-cli": { "support_level": "A" },
+    "opencode": { "support_level": "A" },
+    "openclaw": { "support_level": "C" },
+    "hermes": { "support_level": "C" }
+  },
+  "packs": [
+    {
+      "id": "product-default",
+      "version": "0.1.0",
+      "description": "Default product team starter pack",
+      "path": "packs/product-default.json",
+      "items": [
+        "skill:prd-review",
+        "script:forum-demand-crawler",
+        "wrapper:opencode-review"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "type": "skill",
+      "id": "prd-review",
+      "version": "0.1.0",
+      "path": "skills/prd-review",
+      "description": "Review product requirement documents with structured output",
+      "support": {
+        "codex": { "mode": "native_skill_dir" },
+        "opencode": { "mode": "native_skill_dir" },
+        "claude-code": { "mode": "generated_subagent" },
+        "cursor": { "mode": "generated_rules" },
+        "gemini-cli": { "mode": "extension_bundle" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "forum-demand-crawler",
+      "version": "0.1.0",
+      "path": "scripts/forum-demand-crawler",
+      "description": "Crawl approved forums and export demand findings",
+      "support": {
+        "codex": { "mode": "local_copy" },
+        "claude-code": { "mode": "local_copy" },
+        "cursor": { "mode": "project_local_copy" },
+        "gemini-cli": { "mode": "extension_bundle" },
+        "opencode": { "mode": "local_copy" }
+      },
+      "requires": {
+        "cli": ["curl", "python3"]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD"
+    },
+    {
+      "type": "wrapper",
+      "id": "opencode-review",
+      "version": "0.1.0",
+      "path": "wrappers/opencode-review",
+      "description": "Controlled local wrapper for repository review via opencode",
+      "support": {
+        "codex": { "mode": "local_copy" },
+        "claude-code": { "mode": "local_copy" },
+        "opencode": { "mode": "local_copy" }
+      },
+      "requires": {
+        "cli": ["opencode"]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD"
+    }
+  ]
+}
