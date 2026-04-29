@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product-ai-registry/schemas/addon.schema.json",
+  "title": "Addon Metadata",
+  "type": "object",
+  "required": ["id", "name", "version", "description", "source", "policy", "agents", "os"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["kind", "url"],
+      "properties": {
+        "kind": { "type": "string" },
+        "url": { "type": "string" },
+        "ref": { "type": "string" },
+        "install_method": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "policy": {
+      "type": "object",
+      "required": ["role", "action_on_missing"],
+      "properties": {
+        "role": { "type": "string" },
+        "action_on_missing": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "agents": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "os": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
