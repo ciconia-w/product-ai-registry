@@ -15,6 +15,10 @@
 - [ ] `scripts/forum-demand-crawler`
 - [ ] `wrappers/opencode-review`
 - [ ] `packs/product-default.json`
+- [x] `skills/linglong-uab-shortest-path`
+- [x] `scripts/reset-linglong-builder-env`
+- [x] `scripts/rebuild-linglong-uab-shortest-path`
+- [x] `packs/deepin-color-correction-linglong.json`
 
 ## Phase 1 - Adapters
 
