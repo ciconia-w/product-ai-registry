@@ -46,7 +46,7 @@
       "type": "object",
       "required": ["type", "id", "version", "path", "description", "support", "checksum"],
       "properties": {
-        "type": { "type": "string", "enum": ["skill", "script", "wrapper"] },
+        "type": { "type": "string", "enum": ["skill", "script", "wrapper", "addon", "reference"] },
         "id": { "type": "string" },
         "version": { "type": "string" },
         "path": { "type": "string" },
@@ -55,6 +55,33 @@
         "target_path_hint": { "type": "string" },
         "entry": { "type": "string" },
         "checksum": { "type": "string" },
+        "source": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["local", "external_git", "external_release", "external_package", "reference"]
+            },
+            "url": { "type": "string" },
+            "ref": { "type": "string" },
+            "install_method": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "policy": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string",
+              "enum": ["baseline", "dependency", "reference", "optional"]
+            },
+            "action_on_missing": {
+              "type": "string",
+              "enum": ["install", "block", "suggest", "ignore"]
+            }
+          },
+          "additionalProperties": true
+        },
         "requires": {
           "type": "object",
           "additionalProperties": true
