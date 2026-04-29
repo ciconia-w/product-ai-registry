@@ -3,27 +3,38 @@
   "generated_at": "2026-04-29T12:00:00Z",
   "default_pack": "product-default",
   "agents": {
-    "codex": { "support_level": "A" },
-    "claude-code": { "support_level": "B" },
-    "cursor": { "support_level": "B" },
-    "gemini-cli": { "support_level": "A" },
-    "opencode": { "support_level": "A" },
-    "openclaw": { "support_level": "C" },
-    "hermes": { "support_level": "C" }
+    "codex": {
+      "support_level": "A"
+    },
+    "claude-code": {
+      "support_level": "B"
+    },
+    "cursor": {
+      "support_level": "B"
+    },
+    "gemini-cli": {
+      "support_level": "A"
+    },
+    "opencode": {
+      "support_level": "A"
+    },
+    "openclaw": {
+      "support_level": "C"
+    },
+    "hermes": {
+      "support_level": "C"
+    }
   },
   "packs": [
     {
       "id": "product-default",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Default product team starter pack",
       "path": "packs/product-default.json",
       "items": [
         "addon:oh-my-codex",
         "addon:oh-my-claudecode",
-        "addon:superpowers",
-        "skill:prd-review",
-        "script:forum-demand-crawler",
-        "wrapper:opencode-review"
+        "addon:superpowers"
       ]
     },
     {
@@ -46,11 +57,21 @@
       "path": "skills/prd-review",
       "description": "Review product requirement documents with structured output",
       "support": {
-        "codex": { "mode": "native_skill_dir" },
-        "opencode": { "mode": "native_skill_dir" },
-        "claude-code": { "mode": "generated_subagent" },
-        "cursor": { "mode": "generated_rules" },
-        "gemini-cli": { "mode": "extension_bundle" }
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
       },
       "checksum": "TBD"
     },
@@ -61,14 +82,27 @@
       "path": "scripts/forum-demand-crawler",
       "description": "Crawl approved forums and export demand findings",
       "support": {
-        "codex": { "mode": "local_copy" },
-        "claude-code": { "mode": "local_copy" },
-        "cursor": { "mode": "project_local_copy" },
-        "gemini-cli": { "mode": "extension_bundle" },
-        "opencode": { "mode": "local_copy" }
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
       },
       "requires": {
-        "cli": ["curl", "python3"]
+        "cli": [
+          "curl",
+          "python3"
+        ]
       },
       "entry": "run.sh",
       "checksum": "TBD"
@@ -79,19 +113,31 @@
       "version": "0.1.0",
       "path": "wrappers/opencode-review",
       "description": "Controlled local wrapper for repository review via opencode",
-      "source": { "kind": "local" },
+      "source": {
+        "kind": "local"
+      },
       "policy": {
         "role": "optional",
         "action_on_missing": "install"
       },
       "support": {
-        "codex": { "mode": "local_copy" },
-        "claude-code": { "mode": "local_copy" },
-        "opencode": { "mode": "local_copy" }
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
       },
       "requires": {
-        "cli": ["opencode"],
-        "items": ["addon:opencli"]
+        "cli": [
+          "opencode"
+        ],
+        "items": [
+          "addon:opencli"
+        ]
       },
       "entry": "run.sh",
       "checksum": "TBD"
@@ -113,7 +159,9 @@
         "action_on_missing": "install"
       },
       "support": {
-        "codex": { "mode": "external_upstream" }
+        "codex": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -134,7 +182,9 @@
         "action_on_missing": "install"
       },
       "support": {
-        "claude-code": { "mode": "external_upstream" }
+        "claude-code": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -155,8 +205,12 @@
         "action_on_missing": "install"
       },
       "support": {
-        "codex": { "mode": "external_upstream" },
-        "claude-code": { "mode": "external_upstream" }
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -177,11 +231,21 @@
         "action_on_missing": "install"
       },
       "support": {
-        "codex": { "mode": "external_upstream" },
-        "claude-code": { "mode": "external_upstream" },
-        "cursor": { "mode": "external_upstream" },
-        "gemini-cli": { "mode": "external_upstream" },
-        "opencode": { "mode": "external_upstream" }
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -201,13 +265,27 @@
         "action_on_missing": "suggest"
       },
       "support": {
-        "codex": { "mode": "reference_only" },
-        "claude-code": { "mode": "reference_only" },
-        "cursor": { "mode": "reference_only" },
-        "gemini-cli": { "mode": "reference_only" },
-        "opencode": { "mode": "reference_only" },
-        "openclaw": { "mode": "reference_only" },
-        "hermes": { "mode": "reference_only" }
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
       },
       "checksum": "TBD"
     },
@@ -220,10 +298,18 @@
       "install_scope": "project",
       "target_path_hint": ".agents/skills/linglong-uab-shortest-path/SKILL.md",
       "support": {
-        "codex": { "mode": "project_native_skill_dir" },
-        "opencode": { "mode": "project_native_skill_dir" },
-        "claude-code": { "mode": "project_generated_subagent" },
-        "cursor": { "mode": "project_generated_rules" }
+        "codex": {
+          "mode": "project_native_skill_dir"
+        },
+        "opencode": {
+          "mode": "project_native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "project_generated_subagent"
+        },
+        "cursor": {
+          "mode": "project_generated_rules"
+        }
       },
       "checksum": "TBD"
     },
@@ -236,12 +322,26 @@
       "install_scope": "project",
       "target_path_hint": "scripts/reset-linglong-builder-env.sh",
       "support": {
-        "codex": { "mode": "project_local_copy" },
-        "claude-code": { "mode": "project_local_copy" },
-        "opencode": { "mode": "project_local_copy" }
+        "codex": {
+          "mode": "project_local_copy"
+        },
+        "claude-code": {
+          "mode": "project_local_copy"
+        },
+        "opencode": {
+          "mode": "project_local_copy"
+        }
       },
       "requires": {
-        "cli": ["bash", "pkill", "mount", "grep", "awk", "sort", "sudo"]
+        "cli": [
+          "bash",
+          "pkill",
+          "mount",
+          "grep",
+          "awk",
+          "sort",
+          "sudo"
+        ]
       },
       "entry": "run.sh",
       "checksum": "TBD"
@@ -255,14 +355,30 @@
       "install_scope": "project",
       "target_path_hint": "scripts/rebuild-linglong-uab-shortest-path.sh",
       "support": {
-        "codex": { "mode": "project_local_copy" },
-        "claude-code": { "mode": "project_local_copy" },
-        "opencode": { "mode": "project_local_copy" }
+        "codex": {
+          "mode": "project_local_copy"
+        },
+        "claude-code": {
+          "mode": "project_local_copy"
+        },
+        "opencode": {
+          "mode": "project_local_copy"
+        }
       },
       "requires": {
-        "cli": ["bash", "sha256sum", "find", "grep", "sort"],
-        "scripts": ["reset-linglong-builder-env"],
-        "items": ["addon:opencli"]
+        "cli": [
+          "bash",
+          "sha256sum",
+          "find",
+          "grep",
+          "sort"
+        ],
+        "scripts": [
+          "reset-linglong-builder-env"
+        ],
+        "items": [
+          "addon:opencli"
+        ]
       },
       "entry": "run.sh",
       "checksum": "TBD"
