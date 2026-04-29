@@ -1,0 +1,10 @@
+{
+  "id": "product-default",
+  "version": "0.1.0",
+  "description": "Default starter pack for product team members",
+  "items": [
+    "skill:prd-review",
+    "script:forum-demand-crawler",
+    "wrapper:opencode-review"
+  ]
+}
