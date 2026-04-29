@@ -18,6 +18,9 @@
       "description": "Default product team starter pack",
       "path": "packs/product-default.json",
       "items": [
+        "addon:oh-my-codex",
+        "addon:oh-my-claudecode",
+        "addon:superpowers",
         "skill:prd-review",
         "script:forum-demand-crawler",
         "wrapper:opencode-review"
@@ -76,15 +79,136 @@
       "version": "0.1.0",
       "path": "wrappers/opencode-review",
       "description": "Controlled local wrapper for repository review via opencode",
+      "source": { "kind": "local" },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      },
       "support": {
         "codex": { "mode": "local_copy" },
         "claude-code": { "mode": "local_copy" },
         "opencode": { "mode": "local_copy" }
       },
       "requires": {
-        "cli": ["opencode"]
+        "cli": ["opencode"],
+        "items": ["addon:opencli"]
       },
       "entry": "run.sh",
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "oh-my-codex",
+      "version": "0.1.0",
+      "path": "addons/oh-my-codex",
+      "description": "Baseline addon for Codex users",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-codex",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "codex": { "mode": "external_upstream" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "oh-my-claudecode",
+      "version": "0.1.0",
+      "path": "addons/oh-my-claudecode",
+      "description": "Baseline addon for Claude Code users",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "claude-code": { "mode": "external_upstream" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "superpowers",
+      "version": "0.1.0",
+      "path": "addons/superpowers",
+      "description": "Baseline enhancement addon for supported coding agents",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/obra/superpowers",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "codex": { "mode": "external_upstream" },
+        "claude-code": { "mode": "external_upstream" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "opencli",
+      "version": "0.1.0",
+      "path": "addons/opencli",
+      "description": "Dependency addon used by wrappers, scripts, or other agent resources",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/jackwener/opencli",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "dependency",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "codex": { "mode": "external_upstream" },
+        "claude-code": { "mode": "external_upstream" },
+        "cursor": { "mode": "external_upstream" },
+        "gemini-cli": { "mode": "external_upstream" },
+        "opencode": { "mode": "external_upstream" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "rag-anything",
+      "version": "0.1.0",
+      "path": "references/rag-anything",
+      "description": "Reference upstream project for knowledge-base and multimodal RAG capabilities",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/HKUDS/RAG-Anything",
+        "ref": "main"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": { "mode": "reference_only" },
+        "claude-code": { "mode": "reference_only" },
+        "cursor": { "mode": "reference_only" },
+        "gemini-cli": { "mode": "reference_only" },
+        "opencode": { "mode": "reference_only" },
+        "openclaw": { "mode": "reference_only" },
+        "hermes": { "mode": "reference_only" }
+      },
       "checksum": "TBD"
     },
     {
@@ -137,7 +261,8 @@
       },
       "requires": {
         "cli": ["bash", "sha256sum", "find", "grep", "sort"],
-        "scripts": ["reset-linglong-builder-env"]
+        "scripts": ["reset-linglong-builder-env"],
+        "items": ["addon:opencli"]
       },
       "entry": "run.sh",
       "checksum": "TBD"
