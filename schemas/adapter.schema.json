@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product-ai-registry/schemas/adapter.schema.json",
+  "title": "Agent Adapter",
+  "type": "object",
+  "required": [
+    "agent_id",
+    "support_level",
+    "instruction_mode",
+    "skill_mode",
+    "script_mode",
+    "wrapper_mode",
+    "install_strategy",
+    "supported_os"
+  ],
+  "properties": {
+    "agent_id": { "type": "string" },
+    "support_level": { "type": "string", "enum": ["A", "B", "C"] },
+    "instruction_mode": { "type": "string" },
+    "skill_mode": { "type": "string" },
+    "script_mode": { "type": "string" },
+    "wrapper_mode": { "type": "string" },
+    "install_strategy": { "type": "string" },
+    "supported_os": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
