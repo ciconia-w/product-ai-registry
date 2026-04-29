@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product-ai-registry/schemas/installed.schema.json",
+  "title": "Installed Registry State",
+  "type": "object",
+  "required": ["registry_url", "last_synced", "active_pack", "agent_type", "os", "items"],
+  "properties": {
+    "registry_url": { "type": "string" },
+    "last_synced": { "type": "string" },
+    "active_pack": { "type": "string" },
+    "agent_type": { "type": "string" },
+    "os": { "type": "string" },
+    "items": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["version", "path", "materialization_mode", "managed_by_registry"],
+        "properties": {
+          "version": { "type": "string" },
+          "installed_at": { "type": "string" },
+          "path": { "type": "string" },
+          "materialization_mode": { "type": "string" },
+          "source_commit": { "type": "string" },
+          "pinned": { "type": "boolean" },
+          "managed_by_registry": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}
