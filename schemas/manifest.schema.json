@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product-ai-registry/schemas/manifest.schema.json",
+  "title": "Registry Manifest",
+  "type": "object",
+  "required": ["registry_version", "generated_at", "default_pack", "agents", "packs", "items"],
+  "properties": {
+    "registry_version": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "default_pack": { "type": "string" },
+    "agents": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["support_level"],
+        "properties": {
+          "support_level": { "type": "string", "enum": ["A", "B", "C"] }
+        }
+      }
+    },
+    "packs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/packRef" }
+    },
+    "items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/itemRef" }
+    }
+  },
+  "$defs": {
+    "packRef": {
+      "type": "object",
+      "required": ["id", "version", "description", "path", "items"],
+      "properties": {
+        "id": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" },
+        "path": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "itemRef": {
+      "type": "object",
+      "required": ["type", "id", "version", "path", "description", "support", "checksum"],
+      "properties": {
+        "type": { "type": "string", "enum": ["skill", "script", "wrapper"] },
+        "id": { "type": "string" },
+        "version": { "type": "string" },
+        "path": { "type": "string" },
+        "description": { "type": "string" },
+        "install_scope": { "type": "string", "enum": ["global", "project"] },
+        "target_path_hint": { "type": "string" },
+        "entry": { "type": "string" },
+        "checksum": { "type": "string" },
+        "requires": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "support": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["mode"],
+            "properties": {
+              "mode": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
