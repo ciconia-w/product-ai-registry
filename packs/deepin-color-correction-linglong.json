@@ -1,0 +1,10 @@
+{
+  "id": "deepin-color-correction-linglong",
+  "version": "0.1.0",
+  "description": "Repo-specific Linglong packaging pack for deepin-color-correction on Linux hosts",
+  "items": [
+    "skill:linglong-uab-shortest-path",
+    "script:reset-linglong-builder-env",
+    "script:rebuild-linglong-uab-shortest-path"
+  ]
+}
