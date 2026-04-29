@@ -99,6 +99,11 @@ GitHub 仓库是唯一事实来源。
 | `wrapper` | 对本地 CLI 的受控封装 |
 | `pack` | 一组角色化资源的集合 |
 
+后续允许扩展为：
+
+- `addon`
+- `reference`
+
 注意：
 
 - `skill` 是**规范化资源类型**
@@ -110,6 +115,24 @@ GitHub 仓库是唯一事实来源。
   - `.cursor/rules/*.mdc`
   - `GEMINI.md`
   - Gemini extension 中的 `skills/`
+
+### 6.1 资源角色
+
+除了 `type`，资源还应有 `role`。
+
+推荐角色：
+
+- `baseline`
+- `dependency`
+- `reference`
+- `optional`
+
+行为目标：
+
+- `baseline`: 如果检测到当前 Agent 适用且本地缺失，可以直接安装
+- `dependency`: 只有在被其他能力命中依赖时才处理
+- `reference`: 不自动安装，只做发现和引用
+- `optional`: 可安装，但不作为默认前置
 
 ## 7. 兼容性设计原则
 
