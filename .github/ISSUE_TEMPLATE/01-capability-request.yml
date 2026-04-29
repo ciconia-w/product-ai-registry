@@ -1,0 +1,29 @@
+name: Capability Request
+description: Request a new skill, script, wrapper, or pack
+title: "[capability] "
+labels:
+  - capability
+body:
+  - type: dropdown
+    id: capability_type
+    attributes:
+      label: Capability type
+      options:
+        - skill
+        - script
+        - wrapper
+        - pack
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: What job should this capability solve?
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Required CLI, runtime, or external access
