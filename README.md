@@ -85,6 +85,8 @@ flowchart LR
 
 适合：
 
+- `gh-cli`
+- `cc-switch`
 - `oh-my-codex`
 - `oh-my-claudecode`
 - `superpowers`
@@ -189,6 +191,7 @@ Agent 进入仓库后，按这个顺序工作：
 - `addon:oh-my-claudecode`
 - `addon:superpowers`
 - `addon:opencli`
+- `pack:agent-baseline`
 - `pack:product-default`
 - `skill:prd-review`
 - `script:forum-demand-crawler`
@@ -212,6 +215,13 @@ Agent 进入仓库后，按这个顺序工作：
 - `script:check-benchmark-days`
 - `script:compare-benchmark-morning`
 
+## Pack 现状
+
+- 现成可直接用于业务工作的 workflow pack 还未开始系统整理
+- 当前默认 pack 应被视为基础应用与增强包集合
+- `agent-baseline` 用于默认基础安装与环境引导
+- `product-default` 当前只是草稿包，不应被当成可直接使用的业务包
+
 ## 重要原则
 
 - 资源统一，落地格式不统一
@@ -230,3 +240,5 @@ Agent 进入仓库后，按这个顺序工作：
 - [docs/03-registry-schemas.md](docs/03-registry-schemas.md)
 - [docs/04-bootstrap-and-helpers.md](docs/04-bootstrap-and-helpers.md)
 - [docs/05-project-scoped-materialization.md](docs/05-project-scoped-materialization.md)
+
+
