@@ -453,6 +453,15 @@ Interpretation rules:
 - `dependency + block/install`: only resolve when another item requires it
 - `reference + suggest`: never auto-install, only surface to the user or agent
 
+Important distinction:
+
+- `agent runtime` is the execution surface, for example `codex`, `claude-code`, `cursor`, `gemini-cli`, `opencode`
+- `registry resource` is what the registry indexes, for example `skill`, `script`, `wrapper`, `addon`, `reference`
+- a resource may depend on an addon like `opencli`
+- a resource may proactively install a baseline addon like `gh-cli` or `cc-switch`
+- a resource may expose an optional addon like `lark-cli`
+- a resource should not model `opencode` itself as a dependency addon
+
 ## 13. REGISTRY.md 的职责
 
 `REGISTRY.md` 是 Agent 读取入口，但不能承担“跨 Agent 统一安装器”的幻想。
