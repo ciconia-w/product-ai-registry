@@ -1,4 +1,4 @@
----
+﻿---
 inclusion: manual
 ---
 
@@ -56,7 +56,7 @@ import org.deepin.dtk.settings 1.0 as Settings
 
 - 如果顶层窗口需要最小化、最大化 / 还原、关闭按钮，并且本机 DTK 已导出 `D.WindowButtonGroup`，默认必须直接使用 `D.WindowButtonGroup`。
 - 不要再用一组 `D.ToolButton`、`Button` 或自绘 icon row 重做一套窗口按钮。
-- 只有在 `D.WindowButtonGroup` 明确无法满足目标布局时，才允许窄范围 fallback，并且必须写 `uos-design: allow-custom-window-buttons`。
+- 只有在 `D.WindowButtonGroup` 明确无法满足目标布局时，才允许窄范围 fallback，并且必须写 `deepin-design: allow-custom-window-buttons`。
 
 ### 2. 设置对话框
 
