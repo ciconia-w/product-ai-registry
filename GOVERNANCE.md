@@ -49,3 +49,13 @@ If safe installation cannot be guaranteed:
 - stop
 - report the blocker
 - do not guess
+
+## Semantic changes
+
+If a PR changes resource semantics, it must update both machine-readable and human-readable layers:
+
+- manifest and schemas
+- README
+- relevant docs under docs/
+- addon or reference install guidance when upstream behavior changes
+
