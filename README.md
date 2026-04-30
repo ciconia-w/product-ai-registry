@@ -198,6 +198,7 @@ Agent 进入仓库后，按这个顺序工作：
 - `script:reset-linglong-builder-env`
 - `script:rebuild-linglong-uab-shortest-path`
 - `reference:rag-anything`
+- `reference:local-reusable-assets-curated`
 
 ## 重要原则
 

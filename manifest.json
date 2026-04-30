@@ -365,6 +365,46 @@
       "checksum": "TBD"
     },
     {
+      "type": "reference",
+      "id": "local-reusable-assets-curated",
+      "version": "0.1.0",
+      "path": "references/local-reusable-assets-curated",
+      "description": "Sanitized reference workbook capturing a curated local inventory of reusable AI resources",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/ciconia-w/product-ai-registry/tree/main/references/local-reusable-assets-curated",
+        "ref": "main"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
       "type": "skill",
       "id": "linglong-uab-shortest-path",
       "version": "0.1.0",

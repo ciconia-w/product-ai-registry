@@ -1,0 +1,27 @@
+id: local-reusable-assets-curated
+name: Local Reusable Assets Curated
+version: 0.1.0
+description: Sanitized reference workbook capturing a curated local inventory of reusable AI resources, grouped by must-keep workflows and Claude Code or Codex related surfaces
+source:
+  kind: reference
+  url: https://github.com/ciconia-w/product-ai-registry/tree/main/references/local-reusable-assets-curated
+  ref: main
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - This is a sanitized curation artifact, not an installable capability
+  - Use it as a discovery input when extracting stable skills, scripts, wrappers, or packs
