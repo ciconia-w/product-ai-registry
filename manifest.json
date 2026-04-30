@@ -50,6 +50,41 @@
         "script:reset-linglong-builder-env",
         "script:rebuild-linglong-uab-shortest-path"
       ]
+    },
+    {
+      "id": "product-insight-workflow",
+      "version": "0.1.0",
+      "description": "Requirement collection, analysis, prioritization, and backlog-writing workflow pack for product teams",
+      "path": "packs/product-insight-workflow.json",
+      "items": [
+        "skill:triage-issue",
+        "skill:prd-review",
+        "skill:spec-to-backlog",
+        "skill:deepin-requirement-crawler",
+        "skill:requirement-analyzer",
+        "skill:requirement-prioritizer",
+        "skill:requirement-writer"
+      ]
+    },
+    {
+      "id": "ai-daily-news-workflow",
+      "version": "0.1.0",
+      "description": "AI daily news collection, drafting, and SMTP delivery workflow pack",
+      "path": "packs/ai-daily-news-workflow.json",
+      "items": [
+        "skill:ai-daily-news",
+        "skill:send-email",
+        "script:send-email"
+      ]
+    },
+    {
+      "id": "uniontech-ai-point-extract",
+      "version": "0.1.0",
+      "description": "Minimal UnionTech AI point extraction workflow pack centered on the logged-in browser extraction skill",
+      "path": "packs/uniontech-ai-point-extract.json",
+      "items": [
+        "skill:uniontech-ai-point-export"
+      ]
     }
   ],
   "items": [

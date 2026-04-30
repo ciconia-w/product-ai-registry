@@ -208,6 +208,9 @@ Agent 进入仓库后，按这个顺序工作：
 - `skill:requirement-writer`
 - `skill:send-email`
 - `script:send-email`
+- `pack:product-insight-workflow`
+- `pack:ai-daily-news-workflow`
+- `pack:uniontech-ai-point-extract`
 
 ## 重要原则
 

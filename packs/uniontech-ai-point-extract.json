@@ -1,0 +1,14 @@
+{
+  "id": "uniontech-ai-point-extract",
+  "version": "0.1.0",
+  "description": "Minimal UnionTech AI point extraction workflow pack centered on the logged-in browser extraction skill",
+  "items": [
+    "skill:uniontech-ai-point-export"
+  ],
+  "notes": [
+    "Execution requires the user to already be logged into the UnionTech dashboard in a live browser session.",
+    "The executing agent must be able to operate the logged-in page and inspect authenticated XHR traffic.",
+    "Agents should verify the target page is open on the correct dashboard route before starting.",
+    "If login state, page access, or XHR interception capability is missing, agents should stop and report blocked instead of guessing."
+  ]
+}
