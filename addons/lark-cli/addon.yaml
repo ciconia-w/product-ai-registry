@@ -1,0 +1,23 @@
+id: lark-cli
+name: Lark CLI
+version: 0.1.0
+description: Optional Lark or Feishu CLI for messaging, docs, sheets, and workflow automation
+source:
+  kind: external_git
+  url: https://github.com/larksuite/cli
+  ref: main
+  install_method: external_git
+policy:
+  role: optional
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Optional application
+  - Agent should suggest or install only when the user or workflow needs Lark/Feishu automation
