@@ -207,10 +207,6 @@ Agent 进入仓库后，按这个顺序工作：
 - `skill:requirement-prioritizer`
 - `skill:requirement-writer`
 - `script:send-email`
-- `script:analyze-7day-vs-benchmark`
-- `script:analyze-morning-current`
-- `script:check-benchmark-days`
-- `script:compare-benchmark-morning`
 
 ## 重要原则
 
