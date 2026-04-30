@@ -1076,6 +1076,46 @@
                                                  }
                                   },
                       "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "reference",
+                      "id":  "ai-handbook-sdd-overview",
+                      "version":  "0.1.0",
+                      "path":  "references/ai-handbook-sdd-overview",
+                      "description":  "Reference material about SDD overview and AI-native software delivery thinking",
+                      "source":  {
+                                     "kind":  "reference",
+                                     "url":  "https://jimmysong.io/zh/book/ai-handbook/sdd/overview/",
+                                     "docs_url":  "https://jimmysong.io/zh/book/ai-handbook/sdd/overview/"
+                                 },
+                      "policy":  {
+                                     "role":  "reference",
+                                     "action_on_missing":  "suggest"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "reference_only"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "reference_only"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "reference_only"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "reference_only"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "reference_only"
+                                                   },
+                                      "openclaw":  {
+                                                       "mode":  "reference_only"
+                                                   },
+                                      "hermes":  {
+                                                     "mode":  "reference_only"
+                                                 }
+                                  },
+                      "checksum":  "TBD"
                   }
               ]
 }
