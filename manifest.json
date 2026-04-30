@@ -691,6 +691,36 @@
       "checksum": "TBD"
     },
     {
+      "type": "skill",
+      "id": "send-email",
+      "version": "0.1.0",
+      "path": "skills/send-email",
+      "description": "Guide agents through SMTP prerequisites and safe use of the registry send-email script",
+      "requires": {
+        "items": [
+          "script:send-email"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
       "type": "script",
       "id": "send-email",
       "version": "0.1.0",

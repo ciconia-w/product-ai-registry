@@ -206,6 +206,7 @@ Agent 进入仓库后，按这个顺序工作：
 - `skill:requirement-analyzer`
 - `skill:requirement-prioritizer`
 - `skill:requirement-writer`
+- `skill:send-email`
 - `script:send-email`
 
 ## 重要原则
