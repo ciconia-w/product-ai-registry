@@ -1,0 +1,20 @@
+id: cc-switch
+name: CC Switch
+version: 0.1.0
+description: Baseline application for Claude Code related environment switching and provider routing
+source:
+  kind: external_git
+  url: https://github.com/farion1231/cc-switch
+  ref: main
+  install_method: external_git
+policy:
+  role: baseline
+  action_on_missing: install
+agents:
+  - claude-code
+  - codex
+os:
+  - linux
+notes:
+  - Baseline application
+  - Recommended when Claude Code or compatible flows need provider switching
