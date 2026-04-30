@@ -182,6 +182,9 @@ Agent 进入仓库后，按这个顺序工作：
 
 目前仓库里已经有这些示例：
 
+- `addon:gh-cli`
+- `addon:cc-switch`
+- `addon:lark-cli`
 - `addon:oh-my-codex`
 - `addon:oh-my-claudecode`
 - `addon:superpowers`
