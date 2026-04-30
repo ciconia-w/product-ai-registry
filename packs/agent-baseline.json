@@ -1,0 +1,13 @@
+{
+    "description":  "Default baseline applications and addons. Ready-to-use workflow packs are still being curated.",
+    "id":  "agent-baseline",
+    "items":  [
+                  "addon:gh-cli",
+                  "addon:opencli",
+                  "addon:cc-switch",
+                  "addon:oh-my-codex",
+                  "addon:oh-my-claudecode",
+                  "addon:superpowers"
+              ],
+    "version":  "0.2.0"
+}
