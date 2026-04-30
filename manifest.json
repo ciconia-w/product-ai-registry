@@ -1,849 +1,1081 @@
 {
-  "registry_version": "1.0.0",
-  "generated_at": "2026-04-29T12:00:00Z",
-  "default_pack": "product-default",
-  "agents": {
-    "codex": {
-      "support_level": "A"
-    },
-    "claude-code": {
-      "support_level": "B"
-    },
-    "cursor": {
-      "support_level": "B"
-    },
-    "gemini-cli": {
-      "support_level": "A"
-    },
-    "opencode": {
-      "support_level": "A"
-    },
-    "openclaw": {
-      "support_level": "C"
-    },
-    "hermes": {
-      "support_level": "C"
-    }
-  },
-  "packs": [
-    {
-      "id": "product-default",
-      "version": "0.1.1",
-      "description": "Default product team starter pack",
-      "path": "packs/product-default.json",
-      "items": [
-        "addon:gh-cli",
-        "addon:cc-switch",
-        "addon:lark-cli",
-        "addon:oh-my-codex",
-        "addon:oh-my-claudecode",
-        "addon:superpowers"
-      ]
-    },
-    {
-      "id": "deepin-color-correction-linglong",
-      "version": "0.1.0",
-      "description": "Repo-specific Linglong packaging pack for deepin-color-correction on Linux hosts",
-      "path": "packs/deepin-color-correction-linglong.json",
-      "items": [
-        "skill:linglong-uab-shortest-path",
-        "script:reset-linglong-builder-env",
-        "script:rebuild-linglong-uab-shortest-path"
-      ]
-    }
-  ],
-  "items": [
-    {
-      "type": "skill",
-      "id": "prd-review",
-      "version": "0.1.0",
-      "path": "skills/prd-review",
-      "description": "Review product requirement documents with structured output",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "forum-demand-crawler",
-      "version": "0.1.0",
-      "path": "scripts/forum-demand-crawler",
-      "description": "Crawl approved forums and export demand findings",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "curl",
-          "python3"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD"
-    },
-    {
-      "type": "wrapper",
-      "id": "opencode-review",
-      "version": "0.1.0",
-      "path": "wrappers/opencode-review",
-      "description": "Controlled local wrapper for repository review via opencode",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "opencode"
-        ],
-        "items": [
-          "addon:opencli"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "gh-cli",
-      "version": "0.1.0",
-      "path": "addons/gh-cli",
-      "description": "Baseline GitHub CLI application used by many agent workflows and registry operations",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/cli/cli",
-        "ref": "trunk",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        },
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "cursor": {
-          "mode": "external_upstream"
-        },
-        "gemini-cli": {
-          "mode": "external_upstream"
-        },
-        "opencode": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "cc-switch",
-      "version": "0.1.0",
-      "path": "addons/cc-switch",
-      "description": "Baseline application for Claude Code related environment switching and provider routing",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/farion1231/cc-switch",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "codex": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "lark-cli",
-      "version": "0.1.0",
-      "path": "addons/lark-cli",
-      "description": "Optional Lark or Feishu CLI for messaging, docs, sheets, and workflow automation",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/larksuite/cli",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        },
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "cursor": {
-          "mode": "external_upstream"
-        },
-        "gemini-cli": {
-          "mode": "external_upstream"
-        },
-        "opencode": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "oh-my-codex",
-      "version": "0.1.0",
-      "path": "addons/oh-my-codex",
-      "description": "Baseline addon for Codex users",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/Yeachan-Heo/oh-my-codex",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "oh-my-claudecode",
-      "version": "0.1.0",
-      "path": "addons/oh-my-claudecode",
-      "description": "Baseline addon for Claude Code users",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "claude-code": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "superpowers",
-      "version": "0.1.0",
-      "path": "addons/superpowers",
-      "description": "Baseline enhancement addon for supported coding agents",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/obra/superpowers",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        },
-        "claude-code": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "opencli",
-      "version": "0.1.0",
-      "path": "addons/opencli",
-      "description": "Dependency addon used by wrappers, scripts, or other agent resources",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/jackwener/opencli",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "policy": {
-        "role": "dependency",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        },
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "cursor": {
-          "mode": "external_upstream"
-        },
-        "gemini-cli": {
-          "mode": "external_upstream"
-        },
-        "opencode": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "reference",
-      "id": "rag-anything",
-      "version": "0.1.0",
-      "path": "references/rag-anything",
-      "description": "Reference upstream project for knowledge-base and multimodal RAG capabilities",
-      "source": {
-        "kind": "reference",
-        "url": "https://github.com/HKUDS/RAG-Anything",
-        "ref": "main"
-      },
-      "policy": {
-        "role": "reference",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "reference_only"
-        },
-        "claude-code": {
-          "mode": "reference_only"
-        },
-        "cursor": {
-          "mode": "reference_only"
-        },
-        "gemini-cli": {
-          "mode": "reference_only"
-        },
-        "opencode": {
-          "mode": "reference_only"
-        },
-        "openclaw": {
-          "mode": "reference_only"
-        },
-        "hermes": {
-          "mode": "reference_only"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "linglong-uab-shortest-path",
-      "version": "0.1.0",
-      "path": "skills/linglong-uab-shortest-path",
-      "description": "Repo-specific playbook for rebuilding the deepin-color-correction Linglong UAB on Linux hosts",
-      "install_scope": "project",
-      "target_path_hint": ".agents/skills/linglong-uab-shortest-path/SKILL.md",
-      "support": {
-        "codex": {
-          "mode": "project_native_skill_dir"
-        },
-        "opencode": {
-          "mode": "project_native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "project_generated_subagent"
-        },
-        "cursor": {
-          "mode": "project_generated_rules"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "reset-linglong-builder-env",
-      "version": "0.1.0",
-      "path": "scripts/reset-linglong-builder-env",
-      "description": "Reset stale Linglong builder state before a deepin-color-correction rebuild",
-      "install_scope": "project",
-      "target_path_hint": "scripts/reset-linglong-builder-env.sh",
-      "support": {
-        "codex": {
-          "mode": "project_local_copy"
-        },
-        "claude-code": {
-          "mode": "project_local_copy"
-        },
-        "opencode": {
-          "mode": "project_local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "bash",
-          "pkill",
-          "mount",
-          "grep",
-          "awk",
-          "sort",
-          "sudo"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "rebuild-linglong-uab-shortest-path",
-      "version": "0.1.0",
-      "path": "scripts/rebuild-linglong-uab-shortest-path",
-      "description": "Rebuild deepin-color-correction Linglong UAB using the shortest known-good path",
-      "install_scope": "project",
-      "target_path_hint": "scripts/rebuild-linglong-uab-shortest-path.sh",
-      "support": {
-        "codex": {
-          "mode": "project_local_copy"
-        },
-        "claude-code": {
-          "mode": "project_local_copy"
-        },
-        "opencode": {
-          "mode": "project_local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "bash",
-          "sha256sum",
-          "find",
-          "grep",
-          "sort"
-        ],
-        "scripts": [
-          "reset-linglong-builder-env"
-        ],
-        "items": [
-          "addon:opencli"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "ai-daily-news",
-      "version": "0.1.0",
-      "path": "skills/ai-daily-news",
-      "description": "Generate a structured AI daily news digest from multiple Chinese and English sources and hand off to a local mail sender",
-      "requires": {
-        "items": [
-          "script:send-email"
-        ],
-        "cli": [
-          "python3"
-        ]
-      },
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "triage-issue",
-      "version": "0.1.0",
-      "path": "skills/triage-issue",
-      "description": "Triage bug reports or requirement-like issues by searching for duplicates and structuring the next action",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "spec-to-backlog",
-      "version": "0.1.0",
-      "path": "skills/spec-to-backlog",
-      "description": "Break a specification into an Epic plus implementation backlog tickets",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "uniontech-ai-point-export",
-      "version": "0.1.0",
-      "path": "skills/uniontech-ai-point-export",
-      "description": "Extract UnionTech AI point dashboard data from the live logged-in page and optionally write workbook totals",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "deepin-requirement-crawler",
-      "version": "0.1.0",
-      "path": "skills/deepin-requirement-crawler",
-      "description": "Collect requirements from forum, email, and product feedback sources and generate normalized markdown or Excel outputs",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "requirement-analyzer",
-      "version": "0.1.0",
-      "path": "skills/requirement-analyzer",
-      "description": "Analyze raw requirement text into structured fields such as type, module, complexity, scenario, and expected behavior",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "requirement-prioritizer",
-      "version": "0.1.0",
-      "path": "skills/requirement-prioritizer",
-      "description": "Score and rank requirements across six dimensions to produce a P0 to P4 priority level",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "requirement-writer",
-      "version": "0.1.0",
-      "path": "skills/requirement-writer",
-      "description": "Guide a user through structured requirement conversations and generate Problem Framing, SRD, or PRD outputs",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "send-email",
-      "version": "0.1.0",
-      "path": "scripts/send-email",
-      "description": "Send plaintext email using an SMTP configuration provided entirely through environment variables",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "analyze-7day-vs-benchmark",
-      "version": "0.1.0",
-      "path": "scripts/analyze-7day-vs-benchmark",
-      "description": "Analyze day-by-day UOS AI app stats from a current aggregated JSON payload",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "analyze-morning-current",
-      "version": "0.1.0",
-      "path": "scripts/analyze-morning-current",
-      "description": "Compare a morning-captured UOS AI response set against a later aggregated JSON payload",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "check-benchmark-days",
-      "version": "0.1.0",
-      "path": "scripts/check-benchmark-days",
-      "description": "Inspect row count and date coverage in a benchmark Excel workbook",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD"
-    },
-    {
-      "type": "script",
-      "id": "compare-benchmark-morning",
-      "version": "0.1.0",
-      "path": "scripts/compare-benchmark-morning",
-      "description": "Compare benchmark workbook totals against a morning captured UOS AI response set",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD"
-    }
-  ]
+    "registry_version":  "1.0.0",
+    "generated_at":  "2026-04-29T12:00:00Z",
+    "default_pack":  "agent-baseline",
+    "agents":  {
+                   "codex":  {
+                                 "support_level":  "A"
+                             },
+                   "claude-code":  {
+                                       "support_level":  "B"
+                                   },
+                   "cursor":  {
+                                  "support_level":  "B"
+                              },
+                   "gemini-cli":  {
+                                      "support_level":  "A"
+                                  },
+                   "opencode":  {
+                                    "support_level":  "A"
+                                },
+                   "openclaw":  {
+                                    "support_level":  "C"
+                                },
+                   "hermes":  {
+                                  "support_level":  "C"
+                              }
+               },
+    "packs":  [
+                  {
+                      "id":  "agent-baseline",
+                      "version":  "0.2.0",
+                      "description":  "Default baseline applications and addons. Ready-to-use workflow packs are still being curated.",
+                      "path":  "packs/agent-baseline.json",
+                      "items":  [
+                                    "addon:gh-cli",
+                                    "addon:opencli",
+                                    "addon:cc-switch",
+                                    "addon:oh-my-codex",
+                                    "addon:oh-my-claudecode",
+                                    "addon:superpowers"
+                                ]
+                  },
+                  {
+                      "id":  "product-default",
+                      "version":  "0.1.2",
+                      "description":  "Draft product workflow pack. Not ready-to-use yet; resources are still being integrated.",
+                      "path":  "packs/product-default.json",
+                      "items":  [
+
+                                ]
+                  },
+                  {
+                      "id":  "deepin-color-correction-linglong",
+                      "version":  "0.1.0",
+                      "description":  "Repo-specific Linglong packaging pack for deepin-color-correction on Linux hosts",
+                      "path":  "packs/deepin-color-correction-linglong.json",
+                      "items":  [
+                                    "skill:linglong-uab-shortest-path",
+                                    "script:reset-linglong-builder-env",
+                                    "script:rebuild-linglong-uab-shortest-path"
+                                ]
+                  }
+              ],
+    "items":  [
+                  {
+                      "type":  "skill",
+                      "id":  "prd-review",
+                      "version":  "0.1.0",
+                      "path":  "skills/prd-review",
+                      "description":  "Review product requirement documents with structured output",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "forum-demand-crawler",
+                      "version":  "0.1.0",
+                      "path":  "scripts/forum-demand-crawler",
+                      "description":  "Crawl approved forums and export demand findings",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_local_copy"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "curl",
+                                                   "python3"
+                                               ]
+                                   },
+                      "entry":  "run.sh",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "wrapper",
+                      "id":  "opencode-review",
+                      "version":  "0.1.0",
+                      "path":  "wrappers/opencode-review",
+                      "description":  "Controlled local wrapper for repository review via opencode",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "opencode"
+                                               ],
+                                       "items":  [
+                                                     "addon:opencli"
+                                                 ]
+                                   },
+                      "entry":  "run.sh",
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "linglong-uab-shortest-path",
+                      "version":  "0.1.0",
+                      "path":  "skills/linglong-uab-shortest-path",
+                      "description":  "Repo-specific playbook for rebuilding the deepin-color-correction Linglong UAB on Linux hosts",
+                      "install_scope":  "project",
+                      "target_path_hint":  ".agents/skills/linglong-uab-shortest-path/SKILL.md",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "project_native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "project_native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "project_generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_generated_rules"
+                                                 }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "reset-linglong-builder-env",
+                      "version":  "0.1.0",
+                      "path":  "scripts/reset-linglong-builder-env",
+                      "description":  "Reset stale Linglong builder state before a deepin-color-correction rebuild",
+                      "install_scope":  "project",
+                      "target_path_hint":  "scripts/reset-linglong-builder-env.sh",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "project_local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "project_local_copy"
+                                                      },
+                                      "opencode":  {
+                                                       "mode":  "project_local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "bash",
+                                                   "pkill",
+                                                   "mount",
+                                                   "grep",
+                                                   "awk",
+                                                   "sort",
+                                                   "sudo"
+                                               ]
+                                   },
+                      "entry":  "run.sh",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "rebuild-linglong-uab-shortest-path",
+                      "version":  "0.1.0",
+                      "path":  "scripts/rebuild-linglong-uab-shortest-path",
+                      "description":  "Rebuild deepin-color-correction Linglong UAB using the shortest known-good path",
+                      "install_scope":  "project",
+                      "target_path_hint":  "scripts/rebuild-linglong-uab-shortest-path.sh",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "project_local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "project_local_copy"
+                                                      },
+                                      "opencode":  {
+                                                       "mode":  "project_local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "bash",
+                                                   "sha256sum",
+                                                   "find",
+                                                   "grep",
+                                                   "sort"
+                                               ],
+                                       "scripts":  [
+                                                       "reset-linglong-builder-env"
+                                                   ],
+                                       "items":  [
+                                                     "addon:opencli"
+                                                 ]
+                                   },
+                      "entry":  "run.sh",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "ai-daily-news",
+                      "version":  "0.1.0",
+                      "path":  "skills/ai-daily-news",
+                      "description":  "Generate a structured AI daily news digest from multiple Chinese and English sources and hand off to a local mail sender",
+                      "requires":  {
+                                       "items":  [
+                                                     "script:send-email"
+                                                 ],
+                                       "cli":  [
+                                                   "python3"
+                                               ]
+                                   },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "triage-issue",
+                      "version":  "0.1.0",
+                      "path":  "skills/triage-issue",
+                      "description":  "Triage bug reports or requirement-like issues by searching for duplicates and structuring the next action",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "spec-to-backlog",
+                      "version":  "0.1.0",
+                      "path":  "skills/spec-to-backlog",
+                      "description":  "Break a specification into an Epic plus implementation backlog tickets",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "uniontech-ai-point-export",
+                      "version":  "0.1.0",
+                      "path":  "skills/uniontech-ai-point-export",
+                      "description":  "Extract UnionTech AI point dashboard data from the live logged-in page and optionally write workbook totals",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "deepin-requirement-crawler",
+                      "version":  "0.1.0",
+                      "path":  "skills/deepin-requirement-crawler",
+                      "description":  "Collect requirements from forum, email, and product feedback sources and generate normalized markdown or Excel outputs",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "requirement-analyzer",
+                      "version":  "0.1.0",
+                      "path":  "skills/requirement-analyzer",
+                      "description":  "Analyze raw requirement text into structured fields such as type, module, complexity, scenario, and expected behavior",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "requirement-prioritizer",
+                      "version":  "0.1.0",
+                      "path":  "skills/requirement-prioritizer",
+                      "description":  "Score and rank requirements across six dimensions to produce a P0 to P4 priority level",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "skill",
+                      "id":  "requirement-writer",
+                      "version":  "0.1.0",
+                      "path":  "skills/requirement-writer",
+                      "description":  "Guide a user through structured requirement conversations and generate Problem Framing, SRD, or PRD outputs",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "native_skill_dir"
+                                                },
+                                      "opencode":  {
+                                                       "mode":  "native_skill_dir"
+                                                   },
+                                      "claude-code":  {
+                                                          "mode":  "generated_subagent"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "generated_rules"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     }
+                                  },
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "send-email",
+                      "version":  "0.1.0",
+                      "path":  "scripts/send-email",
+                      "description":  "Send plaintext email using an SMTP configuration provided entirely through environment variables",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_local_copy"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "python3"
+                                               ]
+                                   },
+                      "entry":  "run.py",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "analyze-7day-vs-benchmark",
+                      "version":  "0.1.0",
+                      "path":  "scripts/analyze-7day-vs-benchmark",
+                      "description":  "Analyze day-by-day UOS AI app stats from a current aggregated JSON payload",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_local_copy"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "python3"
+                                               ]
+                                   },
+                      "entry":  "run.py",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "analyze-morning-current",
+                      "version":  "0.1.0",
+                      "path":  "scripts/analyze-morning-current",
+                      "description":  "Compare a morning-captured UOS AI response set against a later aggregated JSON payload",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_local_copy"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "python3"
+                                               ]
+                                   },
+                      "entry":  "run.py",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "check-benchmark-days",
+                      "version":  "0.1.0",
+                      "path":  "scripts/check-benchmark-days",
+                      "description":  "Inspect row count and date coverage in a benchmark Excel workbook",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_local_copy"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "python3"
+                                               ]
+                                   },
+                      "entry":  "run.py",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "script",
+                      "id":  "compare-benchmark-morning",
+                      "version":  "0.1.0",
+                      "path":  "scripts/compare-benchmark-morning",
+                      "description":  "Compare benchmark workbook totals against a morning captured UOS AI response set",
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "local_copy"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "local_copy"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "project_local_copy"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "extension_bundle"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "local_copy"
+                                                   }
+                                  },
+                      "requires":  {
+                                       "cli":  [
+                                                   "python3"
+                                               ]
+                                   },
+                      "entry":  "run.py",
+                      "checksum":  "TBD",
+                      "source":  {
+                                     "kind":  "local"
+                                 },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "install"
+                                 }
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "gh-cli",
+                      "version":  "0.1.0",
+                      "path":  "addons/gh-cli",
+                      "description":  "Baseline GitHub CLI application used by many agent workflows and registry operations",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/cli/cli",
+                                     "ref":  "trunk",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://cli.github.com/manual/"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "type -p curl \u003e/dev/null || sudo apt update \u0026\u0026 sudo apt install -y curl",
+                                                       "curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /usr/share/keyrings/githubcli-archive-keyring.gpg \u003e/dev/null",
+                                                       "sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg",
+                                                       "echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\" | sudo tee /etc/apt/sources.list.d/github-cli.list \u003e/dev/null",
+                                                       "sudo apt update",
+                                                       "sudo apt install -y gh"
+                                                   ],
+                                      "verify":  [
+                                                     "gh --version"
+                                                 ],
+                                      "post_install":  [
+                                                           "gh auth login",
+                                                           "gh auth status"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "baseline",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "external_upstream"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "external_upstream"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "external_upstream"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "external_upstream"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "external_upstream"
+                                                   }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "cc-switch",
+                      "version":  "0.1.0",
+                      "path":  "addons/cc-switch",
+                      "description":  "Baseline application for Claude Code related environment switching and provider routing",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/farion1231/cc-switch",
+                                     "ref":  "main",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://docs.moleapi.com/en-US/docs/apps/cc-switch"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "gh release download --repo farion1231/cc-switch --pattern \"CC-Switch-*-Linux-*.deb\" --dir /tmp/cc-switch-install",
+                                                       "sudo apt install -y /tmp/cc-switch-install/CC-Switch-*-Linux-*.deb"
+                                                   ],
+                                      "verify":  [
+                                                     "cc-switch --help"
+                                                 ],
+                                      "post_install":  [
+                                                           "Launch cc-switch once and complete its local onboarding if prompted"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "baseline",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "claude-code":  {
+                                                          "mode":  "external_upstream"
+                                                      },
+                                      "codex":  {
+                                                    "mode":  "external_upstream"
+                                                }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "lark-cli",
+                      "version":  "0.1.0",
+                      "path":  "addons/lark-cli",
+                      "description":  "Optional Lark or Feishu CLI for messaging, docs, sheets, and workflow automation",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/larksuite/cli",
+                                     "ref":  "main",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://github.com/larksuite/cli/blob/main/README.md"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "npm install -g @larksuite/cli",
+                                                       "npx skills add larksuite/cli -y -g"
+                                                   ],
+                                      "verify":  [
+                                                     "lark-cli --help",
+                                                     "lark-cli auth status"
+                                                 ],
+                                      "post_install":  [
+                                                           "lark-cli config init --new",
+                                                           "lark-cli auth login --recommend"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "optional",
+                                     "action_on_missing":  "suggest"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "external_upstream"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "external_upstream"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "external_upstream"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "external_upstream"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "external_upstream"
+                                                   }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "oh-my-codex",
+                      "version":  "0.1.0",
+                      "path":  "addons/oh-my-codex",
+                      "description":  "Baseline addon for Codex users",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/Yeachan-Heo/oh-my-codex",
+                                     "ref":  "main",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://github.com/Yeachan-Heo/oh-my-codex#readme"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "git clone https://github.com/Yeachan-Heo/oh-my-codex.git ~/.codex/oh-my-codex || (cd ~/.codex/oh-my-codex \u0026\u0026 git pull)"
+                                                   ],
+                                      "verify":  [
+                                                     "test -d ~/.codex/oh-my-codex"
+                                                 ],
+                                      "post_install":  [
+                                                           "Follow upstream repository instructions to enable Codex integration"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "baseline",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "external_upstream"
+                                                }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "oh-my-claudecode",
+                      "version":  "0.1.0",
+                      "path":  "addons/oh-my-claudecode",
+                      "description":  "Baseline addon for Claude Code users",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/Yeachan-Heo/oh-my-claudecode",
+                                     "ref":  "main",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://github.com/Yeachan-Heo/oh-my-claudecode#readme"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "git clone https://github.com/Yeachan-Heo/oh-my-claudecode.git ~/.claude/oh-my-claudecode || (cd ~/.claude/oh-my-claudecode \u0026\u0026 git pull)"
+                                                   ],
+                                      "verify":  [
+                                                     "test -d ~/.claude/oh-my-claudecode"
+                                                 ],
+                                      "post_install":  [
+                                                           "Follow upstream repository instructions to enable Claude Code integration"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "baseline",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "claude-code":  {
+                                                          "mode":  "external_upstream"
+                                                      }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "superpowers",
+                      "version":  "0.1.0",
+                      "path":  "addons/superpowers",
+                      "description":  "Baseline enhancement addon for supported coding agents",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/obra/superpowers",
+                                     "ref":  "main",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://github.com/obra/superpowers#installation"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "For Codex: fetch and follow https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md",
+                                                       "For OpenCode: fetch and follow https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md",
+                                                       "For Gemini CLI: gemini extensions install https://github.com/obra/superpowers"
+                                                   ],
+                                      "verify":  [
+                                                     "Check upstream installation verification steps for the current agent"
+                                                 ],
+                                      "post_install":  [
+                                                           "Restart the current agent session if upstream instructions require it"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "baseline",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "external_upstream"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "external_upstream"
+                                                      }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "addon",
+                      "id":  "opencli",
+                      "version":  "0.1.0",
+                      "path":  "addons/opencli",
+                      "description":  "Dependency addon used by wrappers, scripts, or other agent resources",
+                      "source":  {
+                                     "kind":  "external_git",
+                                     "url":  "https://github.com/jackwener/opencli",
+                                     "ref":  "main",
+                                     "install_method":  "external_git",
+                                     "docs_url":  "https://github.com/jackwener/opencli#readme"
+                                 },
+                      "install":  {
+                                      "commands":  [
+                                                       "npm install -g --prefix ~/.local @jackwener/opencli"
+                                                   ],
+                                      "verify":  [
+                                                     "~/.local/bin/opencli --version"
+                                                 ],
+                                      "post_install":  [
+                                                           "Ensure ~/.local/bin is on PATH for future shells"
+                                                       ]
+                                  },
+                      "policy":  {
+                                     "role":  "dependency",
+                                     "action_on_missing":  "install"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "external_upstream"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "external_upstream"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "external_upstream"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "external_upstream"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "external_upstream"
+                                                   }
+                                  },
+                      "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "reference",
+                      "id":  "rag-anything",
+                      "version":  "0.1.0",
+                      "path":  "references/rag-anything",
+                      "description":  "Reference upstream project for knowledge-base and multimodal RAG capabilities",
+                      "source":  {
+                                     "kind":  "reference",
+                                     "url":  "https://github.com/HKUDS/RAG-Anything",
+                                     "ref":  "main",
+                                     "docs_url":  "https://github.com/HKUDS/RAG-Anything#readme"
+                                 },
+                      "policy":  {
+                                     "role":  "reference",
+                                     "action_on_missing":  "suggest"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "reference_only"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "reference_only"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "reference_only"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "reference_only"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "reference_only"
+                                                   },
+                                      "openclaw":  {
+                                                       "mode":  "reference_only"
+                                                   },
+                                      "hermes":  {
+                                                     "mode":  "reference_only"
+                                                 }
+                                  },
+                      "checksum":  "TBD"
+                  }
+              ]
 }
