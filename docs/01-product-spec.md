@@ -134,6 +134,31 @@ GitHub 仓库是唯一事实来源。
 - `reference`: 不自动安装，只做发现和引用
 - `optional`: 可安装，但不作为默认前置
 
+说明：
+
+- `gh-cli`、`cc-switch` 适合建模为 `baseline`
+- `lark-cli` 适合建模为 `optional`
+- `opencli` 适合建模为 `dependency`
+
+### 6.2 Agent runtime 与 registry 资源的区别
+
+这里要明确区分：
+
+- `Agent runtime`
+  - 例如 `codex`、`claude-code`、`cursor`、`gemini-cli`、`opencode`
+- `Registry resource`
+  - 例如 `skill`、`script`、`wrapper`、`addon`、`reference`
+
+`opencode` 本身属于 **基础 Agent runtime**，不属于依赖型 addon。
+
+但：
+
+- 某个 `wrapper` 可以依赖 `opencli`
+- 某个 `pack` 可以把 `gh-cli`、`cc-switch` 标成 `baseline addon`
+- 某个 `pack` 可以把 `lark-cli` 标成 `optional addon`
+- 某个 `pack` 可以把 `oh-my-codex` 标成 `baseline addon`
+- 某个外部项目如 `RAG-Anything` 可以标成 `reference`
+
 ## 7. 兼容性设计原则
 
 ### 7.1 三层模型
