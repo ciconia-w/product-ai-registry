@@ -26,10 +26,14 @@ jobs:
 
           assert "packs" in manifest, "manifest missing packs"
           assert "items" in manifest, "manifest missing items"
+          assert "default_pack" in manifest, "manifest missing default_pack"
 
           item_ids = set()
+          pack_ids = set()
           for item in manifest["items"]:
             item_ids.add(f'{item["type"]}:{item["id"]}')
+            assert "source" in item, f'item missing source: {item["type"]}:{item["id"]}'
+            assert "policy" in item, f'item missing policy: {item["type"]}:{item["id"]}'
             item_path = root / item["path"]
             assert item_path.exists(), f'missing path: {item["path"]}'
             if item["type"] == "skill":
@@ -38,15 +42,28 @@ jobs:
               assert (item_path / "tool.yaml").exists(), f'missing tool.yaml for {item["id"]}'
             if item["type"] == "addon":
               assert (item_path / "addon.yaml").exists(), f'missing addon.yaml for {item["id"]}'
+              addon_text = (item_path / "addon.yaml").read_text(encoding="utf-8")
+              assert "source:" in addon_text, f'addon missing source block: {item["id"]}'
+              assert "url:" in addon_text, f'addon missing source url: {item["id"]}'
+              assert "policy:" in addon_text, f'addon missing policy block: {item["id"]}'
+              assert "install:" in addon_text, f'addon missing install block: {item["id"]}'
+              assert "commands:" in addon_text, f'addon missing install commands: {item["id"]}'
             if item["type"] == "reference":
               assert (item_path / "reference.yaml").exists(), f'missing reference.yaml for {item["id"]}'
+              ref_text = (item_path / "reference.yaml").read_text(encoding="utf-8")
+              assert "source:" in ref_text, f'reference missing source block: {item["id"]}'
+              assert "url:" in ref_text, f'reference missing source url: {item["id"]}'
+              assert "policy:" in ref_text, f'reference missing policy block: {item["id"]}'
 
           for pack in manifest["packs"]:
+            pack_ids.add(pack["id"])
             pack_path = root / pack["path"]
             assert pack_path.exists(), f'missing pack file: {pack["path"]}'
             pack_data = json.loads(pack_path.read_text(encoding="utf-8"))
             for ref in pack_data["items"]:
               assert ref in item_ids, f'pack {pack["id"]} references unknown item {ref}'
+
+          assert manifest["default_pack"] in pack_ids, f'default_pack {manifest["default_pack"]} not found in manifest packs'
 
           for adapter in (root / "adapters").glob("*/adapter.yaml"):
             assert adapter.exists(), f'missing adapter file: {adapter}'
