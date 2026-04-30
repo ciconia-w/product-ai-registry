@@ -1,0 +1,23 @@
+id: deepin-compat
+name: deepin v20/v25 Compatibility Reference
+version: 0.1.0
+description: Environment snapshot and constraint rules for deepin v20 (UOS 20) and v25 application development
+source:
+  kind: reference
+  url: https://github.com/ciconia-w/product-ai-registry
+  ref: main
+policy:
+  role: constraint-reference
+  action_on_missing: block
+agents:
+  - claude-code
+  - codex
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Load this reference whenever writing code targeting deepin v20 or v25
+  - See diff.md for AI-actionable constraint rules
+  - See v20.md and v25.md for raw environment data

@@ -1,0 +1,9 @@
+{
+  "id": "deepin-dev",
+  "version": "0.1.0",
+  "description": "deepin v20/v25 application development - Qt/DTK/Python/D-Bus compatibility constraints",
+  "items": [
+    "skill:deepin-dev",
+    "reference:deepin-compat"
+  ]
+}
