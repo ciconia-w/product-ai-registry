@@ -32,6 +32,9 @@
       "description": "Default product team starter pack",
       "path": "packs/product-default.json",
       "items": [
+        "addon:gh-cli",
+        "addon:cc-switch",
+        "addon:lark-cli",
         "addon:oh-my-codex",
         "addon:oh-my-claudecode",
         "addon:superpowers"
@@ -140,6 +143,78 @@
         ]
       },
       "entry": "run.sh",
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "gh-cli",
+      "version": "0.1.0",
+      "path": "addons/gh-cli",
+      "description": "Baseline GitHub CLI application used by many agent workflows and registry operations",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/cli/cli",
+        "ref": "trunk",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "codex": { "mode": "external_upstream" },
+        "claude-code": { "mode": "external_upstream" },
+        "cursor": { "mode": "external_upstream" },
+        "gemini-cli": { "mode": "external_upstream" },
+        "opencode": { "mode": "external_upstream" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "cc-switch",
+      "version": "0.1.0",
+      "path": "addons/cc-switch",
+      "description": "Baseline application for Claude Code related environment switching and provider routing",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/farion1231/cc-switch",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "claude-code": { "mode": "external_upstream" },
+        "codex": { "mode": "external_upstream" }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "lark-cli",
+      "version": "0.1.0",
+      "path": "addons/lark-cli",
+      "description": "Optional Lark or Feishu CLI for messaging, docs, sheets, and workflow automation",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/larksuite/cli",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": { "mode": "external_upstream" },
+        "claude-code": { "mode": "external_upstream" },
+        "cursor": { "mode": "external_upstream" },
+        "gemini-cli": { "mode": "external_upstream" },
+        "opencode": { "mode": "external_upstream" }
+      },
       "checksum": "TBD"
     },
     {
