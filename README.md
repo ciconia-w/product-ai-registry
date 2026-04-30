@@ -203,6 +203,7 @@ Agent 进入仓库后，按这个顺序工作：
 - `reference:rag-anything`
 - `reference:ui-skills-catalog`
 - `reference:ai-handbook-sdd-overview`
+- `reference:awesome-design-md`
 - `skill:ai-daily-news`
 - `skill:triage-issue`
 - `skill:spec-to-backlog`
