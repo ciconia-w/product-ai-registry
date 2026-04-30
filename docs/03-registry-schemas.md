@@ -47,11 +47,37 @@ These roles answer a different question than `type`.
 
 Examples:
 
+- `gh-cli` -> likely `addon + baseline`
+- `cc-switch` -> likely `addon + baseline`
+- `lark-cli` -> likely `addon + optional`
 - `superpowers` -> likely `addon + baseline`
 - `oh-my-codex` -> likely `addon + baseline`
 - `oh-my-claudecode` -> likely `addon + baseline`
 - `opencli` -> likely `addon + dependency`
 - `RAG-Anything` -> likely `reference + suggest`
+
+## Runtime vs resource
+
+Do not confuse:
+
+- `agent runtime`
+  - `codex`
+  - `claude-code`
+  - `cursor`
+  - `gemini-cli`
+  - `opencode`
+
+with:
+
+- `registry resource`
+  - `skill`
+  - `script`
+  - `wrapper`
+  - `addon`
+  - `reference`
+
+`opencode` belongs to the first category.  
+`opencli` may belong to the second category as an addon dependency.
 
 ## Suggested metadata additions
 
