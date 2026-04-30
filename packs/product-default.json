@@ -1,13 +1,8 @@
 {
-  "id": "product-default",
-  "version": "0.1.1",
-  "description": "Default starter pack for product team members",
-  "items": [
-    "addon:gh-cli",
-    "addon:cc-switch",
-    "addon:lark-cli",
-    "addon:oh-my-codex",
-    "addon:oh-my-claudecode",
-    "addon:superpowers"
-  ]
+    "description":  "Draft product workflow pack. Not ready-to-use yet; resources are still being integrated.",
+    "id":  "product-default",
+    "items":  [
+
+              ],
+    "version":  "0.1.2"
 }
