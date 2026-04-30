@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "description": "Default starter pack for product team members",
   "items": [
+    "addon:gh-cli",
+    "addon:cc-switch",
+    "addon:lark-cli",
     "addon:oh-my-codex",
     "addon:oh-my-claudecode",
     "addon:superpowers"
