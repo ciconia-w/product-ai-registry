@@ -1,0 +1,23 @@
+id: gh-cli
+name: GitHub CLI
+version: 0.1.0
+description: Baseline GitHub CLI application used by many agent workflows and registry operations
+source:
+  kind: external_git
+  url: https://github.com/cli/cli
+  ref: trunk
+  install_method: external_git
+policy:
+  role: baseline
+  action_on_missing: install
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Baseline application
+  - If compatible and missing, agent can install proactively
