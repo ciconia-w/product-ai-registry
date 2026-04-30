@@ -12,4 +12,5 @@
 
 - Add reference:ai-handbook-sdd-overview for SDD overview guidance
 - Add reference:ui-skills-catalog for UI and design-engineering capability discovery
+- Add reference:awesome-design-md for DESIGN.md-based frontend and UI style discovery
 
