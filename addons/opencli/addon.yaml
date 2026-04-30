@@ -7,6 +7,11 @@ source:
   url: https://github.com/jackwener/opencli
   ref: main
   install_method: external_git
+install:
+  commands:
+    - git clone https://github.com/jackwener/opencli.git ~/.local/share/opencli
+  verify:
+    - test -d ~/.local/share/opencli
 policy:
   role: dependency
   action_on_missing: install

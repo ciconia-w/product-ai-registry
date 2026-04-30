@@ -7,6 +7,11 @@ source:
   url: https://github.com/Yeachan-Heo/oh-my-codex
   ref: main
   install_method: external_git
+install:
+  commands:
+    - git clone https://github.com/Yeachan-Heo/oh-my-codex.git ~/.local/share/oh-my-codex
+  verify:
+    - test -d ~/.local/share/oh-my-codex
 policy:
   role: baseline
   action_on_missing: install

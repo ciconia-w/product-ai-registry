@@ -57,41 +57,6 @@
         "script:reset-linglong-builder-env",
         "script:rebuild-linglong-uab-shortest-path"
       ]
-    },
-    {
-      "id": "product-insight-workflow",
-      "version": "0.1.0",
-      "description": "Requirement collection, analysis, prioritization, and backlog-writing workflow pack for product teams",
-      "path": "packs/product-insight-workflow.json",
-      "items": [
-        "skill:triage-issue",
-        "skill:prd-review",
-        "skill:spec-to-backlog",
-        "skill:deepin-requirement-crawler",
-        "skill:requirement-analyzer",
-        "skill:requirement-prioritizer",
-        "skill:requirement-writer"
-      ]
-    },
-    {
-      "id": "ai-daily-news-workflow",
-      "version": "0.1.0",
-      "description": "AI daily news collection, drafting, and SMTP delivery workflow pack",
-      "path": "packs/ai-daily-news-workflow.json",
-      "items": [
-        "skill:ai-daily-news",
-        "skill:send-email",
-        "script:send-email"
-      ]
-    },
-    {
-      "id": "uniontech-ai-point-extract",
-      "version": "0.1.0",
-      "description": "Minimal UnionTech AI point extraction workflow pack centered on the logged-in browser extraction skill",
-      "path": "packs/uniontech-ai-point-extract.json",
-      "items": [
-        "skill:uniontech-ai-point-export"
-      ]
     }
   ],
   "items": [
@@ -619,6 +584,158 @@
       }
     },
     {
+      "type": "script",
+      "id": "analyze-7day-vs-benchmark",
+      "version": "0.1.0",
+      "path": "scripts/analyze-7day-vs-benchmark",
+      "description": "Analyze day-by-day UOS AI app stats from a current aggregated JSON payload",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "analyze-morning-current",
+      "version": "0.1.0",
+      "path": "scripts/analyze-morning-current",
+      "description": "Compare a morning-captured UOS AI response set against a later aggregated JSON payload",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "check-benchmark-days",
+      "version": "0.1.0",
+      "path": "scripts/check-benchmark-days",
+      "description": "Inspect row count and date coverage in a benchmark Excel workbook",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "compare-benchmark-morning",
+      "version": "0.1.0",
+      "path": "scripts/compare-benchmark-morning",
+      "description": "Compare benchmark workbook totals against a morning captured UOS AI response set",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
       "type": "addon",
       "id": "gh-cli",
       "version": "0.1.0",
@@ -1039,31 +1156,42 @@
       "checksum": "TBD"
     },
     {
-      "type": "skill",
-      "id": "send-email",
+      "type": "reference",
+      "id": "awesome-design-md",
       "version": "0.1.0",
-      "path": "skills/send-email",
-      "description": "Guide agents through SMTP prerequisites and safe use of the registry send-email script",
-      "requires": {
-        "items": [
-          "script:send-email"
-        ]
+      "path": "references/awesome-design-md",
+      "description": "Reference collection of DESIGN.md files for AI-generated UI and design-system-aligned frontend output",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/VoltAgent/awesome-design-md",
+        "ref": "main",
+        "docs_url": "https://github.com/VoltAgent/awesome-design-md#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
       },
       "support": {
         "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
+          "mode": "reference_only"
         },
         "claude-code": {
-          "mode": "generated_subagent"
+          "mode": "reference_only"
         },
         "cursor": {
-          "mode": "generated_rules"
+          "mode": "reference_only"
         },
         "gemini-cli": {
-          "mode": "extension_bundle"
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
         }
       },
       "checksum": "TBD"
@@ -1091,7 +1219,14 @@
           "mode": "extension_bundle"
         }
       },
-      "checksum": "TBD"
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
     },
     {
       "type": "skill",
@@ -1116,7 +1251,14 @@
           "mode": "extension_bundle"
         }
       },
-      "checksum": "TBD"
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
     }
   ]
 }

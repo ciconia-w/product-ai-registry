@@ -7,6 +7,12 @@ source:
   url: https://github.com/farion1231/cc-switch
   ref: main
   install_method: external_git
+install:
+  commands:
+    - gh release download --repo farion1231/cc-switch --pattern "CC-Switch-*-Linux-*.deb" --dir /tmp/cc-switch-install
+    - sudo apt install -y /tmp/cc-switch-install/CC-Switch-*-Linux-*.deb
+  verify:
+    - cc-switch --help
 policy:
   role: baseline
   action_on_missing: install

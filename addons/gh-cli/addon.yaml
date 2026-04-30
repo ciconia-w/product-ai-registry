@@ -7,6 +7,12 @@ source:
   url: https://github.com/cli/cli
   ref: trunk
   install_method: external_git
+install:
+  commands:
+    - sudo apt update
+    - sudo apt install -y gh
+  verify:
+    - gh --version
 policy:
   role: baseline
   action_on_missing: install
