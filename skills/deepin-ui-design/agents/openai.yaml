@@ -1,0 +1,4 @@
+interface:
+  display_name: "UOS Design"
+  short_description: "UOS and Deepin QML desktop UI guidance with mandatory control-center style left-sidebar baseline"
+  default_prompt: "Use $uos-design to design, implement, or review a UOS or Deepin style QML desktop UI. Inspect local Qt/DTK availability first, run scripts/audit_uos_qml.sh before and after edits, use org.deepin.dtk controls when available, treat theme variables as the source of color, spacing, radius, and typography decisions, and enforce the mandatory control-center style left-right split layout plus validated blurred left sidebar for any desktop application with a persistent primary left sidebar. Treat non-DTK styles, frameless windows, page-level hex colors, fake sidebar blur, and wrong icon theme variables as blockers unless explicitly waived."
