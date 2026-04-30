@@ -11,4 +11,5 @@
 - Add sanitized product workflow skills and scripts for AI daily news, requirement processing, data extraction, and SMTP-based mail sending
 
 - Add reference:ai-handbook-sdd-overview for SDD overview guidance
+- Add reference:ui-skills-catalog for UI and design-engineering capability discovery
 
