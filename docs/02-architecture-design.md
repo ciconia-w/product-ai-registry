@@ -385,7 +385,7 @@ paths:
 - 删除未知来源的用户文件
 - 直接重写现有主配置文件的全部内容
 
-## 12. manifest.json 结构
+## 11.1 Pack maturity`r`n`r`n- `agent-baseline` is the default baseline pack for required applications and addons`r`n- ready-to-use workflow packs are still being curated`r`n- `product-default` should currently be treated as a draft placeholder, not a polished business pack`r`n`r`n## 12. manifest.json 结构
 
 `manifest.json` 必须表达：
 
@@ -447,11 +447,7 @@ paths:
 }
 ```
 
-Interpretation rules:
-
-- `baseline + install`: install proactively when compatible
-- `dependency + block/install`: only resolve when another item requires it
-- `reference + suggest`: never auto-install, only surface to the user or agent
+Interpretation rules:`r`n`r`n- `baseline + install`: install proactively when compatible`r`n- `dependency + block/install`: only resolve when another item requires it`r`n- `reference + suggest`: never auto-install, only surface to the user or agent`r`n`r`nImportant distinction:`r`n`r`n- `agent runtime` is the execution surface, for example `codex`, `claude-code`, `cursor`, `gemini-cli`, `opencode``r`n- `registry resource` is what the registry indexes, for example `skill`, `script`, `wrapper`, `addon`, `reference``r`n- a resource may depend on an addon like `opencli``r`n- a resource may proactively install a baseline addon like `gh-cli` or `cc-switch``r`n- a resource may expose an optional addon like `lark-cli``r`n- a resource should not model `opencode` itself as a dependency addon
 
 Important distinction:
 
@@ -617,3 +613,4 @@ MVP 真正完成的标准：
 - Google Gemini CLI `GEMINI.md`、extensions、skills、agents
 - OpenCode 官方 `AGENTS.md` 与 Skills 文档
 - OpenClaw 与 Hermes 主仓公开资料
+
