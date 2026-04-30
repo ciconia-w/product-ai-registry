@@ -27,6 +27,9 @@ If you change a capability or pack, update all relevant files:
 - resource files
 - `manifest.json`
 - `CHANGELOG.md`
+- `README.md` when user-facing behavior changed
+- `docs/01-product-spec.md`, `docs/02-architecture-design.md`, and `docs/03-registry-schemas.md` when semantics changed
+- addon or reference metadata when source, install commands, or policy changed
 
 If you change an adapter:
 
@@ -59,3 +62,4 @@ If you are an Agent maintaining this repository:
 - do not push directly to `main`
 - do not bypass CI
 - if a compatibility fact is uncertain, downgrade the claim instead of asserting support
+
