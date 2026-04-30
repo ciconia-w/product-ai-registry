@@ -211,16 +211,19 @@ Agent 进入仓库后，按这个顺序工作：
 - `skill:requirement-analyzer`
 - `skill:requirement-prioritizer`
 - `skill:requirement-writer`
+- `skill:send-email`
 - `script:send-email`
-- `script:analyze-7day-vs-benchmark`
-- `script:analyze-morning-current`
-- `script:check-benchmark-days`
-- `script:compare-benchmark-morning`
+- `pack:product-insight-workflow`
+- `pack:ai-daily-news-workflow`
+- `pack:uniontech-ai-point-extract`
 
 ## Pack 现状
 
-- 现成可直接用于业务工作的 workflow pack 还未开始系统整理
-- 当前默认 pack 应被视为基础应用与增强包集合
+- 已经整理出 3 个面向业务的 workflow pack：
+- `product-insight-workflow` 用于需求收集、分析、优先级评估与 backlog 输出
+- `ai-daily-news-workflow` 用于 AI 日报生成与 SMTP 投递
+- `uniontech-ai-point-extract` 用于复用已登录会话进行 UnionTech AI 埋点取数
+- 当前默认基础 pack 仍应视为基础应用与增强包集合
 - `agent-baseline` 用于默认基础安装与环境引导
 - `product-default` 当前只是草稿包，不应被当成可直接使用的业务包
 
