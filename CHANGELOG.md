@@ -8,4 +8,4 @@
 - Add repo-specific Linglong UAB packaging capability pack for deepin-color-correction
 - Add schema skeletons, bootstrap helper skeletons, and adapter template skeletons
 - Add addon and reference entries for oh-my-codex, oh-my-claudecode, superpowers, opencli, and RAG-Anything
-- Add sanitized local reusable assets curated workbook as a reference-only registry item
+- Add sanitized product workflow skills and scripts for AI daily news, requirement processing, data extraction, and SMTP-based mail sending

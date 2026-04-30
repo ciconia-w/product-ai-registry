@@ -162,11 +162,21 @@
         "action_on_missing": "install"
       },
       "support": {
-        "codex": { "mode": "external_upstream" },
-        "claude-code": { "mode": "external_upstream" },
-        "cursor": { "mode": "external_upstream" },
-        "gemini-cli": { "mode": "external_upstream" },
-        "opencode": { "mode": "external_upstream" }
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -187,8 +197,12 @@
         "action_on_missing": "install"
       },
       "support": {
-        "claude-code": { "mode": "external_upstream" },
-        "codex": { "mode": "external_upstream" }
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "codex": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -209,11 +223,21 @@
         "action_on_missing": "suggest"
       },
       "support": {
-        "codex": { "mode": "external_upstream" },
-        "claude-code": { "mode": "external_upstream" },
-        "cursor": { "mode": "external_upstream" },
-        "gemini-cli": { "mode": "external_upstream" },
-        "opencode": { "mode": "external_upstream" }
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        }
       },
       "checksum": "TBD"
     },
@@ -365,46 +389,6 @@
       "checksum": "TBD"
     },
     {
-      "type": "reference",
-      "id": "local-reusable-assets-curated",
-      "version": "0.1.0",
-      "path": "references/local-reusable-assets-curated",
-      "description": "Sanitized reference workbook capturing a curated local inventory of reusable AI resources",
-      "source": {
-        "kind": "reference",
-        "url": "https://github.com/ciconia-w/product-ai-registry/tree/main/references/local-reusable-assets-curated",
-        "ref": "main"
-      },
-      "policy": {
-        "role": "reference",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "reference_only"
-        },
-        "claude-code": {
-          "mode": "reference_only"
-        },
-        "cursor": {
-          "mode": "reference_only"
-        },
-        "gemini-cli": {
-          "mode": "reference_only"
-        },
-        "opencode": {
-          "mode": "reference_only"
-        },
-        "openclaw": {
-          "mode": "reference_only"
-        },
-        "hermes": {
-          "mode": "reference_only"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
       "type": "skill",
       "id": "linglong-uab-shortest-path",
       "version": "0.1.0",
@@ -496,6 +480,369 @@
         ]
       },
       "entry": "run.sh",
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "ai-daily-news",
+      "version": "0.1.0",
+      "path": "skills/ai-daily-news",
+      "description": "Generate a structured AI daily news digest from multiple Chinese and English sources and hand off to a local mail sender",
+      "requires": {
+        "items": [
+          "script:send-email"
+        ],
+        "cli": [
+          "python3"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "triage-issue",
+      "version": "0.1.0",
+      "path": "skills/triage-issue",
+      "description": "Triage bug reports or requirement-like issues by searching for duplicates and structuring the next action",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "spec-to-backlog",
+      "version": "0.1.0",
+      "path": "skills/spec-to-backlog",
+      "description": "Break a specification into an Epic plus implementation backlog tickets",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "uniontech-ai-point-export",
+      "version": "0.1.0",
+      "path": "skills/uniontech-ai-point-export",
+      "description": "Extract UnionTech AI point dashboard data from the live logged-in page and optionally write workbook totals",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "deepin-requirement-crawler",
+      "version": "0.1.0",
+      "path": "skills/deepin-requirement-crawler",
+      "description": "Collect requirements from forum, email, and product feedback sources and generate normalized markdown or Excel outputs",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "requirement-analyzer",
+      "version": "0.1.0",
+      "path": "skills/requirement-analyzer",
+      "description": "Analyze raw requirement text into structured fields such as type, module, complexity, scenario, and expected behavior",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "requirement-prioritizer",
+      "version": "0.1.0",
+      "path": "skills/requirement-prioritizer",
+      "description": "Score and rank requirements across six dimensions to produce a P0 to P4 priority level",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "requirement-writer",
+      "version": "0.1.0",
+      "path": "skills/requirement-writer",
+      "description": "Guide a user through structured requirement conversations and generate Problem Framing, SRD, or PRD outputs",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "send-email",
+      "version": "0.1.0",
+      "path": "scripts/send-email",
+      "description": "Send plaintext email using an SMTP configuration provided entirely through environment variables",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "analyze-7day-vs-benchmark",
+      "version": "0.1.0",
+      "path": "scripts/analyze-7day-vs-benchmark",
+      "description": "Analyze day-by-day UOS AI app stats from a current aggregated JSON payload",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "analyze-morning-current",
+      "version": "0.1.0",
+      "path": "scripts/analyze-morning-current",
+      "description": "Compare a morning-captured UOS AI response set against a later aggregated JSON payload",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "check-benchmark-days",
+      "version": "0.1.0",
+      "path": "scripts/check-benchmark-days",
+      "description": "Inspect row count and date coverage in a benchmark Excel workbook",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "compare-benchmark-morning",
+      "version": "0.1.0",
+      "path": "scripts/compare-benchmark-morning",
+      "description": "Compare benchmark workbook totals against a morning captured UOS AI response set",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
       "checksum": "TBD"
     }
   ]
