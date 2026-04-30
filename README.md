@@ -98,7 +98,6 @@ flowchart LR
 适合：
 
 - `opencli`
-- `opencode`
 - 其他底层 CLI 或运行时
 
 ### reference
@@ -112,6 +111,15 @@ flowchart LR
 - `RAG-Anything`
 - 外部知识库项目
 - 外部实现参考
+
+### optional
+
+可安装，但不是默认前置。
+
+适合：
+
+- `lark-cli`
+- 只在特定工作流里需要的增强工具
 
 ## 怎么用
 
