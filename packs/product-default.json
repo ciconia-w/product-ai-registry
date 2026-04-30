@@ -1,8 +1,8 @@
 {
-    "description":  "Draft product workflow pack. Not ready-to-use yet; resources are still being integrated.",
-    "id":  "product-default",
-    "items":  [
-
-              ],
-    "version":  "0.1.2"
+  "id": "product-default",
+  "version": "0.1.3",
+  "description": "Default starter pack for product team members",
+  "items": [
+    "skill:deepin-dev"
+  ]
 }
