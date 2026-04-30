@@ -201,6 +201,7 @@ Agent 进入仓库后，按这个顺序工作：
 - `script:reset-linglong-builder-env`
 - `script:rebuild-linglong-uab-shortest-path`
 - `reference:rag-anything`
+- `reference:ui-skills-catalog`
 - `reference:ai-handbook-sdd-overview`
 - `skill:ai-daily-news`
 - `skill:triage-issue`
