@@ -1,4 +1,4 @@
-# uos-design-skill
+﻿# deepin-ui-design
 
 ## Source Of Truth
 
