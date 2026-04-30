@@ -1,0 +1,76 @@
+# AI日报新闻源配置
+# News sources configuration for AI Daily News
+
+sources:
+  # 英文源（RSS）
+  english:
+    primary:
+      - name: "MIT Technology Review"
+        url: "https://www.technologyreview.com/feed/"
+        weight: 40
+        max_items: 10
+        language: "en"
+
+      - name: "AI News"
+        url: "https://www.artificialintelligence-news.com/feed/"
+        weight: 30
+        max_items: 8
+        language: "en"
+
+      - name: "MIT News AI"
+        url: "https://news.mit.edu/topic/mitartificial-intelligence2-rss.xml"
+        weight: 30
+        max_items: 7
+        language: "en"
+
+  # 中文源
+  chinese:
+    # 主要源（必须使用）
+    primary:
+      - name: "ai.hubtoday.app"
+        url: "https://ai.hubtoday.app/{date:YYYY-MM}/{date:YYYY-MM-DD}/"
+        method: "curl"
+        weight: 100
+        max_items: 25
+        language: "zh"
+        parser: "parse_news.py"
+
+    # 备用源（主要源失败时使用）
+    fallback:
+      - name: "量子位"
+        url: "https://www.qbitai.com/feed"
+        method: "rss"
+        weight: 100
+        max_items: 20
+        language: "zh"
+
+  # 研究源
+  research:
+    arxiv:
+      topic: "cs.AI"
+      url: "http://export.arxiv.org/rss/cs.AI"
+      max_items: 3  # Top 3最新论文
+      # 注意：该URL可能存在网络访问限制，已添加异常处理
+
+# 配比设置
+ratio:
+  chinese: 0.65  # 中文占比 65%
+  english: 0.35  # 英文占比 35%
+
+# 其他设置
+settings:
+  # 英文新闻处理
+  english:
+    translate_title: true  # 翻译标题成中文
+    include_original: true  # 包含英文原文
+    include_link: true  # 包含原文链接
+
+  # 中文源获取
+  chinese:
+    timeout: 30  # 超时时间（秒）
+    retry: 2  # 重试次数
+
+  # 历史记录
+  history:
+    keep_days: 3  # 保留3天历史
+    arxiv_days: 7  # arXiv保留7天（论文去重）

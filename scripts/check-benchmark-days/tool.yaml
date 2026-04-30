@@ -1,0 +1,17 @@
+id: check-benchmark-days
+name: Check Benchmark Days
+version: 0.1.0
+description: Inspect row count and date coverage in a benchmark Excel workbook
+entry: run.py
+runtime: python
+os:
+  - linux
+inputs:
+  - name: benchmark_xlsx
+    type: string
+    required: true
+requires:
+  cli:
+    - python3
+permissions:
+  workspace_only: true

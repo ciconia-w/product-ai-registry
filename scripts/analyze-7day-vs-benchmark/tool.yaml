@@ -1,0 +1,17 @@
+id: analyze-7day-vs-benchmark
+name: Analyze 7 Day Vs Benchmark
+version: 0.1.0
+description: Analyze day-by-day UOS AI app stats from a current aggregated JSON payload
+entry: run.py
+runtime: python
+os:
+  - linux
+inputs:
+  - name: current_json
+    type: string
+    required: true
+requires:
+  cli:
+    - python3
+permissions:
+  workspace_only: true

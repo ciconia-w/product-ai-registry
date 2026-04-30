@@ -1,0 +1,20 @@
+id: compare-benchmark-morning
+name: Compare Benchmark Morning
+version: 0.1.0
+description: Compare benchmark workbook totals against a morning captured UOS AI response set
+entry: run.py
+runtime: python
+os:
+  - linux
+inputs:
+  - name: benchmark_xlsx
+    type: string
+    required: true
+  - name: morning_json
+    type: string
+    required: true
+requires:
+  cli:
+    - python3
+permissions:
+  workspace_only: true

@@ -198,6 +198,19 @@ Agent 进入仓库后，按这个顺序工作：
 - `script:reset-linglong-builder-env`
 - `script:rebuild-linglong-uab-shortest-path`
 - `reference:rag-anything`
+- `skill:ai-daily-news`
+- `skill:triage-issue`
+- `skill:spec-to-backlog`
+- `skill:uniontech-ai-point-export`
+- `skill:deepin-requirement-crawler`
+- `skill:requirement-analyzer`
+- `skill:requirement-prioritizer`
+- `skill:requirement-writer`
+- `script:send-email`
+- `script:analyze-7day-vs-benchmark`
+- `script:analyze-morning-current`
+- `script:check-benchmark-days`
+- `script:compare-benchmark-morning`
 
 ## 重要原则
 

@@ -1,0 +1,27 @@
+id: send-email
+name: Send Email
+version: 0.1.0
+description: Send plaintext email through an SMTP server configured entirely by environment variables
+entry: run.py
+runtime: python
+os:
+  - linux
+inputs:
+  - name: to_email
+    type: string
+    required: true
+  - name: subject
+    type: string
+    required: true
+  - name: body
+    type: string
+    required: true
+requires:
+  cli:
+    - python3
+permissions:
+  network: true
+  workspace_only: true
+notes:
+  - Requires SMTP_SERVER SMTP_PORT SMTP_USERNAME SMTP_PASSWORD in the environment
+  - Optional env: SMTP_FROM_EMAIL SMTP_FROM_NAME EMAIL_SENDER_NAME SMTP_USE_SSL SMTP_USE_STARTTLS SMTP_PROXY_HOST SMTP_PROXY_PORT SMTP_PROXY_TYPE SMTP_FORCE_IPV4

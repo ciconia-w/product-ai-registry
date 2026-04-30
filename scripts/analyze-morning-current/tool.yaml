@@ -1,0 +1,20 @@
+id: analyze-morning-current
+name: Analyze Morning Current
+version: 0.1.0
+description: Compare a morning-captured UOS AI response set against a later aggregated JSON payload
+entry: run.py
+runtime: python
+os:
+  - linux
+inputs:
+  - name: morning_json
+    type: string
+    required: true
+  - name: current_json
+    type: string
+    required: true
+requires:
+  cli:
+    - python3
+permissions:
+  workspace_only: true
