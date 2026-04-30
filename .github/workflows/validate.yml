@@ -29,9 +29,12 @@ jobs:
           assert "default_pack" in manifest, "manifest missing default_pack"
 
           item_ids = set()
+          item_paths = set()
           pack_ids = set()
+          pack_paths = set()
           for item in manifest["items"]:
             item_ids.add(f'{item["type"]}:{item["id"]}')
+            item_paths.add(item["path"].rstrip("/"))
             assert "source" in item, f'item missing source: {item["type"]}:{item["id"]}'
             assert "policy" in item, f'item missing policy: {item["type"]}:{item["id"]}'
             item_path = root / item["path"]
@@ -57,13 +60,38 @@ jobs:
 
           for pack in manifest["packs"]:
             pack_ids.add(pack["id"])
+            pack_paths.add(pack["path"])
             pack_path = root / pack["path"]
             assert pack_path.exists(), f'missing pack file: {pack["path"]}'
             pack_data = json.loads(pack_path.read_text(encoding="utf-8"))
+            assert pack["items"] == pack_data["items"], f'pack items drift: {pack["id"]}'
             for ref in pack_data["items"]:
               assert ref in item_ids, f'pack {pack["id"]} references unknown item {ref}'
 
           assert manifest["default_pack"] in pack_ids, f'default_pack {manifest["default_pack"]} not found in manifest packs'
+
+          for pack_file in (root / "packs").glob("*.json"):
+            pack_relpath = pack_file.relative_to(root).as_posix()
+            assert pack_relpath in pack_paths, f'pack file not indexed in manifest: {pack_relpath}'
+
+          resource_dirs = {
+            "skills": ("skill", "SKILL.md"),
+            "scripts": ("script", "tool.yaml"),
+            "wrappers": ("wrapper", "tool.yaml"),
+            "addons": ("addon", "addon.yaml"),
+            "references": ("reference", "reference.yaml"),
+          }
+          for directory, (resource_type, marker) in resource_dirs.items():
+            for resource_dir in (root / directory).iterdir():
+              if not resource_dir.is_dir():
+                continue
+              marker_path = resource_dir / marker
+              if not marker_path.exists():
+                continue
+              resource_id = f"{resource_type}:{resource_dir.name}"
+              resource_relpath = resource_dir.relative_to(root).as_posix()
+              assert resource_id in item_ids, f'resource not indexed in manifest: {resource_id}'
+              assert resource_relpath in item_paths, f'resource path not indexed in manifest: {resource_relpath}'
 
           for adapter in (root / "adapters").glob("*/adapter.yaml"):
             assert adapter.exists(), f'missing adapter file: {adapter}'
