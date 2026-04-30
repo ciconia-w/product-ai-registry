@@ -1,4 +1,4 @@
----
+﻿---
 inclusion: manual
 ---
 
@@ -27,7 +27,7 @@ readonly property bool dark: mode === "dark" ||
 
 - 生产代码默认必须从本文件给出的浅色 / 深色中性基线开始，不要自行发明带明显蓝、青、绿、紫倾向的桌面底色。
 - 对于 UOS / Deepin 桌面工具型应用，`bg`、`bgPanel`、`popupBg`、`textPrimary`、`textStrong`、`iconNormal`、`iconStrong`、`sidebarBlurBlend`、`sidebarBlurFallback` 这些核心 token 默认不得偏离本文件语义。
-- 如果产品真的需要偏离这些中性基线，必须写明平台和品牌原因，并加 `uos-design: allow-theme-baseline-deviation`。没有这个 waiver，就按“颜色实现错误”处理，而不是按“风格选择”处理。
+- 如果产品真的需要偏离这些中性基线，必须写明平台和品牌原因，并加 `deepin-design: allow-theme-baseline-deviation`。没有这个 waiver，就按“颜色实现错误”处理，而不是按“风格选择”处理。
 - `systemAccent` 必须直接来自 `D.DTK.palette.highlight` 或等效 DTK / 系统活动色来源；不要自己写一个近似蓝色代替系统活动色。
 - `textPrimary` / `iconNormal` 应回到 70% 黑白语义，`textStrong` / `iconStrong` 应回到 100% 黑白语义。不要把正文和基础图标改成偏蓝、偏灰蓝、偏青或偏彩色前景。
 - 对持久左侧栏应用，侧边栏 blur 层必须呈现为“中性近白玻璃”或“中性近黑玻璃”，而不是带色偏的实心面板：

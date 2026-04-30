@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+﻿#!/usr/bin/env bash
 set -euo pipefail
 
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
     cat <<'EOF'
-Usage: audit_uos_qml.sh [repo-root]
+Usage: audit_deepin_qml.sh [repo-root]
 
 Heuristic audit for UOS/Deepin QML desktop projects.
 It reports blocking findings for:
@@ -4443,7 +4443,7 @@ done < <(grep_repo 'QQuickStyle::setStyle\(.*(Basic|Fusion|Material|Imagine|Univ
 while IFS= read -r -d '' file; do
     rel="${file#$ROOT/}"
 
-    if ! grep -q 'uos-design: allow-icon-rasterization' "$file"; then
+    if ! grep -q 'deepin-design: allow-icon-rasterization' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "icon-rasterization" "$rel:$hit"
@@ -4454,49 +4454,49 @@ done < <(list_source_files)
 while IFS= read -r -d '' file; do
     rel="${file#$ROOT/}"
 
-    if ! grep -q 'uos-design: allow-frameless' "$file"; then
+    if ! grep -q 'deepin-design: allow-frameless' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "frameless-window" "$rel:$hit"
         done < <(grep -nE 'Qt\.FramelessWindowHint' "$file" || true)
     fi
 
-    if ! grep -q 'uos-design: allow-large-window-default' "$file"; then
+    if ! grep -q 'deepin-design: allow-large-window-default' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "large-window-default" "$rel:$hit"
         done < <(detect_large_window_size_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-compact-settings-dialog' "$file"; then
+    if ! grep -q 'deepin-design: allow-compact-settings-dialog' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "compact-settings-dialog" "$rel:$hit"
         done < <(detect_small_settings_dialog_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-system-titlebar-on-standard-dtk-surface' "$file"; then
+    if ! grep -q 'deepin-design: allow-system-titlebar-on-standard-dtk-surface' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "standard-dtk-surface-system-titlebar" "$rel:$hit"
         done < <(detect_standard_dtk_surface_system_titlebar_hits "$file")
     fi
 
-    if (( dtk_available )) && dtk_settings_has_export SettingsDialog && ! grep -q 'uos-design: allow-settings-dialog-without-icon' "$file"; then
+    if (( dtk_available )) && dtk_settings_has_export SettingsDialog && ! grep -q 'deepin-design: allow-settings-dialog-without-icon' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "settings-dialog-missing-icon" "$rel:$hit"
         done < <(detect_settings_dialog_missing_icon_hits "$file")
     fi
 
-    if (( dtk_available )) && dtk_settings_has_export CheckBox && ! grep -q 'uos-design: allow-settings-checkbox-fallback' "$file"; then
+    if (( dtk_available )) && dtk_settings_has_export CheckBox && ! grep -q 'deepin-design: allow-settings-checkbox-fallback' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "settings-checkbox-fallback" "$rel:$hit"
         done < <(detect_settings_checkbox_fallback_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-custom-settings-reset-entry' "$file" \
+    if ! grep -q 'deepin-design: allow-custom-settings-reset-entry' "$file" \
         && grep -qE '^[[:space:]]*((Settings\.)?SettingsDialog)[[:space:]]*\{' "$file"
     then
         while IFS= read -r hit; do
@@ -4505,7 +4505,7 @@ while IFS= read -r -d '' file; do
         done < <(grep -nE '^[[:space:]]*(key|name)[[:space:]]*:[[:space:]]*["'\'']([^"'\'']*)(restoreDefaults|resetDefaults|Restore Defaults|恢复默认)' "$file" || true)
     fi
 
-    if ! grep -q 'uos-design: allow-custom-settings-row-metrics' "$file" \
+    if ! grep -q 'deepin-design: allow-custom-settings-row-metrics' "$file" \
         && grep -qE '^[[:space:]]*((Settings\.)?SettingsDialog)[[:space:]]*\{' "$file"
     then
         while IFS= read -r hit; do
@@ -4524,7 +4524,7 @@ while IFS= read -r -d '' file; do
         log_fail "non-dtk-dialog" "$rel:$hit"
     done < <(detect_non_dtk_dialog_hits "$file")
 
-    if (( dtk_available )) && dtk_has_export DialogWindow && ! grep -q 'uos-design: allow-popup-style-dialog' "$file"; then
+    if (( dtk_available )) && dtk_has_export DialogWindow && ! grep -q 'deepin-design: allow-popup-style-dialog' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "popup-style-dialog" "$rel:$hit"
@@ -4538,14 +4538,14 @@ while IFS= read -r -d '' file; do
         done < <(detect_dialog_button_box_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-vertical-action-stack' "$file"; then
+    if ! grep -q 'deepin-design: allow-vertical-action-stack' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "vertical-action-stack" "$rel:$hit"
         done < <(detect_vertical_action_stack_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-custom-dialog-content-style' "$file"; then
+    if ! grep -q 'deepin-design: allow-custom-dialog-content-style' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "custom-dialog-content-style" "$rel:$hit"
@@ -4557,14 +4557,14 @@ while IFS= read -r -d '' file; do
         log_fail "dialog-overlay" "$rel:$hit"
     done < <(detect_dialog_overlay_hits "$file")
 
-    if (( dtk_available )) && dtk_has_export WindowButtonGroup && ! grep -q 'uos-design: allow-custom-window-buttons' "$file"; then
+    if (( dtk_available )) && dtk_has_export WindowButtonGroup && ! grep -q 'deepin-design: allow-custom-window-buttons' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "custom-window-buttons" "$rel:$hit"
         done < <(detect_custom_window_button_hits "$file")
     fi
 
-    if (( dtk_available )) && dtk_has_export WindowButtonGroup && ! grep -q 'uos-design: allow-offset-window-button-group' "$file"; then
+    if (( dtk_available )) && dtk_has_export WindowButtonGroup && ! grep -q 'deepin-design: allow-offset-window-button-group' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "window-button-group-placement" "$rel:$hit"
@@ -4581,7 +4581,7 @@ while IFS= read -r -d '' file; do
         log_fail "titlebar-clipped-ancestor" "$rel:$hit"
     done < <(detect_titlebar_clipped_ancestor_hits "$file")
 
-    if ! grep -q 'uos-design: allow-customized-window-flags' "$file"; then
+    if ! grep -q 'deepin-design: allow-customized-window-flags' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "customized-window-flags" "$rel:$hit"
@@ -4598,7 +4598,7 @@ while IFS= read -r -d '' file; do
         log_fail "titleband-underlay-gap" "$rel:$hit"
     done < <(detect_titleband_underlay_gap_hits "$file")
 
-    if ! grep -q 'uos-design: allow-transparent-main-window' "$file"; then
+    if ! grep -q 'deepin-design: allow-transparent-main-window' "$file"; then
         if [[ "$(file_has_root_application_window "$file")" == "yes" ]] \
             && grep -qE '^[[:space:]]*color[[:space:]]*:[[:space:]]*["'\'']transparent["'\'']' "$file" \
             && ! grep -qE "$surface_token_pattern" "$file"
@@ -4610,7 +4610,7 @@ while IFS= read -r -d '' file; do
         fi
     fi
 
-    if ! grep -q 'uos-design: allow-full-window-base-under-sidebar-blur' "$file"; then
+    if ! grep -q 'deepin-design: allow-full-window-base-under-sidebar-blur' "$file"; then
         if [[ "$(file_has_root_application_window "$file")" == "yes" ]] \
             && grep -qE '^[[:space:]]*color[[:space:]]*:[[:space:]]*["'\'']transparent["'\'']' "$file" \
             && grep -qE 'AppSidebar|sidebarWidth|sidebarHidden|sidebarHost|onCollapseRequested' "$file"
@@ -4622,7 +4622,7 @@ while IFS= read -r -d '' file; do
         fi
     fi
 
-    if ! grep -q 'uos-design: allow-full-window-blur' "$file"; then
+    if ! grep -q 'deepin-design: allow-full-window-blur' "$file"; then
         if [[ "$(file_has_root_application_window "$file")" == "yes" ]] \
             && grep -qE 'AppSidebar|sidebarWidth|sidebarHidden|sidebarHost|onCollapseRequested' "$file"
         then
@@ -4698,21 +4698,21 @@ while IFS= read -r -d '' file; do
             ;;
     esac
 
-    if ! grep -q 'uos-design: allow-popup-window' "$file"; then
+    if ! grep -q 'deepin-design: allow-popup-window' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "popup-window" "$rel:$hit"
         done < <(grep -nE 'Popup\.Window' "$file" || true)
     fi
 
-    if [[ "$(basename "$file")" != "Theme.qml" ]] && ! grep -q 'uos-design: allow-literal-color' "$file"; then
+    if [[ "$(basename "$file")" != "Theme.qml" ]] && ! grep -q 'deepin-design: allow-literal-color' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "hardcoded-color" "$rel:$hit"
         done < <(grep -nE '#[0-9A-Fa-f]{3,8}\b' "$file" || true)
     fi
 
-    if ! grep -q 'uos-design: allow-textMuted-icon' "$file"; then
+    if ! grep -q 'deepin-design: allow-textMuted-icon' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "text-muted-icon" "$rel:$hit"
@@ -4724,14 +4724,14 @@ while IFS= read -r -d '' file; do
         log_fail "manual-blur-overlay" "$rel:$hit"
     done < <(detect_manual_blur_overlay_hits "$file")
 
-    if ! grep -q 'uos-design: allow-app-side-window-decoration-tuning' "$file"; then
+    if ! grep -q 'deepin-design: allow-app-side-window-decoration-tuning' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "app-side-window-decoration-tuning" "$rel:$hit"
         done < <(grep -nE 'D\.DWindow\.(windowRadius|borderWidth|borderColor|shadowRadius|shadowOffset|shadowColor)[[:space:]]*:' "$file" || true)
     fi
 
-    if ! grep -q 'uos-design: allow-anchored-item-implicit-height' "$file"; then
+    if ! grep -q 'deepin-design: allow-anchored-item-implicit-height' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "anchored-item-implicit-height" "$rel:$hit"
@@ -4760,21 +4760,21 @@ while IFS= read -r -d '' file; do
         done < <(detect_large_unit_label_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-shadowed-delegate-role' "$file"; then
+    if ! grep -q 'deepin-design: allow-shadowed-delegate-role' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "shadowed-delegate-role" "$rel:$hit"
         done < <(detect_shadowed_delegate_role_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-list-without-leading-icon' "$file"; then
+    if ! grep -q 'deepin-design: allow-list-without-leading-icon' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "multiline-list-missing-icon" "$rel:$hit"
         done < <(detect_multiline_setting_row_missing_icon_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-nonstandard-list-icon-size' "$file"; then
+    if ! grep -q 'deepin-design: allow-nonstandard-list-icon-size' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "multiline-list-icon-size" "$rel:$hit"
@@ -4799,7 +4799,7 @@ while IFS= read -r -d '' file; do
         log_fail "fake-table-column-plan" "$rel: table-like screen appears to use separate header widths and row widths without a shared column plan"
     fi
 
-    if ! grep -q 'uos-design: allow-freeform-trailing-control-row' "$file"; then
+    if ! grep -q 'deepin-design: allow-freeform-trailing-control-row' "$file"; then
         if grep -qE 'Repeater|delegate[[:space:]]*:' "$file" \
             && grep -qE '(^|[[:space:]])(AppSwitch|D\.Switch|Switch|D\.ComboBox|ComboBox)([[:space:]]|\{)' "$file" \
             && ! grep -qE 'SettingRow|SettingsOptionRow|controlSlot|trailingSlot|trailingControl|rightControl|controlColumn|actionSlot' "$file"
@@ -4808,7 +4808,7 @@ while IFS= read -r -d '' file; do
         fi
     fi
 
-    if ! grep -q 'uos-design: allow-oversized-card' "$file"; then
+    if ! grep -q 'deepin-design: allow-oversized-card' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "oversized-card" "$rel:$hit"
@@ -4820,7 +4820,7 @@ while IFS= read -r -d '' file; do
         log_fail "fixed-hero-card-shell" "$rel:$hit"
     done < <(detect_fixed_score_hero_card_hits "$file")
 
-    if ! grep -q 'uos-design: allow-card-edge-focal-content' "$file"; then
+    if ! grep -q 'deepin-design: allow-card-edge-focal-content' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "card-focal-content-edge" "$rel:$hit"
@@ -4837,14 +4837,14 @@ while IFS= read -r -d '' file; do
         log_fail "fill-anchored-card-layout" "$rel:$hit"
     done < <(detect_fill_anchored_card_layout_hits "$file")
 
-    if ! grep -q 'uos-design: allow-wide-button' "$file"; then
+    if ! grep -q 'deepin-design: allow-wide-button' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "wide-button" "$rel:$hit"
         done < <(detect_wide_button_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-horizontal-list-scroll' "$file"; then
+    if ! grep -q 'deepin-design: allow-horizontal-list-scroll' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "horizontal-list-scroll" "$rel:$hit"
@@ -4886,7 +4886,7 @@ while IFS= read -r -d '' file; do
         log_fail "dense-cluster-zero-spacing" "$rel:$hit"
     done < <(detect_dense_cluster_zero_spacing_hits "$file")
 
-    if ! grep -q 'uos-design: allow-custom-in-app-notification' "$file"; then
+    if ! grep -q 'deepin-design: allow-custom-in-app-notification' "$file"; then
         case "$rel" in
             *Toast*.qml)
                 if ! grep -qE '(^|[[:space:]])D\.FloatingMessage([[:space:]]|\{)' "$file"; then
@@ -4896,7 +4896,7 @@ while IFS= read -r -d '' file; do
         esac
     fi
 
-    if ! grep -q 'uos-design: allow-dtk-template-override' "$file"; then
+    if ! grep -q 'deepin-design: allow-dtk-template-override' "$file"; then
         if [[ "$(file_has_root_dtk_template_control "$file")" == "yes" ]]; then
             while IFS= read -r hit; do
                 [[ -z "$hit" ]] && continue
@@ -4905,7 +4905,7 @@ while IFS= read -r -d '' file; do
         fi
     fi
 
-    if ! grep -q 'uos-design: allow-derived-nav-color' "$file"; then
+    if ! grep -q 'deepin-design: allow-derived-nav-color' "$file"; then
         case "$rel" in
             *Sidebar*.qml|*Nav*.qml|*Navigation*.qml|*Tab*.qml)
                 while IFS= read -r hit; do
@@ -4916,7 +4916,7 @@ while IFS= read -r -d '' file; do
         esac
     fi
 
-    if ! grep -q 'uos-design: allow-sidebar-active-border' "$file"; then
+    if ! grep -q 'deepin-design: allow-sidebar-active-border' "$file"; then
         case "$rel" in
             *Sidebar*.qml|*Nav*.qml|*Navigation*.qml)
                 while IFS= read -r hit; do
@@ -4927,7 +4927,7 @@ while IFS= read -r -d '' file; do
         esac
     fi
 
-    if ! grep -q 'uos-design: allow-custom-main-menu-button' "$file"; then
+    if ! grep -q 'deepin-design: allow-custom-main-menu-button' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "titlebar-custom-main-menu-trigger" "$rel:$hit (when D.TitleBar is used, let TitleBar.menu generate and own the main-menu button; do not self-draw a trigger)"
@@ -4951,7 +4951,7 @@ while IFS= read -r -d '' file; do
         log_fail "titlebar-menu-attachment" "$rel:$hit"
     done < <(detect_titlebar_menu_attachment_hits "$file")
 
-    if ! grep -q 'uos-design: allow-manual-main-menu-position' "$file"; then
+    if ! grep -q 'deepin-design: allow-manual-main-menu-position' "$file"; then
         if grep -qE '(^|[[:space:]])D\.Menu([[:space:]]|\{)|(^|[[:space:]])Menu([[:space:]]|\{)' "$file" \
             && grep -qE 'iconName[[:space:]]*:[[:space:]]*"menu"|text[[:space:]]*:[[:space:]]*"更多"' "$file" \
             && grep -qE '^[[:space:]]*x[[:space:]]*:' "$file" \
@@ -4966,7 +4966,7 @@ while IFS= read -r -d '' file; do
         log_fail "custom-main-menu-icon" "$rel:$hit"
     done < <(detect_custom_main_menu_icon_hits "$file")
 
-    if ! grep -q 'uos-design: allow-custom-about-dialog' "$file"; then
+    if ! grep -q 'deepin-design: allow-custom-about-dialog' "$file"; then
         case "$rel" in
             *AboutDialog*.qml)
                 if ! grep -qE '(^|[[:space:]])D\.AboutDialog([[:space:]]|\{)' "$file"; then
@@ -4976,7 +4976,7 @@ while IFS= read -r -d '' file; do
         esac
     fi
 
-    if ! grep -q 'uos-design: allow-detailed-gauge-center-text' "$file"; then
+    if ! grep -q 'deepin-design: allow-detailed-gauge-center-text' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "detailed-gauge-center-text" "$rel:$hit"
@@ -5018,7 +5018,7 @@ while IFS= read -r -d '' file; do
         log_fail "option-row-icon" "$rel:$hit"
     done < <(detect_option_row_icon_hits "$file")
 
-    if ! grep -q 'uos-design: allow-shared-functional-list-icon' "$file"; then
+    if ! grep -q 'deepin-design: allow-shared-functional-list-icon' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "shared-functional-row-icon" "$rel:$hit"
@@ -5065,21 +5065,21 @@ while IFS= read -r -d '' file; do
         log_fail "unified-toolbar-divider" "$rel:$hit"
     done < <(detect_unified_toolbar_divider_hits "$file")
 
-    if ! grep -q 'uos-design: allow-nonstandard-sidebar-toggle-icon' "$file"; then
+    if ! grep -q 'deepin-design: allow-nonstandard-sidebar-toggle-icon' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "nonstandard-sidebar-toggle-icon" "$rel:$hit (use the control-center-style dedicated sidebar-toggle glyph/button, not a generic chevron or arrow)"
         done < <(detect_nonstandard_sidebar_toggle_icon_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-moving-logo-slot' "$file"; then
+    if ! grep -q 'deepin-design: allow-moving-logo-slot' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "moving-logo-slot" "$rel:$hit (keep the top-left logo in one stable window-relative slot; do not place it in the animated sidebar or toggle its slot across sidebar states)"
         done < <(detect_moving_logo_slot_hits "$file")
     fi
 
-    if ! grep -q 'uos-design: allow-toolbar-page-title' "$file"; then
+    if ! grep -q 'deepin-design: allow-toolbar-page-title' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             log_fail "toolbar-page-title" "$rel:$hit (toolbar top bands must not show page titles by default; move page titles into the page content header unless explicitly requested)"
@@ -5092,7 +5092,7 @@ while IFS= read -r -d '' file; do
         main_menu_candidates+=("$file")
     fi
 
-    if [[ "$(basename "$file")" != *SettingsDialog.qml ]] && ! grep -q 'uos-design: allow-secondary-settings-entry' "$file"; then
+    if [[ "$(basename "$file")" != *SettingsDialog.qml ]] && ! grep -q 'deepin-design: allow-secondary-settings-entry' "$file"; then
         while IFS= read -r hit; do
             [[ -z "$hit" ]] && continue
             settings_button_candidates+=("$rel:$hit")
@@ -5151,7 +5151,7 @@ then
     fi
 fi
 
-if [[ -n "$theme_file" ]] && ! grep -q 'uos-design: allow-theme-baseline-deviation' "$theme_file"; then
+if [[ -n "$theme_file" ]] && ! grep -q 'deepin-design: allow-theme-baseline-deviation' "$theme_file"; then
     system_accent_line="$(theme_property_line "$theme_file" 'systemAccent')"
     if [[ -z "$system_accent_line" || "$system_accent_line" != *'D.DTK.palette.highlight'* ]]; then
         log_fail "theme-system-accent" "Theme.qml: systemAccent must be sourced from D.DTK.palette.highlight."
@@ -5243,8 +5243,8 @@ if (( ${#main_menu_candidates[@]} > 0 )); then
 fi
 
 if (( findings )); then
-    printf 'UOS design audit failed with %d finding(s).\n' "$findings" >&2
+    printf 'Deepin Design audit failed with %d finding(s).\n' "$findings" >&2
     exit 1
 fi
 
-echo "UOS design audit passed: no findings."
+echo "Deepin Design audit passed: no findings."

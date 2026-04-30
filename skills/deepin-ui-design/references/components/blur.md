@@ -1,4 +1,4 @@
----
+﻿---
 inclusion: manual
 ---
 
@@ -8,7 +8,7 @@ inclusion: manual
 - 用途：用于在侧边栏、浮层和抽屉上叠加轻量玻璃感。
 - 规则：默认采用 `模糊层 + 混色层` 的视觉逻辑，但优先使用 DTK 或系统 blur primitive 已内建的混色能力，而不是额外再画一层。
 - 规则：如果 `D.StyledBehindWindowBlur`、`D.DWindow` 或经验证的系统装饰路径已经提供 `blendColor`、fallback tint 或等效混色层，不得再叠加第二层自绘半透明 `Rectangle`、`ShaderEffect` 或截图着色层。
-- 规则：只有在目标平台已验证 blur primitive 不提供混色层时，才允许补一个显式自绘混色层；该实现必须附带 `uos-design: allow-manual-blur-overlay` 说明具体平台和原因。
+- 规则：只有在目标平台已验证 blur primitive 不提供混色层时，才允许补一个显式自绘混色层；该实现必须附带 `deepin-design: allow-manual-blur-overlay` 说明具体平台和原因。
 - 规则：对于带 blur 侧栏的左右分栏桌面应用，不要在 blur 侧栏背后再铺一整块不透明全窗底面。右侧页面底面必须限制在右侧内容区；否则 blur 会在视觉上退化成纯色面板。
 
 ## WindowBlur

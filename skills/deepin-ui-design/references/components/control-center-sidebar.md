@@ -1,10 +1,10 @@
----
+﻿---
 inclusion: manual
 ---
 
 # 控制中心式左侧边栏基线规则
 
-用于所有带持久主导航左侧栏的桌面应用。该文档以 `dde-control-center` 的当前实现为来源，但在 `uos-design` 中应被当作强制布局基线，而不是仅在用户点名控制中心时才参考的可选先例。
+用于所有带持久主导航左侧栏的桌面应用。该文档以 `dde-control-center` 的当前实现为来源，但在 `deepin-design` 中应被当作强制布局基线，而不是仅在用户点名控制中心时才参考的可选先例。
 
 ## 来源
 - 主窗口结构：`src/dde-control-center/plugin/DccWindow.qml`
@@ -61,7 +61,7 @@ inclusion: manual
   - `topMargin: 6`
   - `bottomMargin: 10`
 - 搜索框也使用 `10px` 左右边距。
-- 这和 `uos-design` 里“持久侧栏的导航列表距侧栏背景左右各 10px”是对齐的。
+- 这和 `deepin-design` 里“持久侧栏的导航列表距侧栏背景左右各 10px”是对齐的。
 
 ### 6. 侧栏项本身比通用文档更紧凑
 - 控制中心二级页的列表 delegate 在 `SecondPage.qml` 里使用 `D.ItemDelegate`，`implicitHeight: 40`。
