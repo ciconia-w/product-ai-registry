@@ -7,6 +7,11 @@ source:
   url: https://github.com/obra/superpowers
   ref: main
   install_method: external_git
+install:
+  commands:
+    - git clone https://github.com/obra/superpowers.git ~/.local/share/superpowers
+  verify:
+    - test -d ~/.local/share/superpowers
 policy:
   role: baseline
   action_on_missing: install

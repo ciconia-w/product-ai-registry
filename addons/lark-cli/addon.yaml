@@ -7,6 +7,11 @@ source:
   url: https://github.com/larksuite/cli
   ref: main
   install_method: external_git
+install:
+  commands:
+    - echo "Install lark-cli from the upstream project release or package instructions for the current platform"
+  verify:
+    - echo "Verify the lark-cli executable is available in PATH"
 policy:
   role: optional
   action_on_missing: suggest

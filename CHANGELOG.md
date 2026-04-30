@@ -12,5 +12,6 @@
 
 - Add reference:ai-handbook-sdd-overview for SDD overview guidance
 - Add reference:ui-skills-catalog for UI and design-engineering capability discovery
+- Add reference:awesome-design-md for DESIGN.md-based frontend and UI style discovery
 - Add sanitized product workflow skills and scripts for AI daily news, requirement processing, data extraction, and SMTP-based mail sending, keeping the UnionTech export skill as the main data extraction path, documenting SMTP setup through a companion send-email skill, and grouping the imported capabilities into three workflow packs
 
