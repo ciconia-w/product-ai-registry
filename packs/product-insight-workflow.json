@@ -1,0 +1,21 @@
+{
+  "id": "product-insight-workflow",
+  "version": "0.1.0",
+  "description": "Requirement collection, analysis, prioritization, and backlog-writing workflow pack for product teams",
+  "items": [
+    "skill:triage-issue",
+    "skill:prd-review",
+    "skill:spec-to-backlog",
+    "skill:deepin-requirement-crawler",
+    "skill:requirement-analyzer",
+    "skill:requirement-prioritizer",
+    "skill:requirement-writer"
+  ],
+  "notes": [
+    "Execution requires network access and whichever source systems are being queried.",
+    "Forum collection requires the target forum to be reachable from the current host.",
+    "Email collection requires mailbox access and any required login or API credentials to already be available to the executing agent.",
+    "Product feedback collection requires authenticated access to the target product requirement or ticket system before execution.",
+    "Agents should verify source accessibility before running and report blocked if login state or credentials are missing."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "ai-daily-news-workflow",
+  "version": "0.1.0",
+  "description": "AI daily news collection, drafting, and SMTP delivery workflow pack",
+  "items": [
+    "skill:ai-daily-news",
+    "skill:send-email",
+    "script:send-email"
+  ],
+  "notes": [
+    "News generation requires network access to the configured upstream news sources.",
+    "SMTP delivery requires the mailbox provider to have SMTP enabled before execution.",
+    "If the provider requires an app password or authorization code, it must already be provisioned outside the registry.",
+    "The executing agent must verify SMTP_SERVER SMTP_PORT SMTP_USERNAME and SMTP_PASSWORD are present before attempting delivery.",
+    "If the host requires a proxy or IPv4-only routing, the SMTP proxy or IPv4 environment variables must be set before execution."
+  ]
+}
