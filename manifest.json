@@ -1156,6 +1156,47 @@
                                                  }
                                   },
                       "checksum":  "TBD"
+                  },
+                  {
+                      "type":  "reference",
+                      "id":  "awesome-design-md",
+                      "version":  "0.1.0",
+                      "path":  "references/awesome-design-md",
+                      "description":  "Reference collection of DESIGN.md files for AI-generated UI and design-system-aligned frontend output",
+                      "source":  {
+                                     "kind":  "reference",
+                                     "url":  "https://github.com/VoltAgent/awesome-design-md",
+                                     "ref":  "main",
+                                     "docs_url":  "https://github.com/VoltAgent/awesome-design-md#readme"
+                                 },
+                      "policy":  {
+                                     "role":  "reference",
+                                     "action_on_missing":  "suggest"
+                                 },
+                      "support":  {
+                                      "codex":  {
+                                                    "mode":  "reference_only"
+                                                },
+                                      "claude-code":  {
+                                                          "mode":  "reference_only"
+                                                      },
+                                      "cursor":  {
+                                                     "mode":  "reference_only"
+                                                 },
+                                      "gemini-cli":  {
+                                                         "mode":  "reference_only"
+                                                     },
+                                      "opencode":  {
+                                                       "mode":  "reference_only"
+                                                   },
+                                      "openclaw":  {
+                                                       "mode":  "reference_only"
+                                                   },
+                                      "hermes":  {
+                                                     "mode":  "reference_only"
+                                                 }
+                                  },
+                      "checksum":  "TBD"
                   }
               ]
 }
