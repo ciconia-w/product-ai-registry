@@ -67,6 +67,8 @@ GitHub 仓库是唯一事实来源。
   - `script`
   - `wrapper`
   - `pack`
+  - `addon`
+  - `reference`
 - 对多种 Agent 提供明确、可验证的适配策略
 - Agent 在使用某项资源前，能判断本机环境是否满足要求
 - 更新由 GitHub 变更驱动，资源版本可以被 Agent 检查并汇报
@@ -90,7 +92,7 @@ GitHub 仓库是唯一事实来源。
 
 ## 6. 规范化资源模型
 
-注册表只管理四类规范化对象：
+注册表当前正式建模的资源类型包括：
 
 | 类型 | 含义 |
 |---|---|
@@ -98,11 +100,8 @@ GitHub 仓库是唯一事实来源。
 | `script` | 带元数据的独立脚本 |
 | `wrapper` | 对本地 CLI 的受控封装 |
 | `pack` | 一组角色化资源的集合 |
-
-当前已扩展为：
-
-- `addon`
-- `reference`
+| `addon` | 可安装的上游增强包或基础应用 |
+| `reference` | 只供发现和引用的外部项目或资料 |
 
 注意：
 
@@ -198,7 +197,7 @@ GitHub 仓库是唯一事实来源。
 
 ## 8. 多 Agent 兼容矩阵
 
-这是第一阶段真正要照着做的兼容表。
+这是当前仓库的目标兼容矩阵。
 
 | Agent | 官方/主仓原生指令入口 | 官方/主仓原生扩展面 | 推荐适配方式 | 支持等级 |
 |---|---|---|---|---|
@@ -207,8 +206,8 @@ GitHub 仓库是唯一事实来源。
 | `cursor` | `AGENTS.md` 或 `.cursor/rules` | `.mdc` 规则文件 | 生成 `.cursor/rules/*.mdc` 或 repo-root `AGENTS.md`，以项目作用域为主 | `B` |
 | `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `A` |
 | `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `A` |
-| `openclaw` | `AGENTS.md` | ClawHub / plugin / skill 生态 | 第二阶段再验证 | `C` |
-| `hermes` | `AGENTS.md` / workspace instructions | `~/.hermes/skills` 与技能生态 | 第二阶段再验证 | `C` |
+| `openclaw` | `AGENTS.md` | ClawHub / plugin / skill 生态 | 由运行中的 agent 自检并自行尝试 | `C` |
+| `hermes` | `AGENTS.md` / workspace instructions | `~/.hermes/skills` 与技能生态 | 由运行中的 agent 自检并自行尝试 | `C` |
 
 ### 8.1 不能再继续使用的错误假设
 
@@ -219,36 +218,21 @@ GitHub 仓库是唯一事实来源。
 - “所有 Agent 都能安装到统一的 `~/.agents/...` 路径”
 - “只靠一个 `AGENTS.md` 就能覆盖所有 Agent”
 
-## 9. 第一阶段验证范围
+## 9. 当前兼容策略
 
-为了确保“真的能用”，MVP 不追求一次性覆盖所有 Agent。
+当前仓库不再对外承诺“某个 Agent 一定可以直接成功安装”。
 
-### 9.1 Phase 1 硬支持
+统一策略是：
 
-- `codex`
-- `gemini-cli`
-- `opencode`
+- registry 负责提供规范化资源源头和适配规则
+- 运行中的 agent 负责根据本地能力、自检结果和 adapter 决定是否执行
+- 未通过自检时，必须 `blocked`
 
-这三类有较明确的本地扩展或技能能力，最适合先打通。
+兼容成熟度仍有差异：
 
-### 9.2 Phase 1 适配支持
-
-- `claude-code`
-- `cursor`
-
-这两类通过适配实现，但不能假设它们原生支持统一的 skill 安装机制。
-
-其中：
-
-- `claude-code` 主要依赖 memory 与 subagent 适配
-- `cursor` 主要依赖项目作用域规则适配，不应设计成“全局技能目录”
-
-### 9.3 Phase 2 实验支持
-
-- `openclaw`
-- `hermes`
-
-只有在目标机器上完成真实验证后，才能升为正式支持。
+- `codex`、`gemini-cli`、`opencode` 更接近一等目标兼容对象
+- `claude-code`、`cursor` 更依赖适配层
+- `openclaw`、`hermes` 默认按实验兼容看待
 
 ## 10. 用户流程
 
@@ -391,25 +375,34 @@ Agent 需要在本地记录同步状态，但本地状态文件不得保存共�
 - 是否要在仓库中提供每种 Agent 的安装适配模板
 - Phase 1 是否必须包含 `claude-code` 与 `cursor` 的真实验证
 
-## 17. Pack 现状`r`n`r`n- 现成可直接用于业务工作的 workflow pack 还未开始系统整理`r`n- 当前默认 pack 应被视为基础应用与增强包集合`r`n- `agent-baseline` 用于默认基础安装与环境引导`r`n- `product-default` 当前只是草稿包，不应被当成可直接使用的业务包`r`n`r`n## 18. MVP 范围
+## 17. Pack 现状
+
+- 现成可直接用于业务工作的 workflow pack 还未开始系统整理
+- 当前默认 pack 应被视为基础应用与增强包集合
+- `agent-baseline` 用于默认基础安装与环境引导
+- `product-default` 当前只是草稿包，不应被当成可直接使用的业务包
+
+## 18. MVP 范围
 
 MVP 必须包含：
 
 - `AGENTS.md`
 - `REGISTRY.md`
 - `manifest.json`
-- `packs/product-default.json`
+- `packs/agent-baseline.json`
 - 一个 `skill`
 - 一个 `script`
 - 一个 `wrapper`
+- 一个 `addon`
+- 一个 `reference`
 - 至少一个 Agent 适配模板目录
 
 MVP 完成的判据不是“文档写完”，而是：
 
-1. `codex` 能成功消费一个 `skill`
-2. `gemini-cli` 能通过 extension 方式消费一个资源包
-3. `opencode` 能发现一个本地 skill
-4. `claude-code` 或 `cursor` 至少有一个完成适配式落地验证
+1. registry 结构可被 agent 正确扫描
+2. manifest 能表达资源类型、资源角色、上游来源、依赖关系
+3. agent 能根据 adapter 和自检结果做出安装、阻断或建议决策
+4. 至少一条真实能力链路被验证可用
 
 ## 19. 验收标准
 
