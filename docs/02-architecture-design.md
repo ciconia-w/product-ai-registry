@@ -184,25 +184,19 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 ## 6. 支持策略
 
-### 6.1 正式支持对象
+当前不是“硬支持名单”，而是“目标兼容名单 + 运行时自判”。
 
-第一阶段正式支持：
+也就是说：
 
-- `codex`
-- `gemini-cli`
-- `opencode`
+- registry 提供结构和 adapter
+- agent 在当前机器上决定是否执行
+- 自检失败时阻断
 
-### 6.2 适配支持对象
+现实上的兼容成熟度仍有差异：
 
-第一阶段适配支持：
-
-- `claude-code`
-- `cursor`
-
-### 6.3 实验对象
-
-- `openclaw`
-- `hermes`
+- `codex`、`gemini-cli`、`opencode` 更适合作为优先验证对象
+- `claude-code`、`cursor` 更依赖适配策略
+- `openclaw`、`hermes` 保持实验性质
 
 ## 7. 仓库目录结构
 
@@ -233,6 +227,7 @@ product-ai-registry/
       run.sh
 
   packs/
+    agent-baseline.json
     product-default.json
 
   adapters/
@@ -385,7 +380,13 @@ paths:
 - 删除未知来源的用户文件
 - 直接重写现有主配置文件的全部内容
 
-## 11.1 Pack maturity`r`n`r`n- `agent-baseline` is the default baseline pack for required applications and addons`r`n- ready-to-use workflow packs are still being curated`r`n- `product-default` should currently be treated as a draft placeholder, not a polished business pack`r`n`r`n## 12. manifest.json 结构
+## 11.1 Pack maturity
+
+- `agent-baseline` is the default baseline pack for required applications and addons
+- ready-to-use workflow packs are still being curated
+- `product-default` should currently be treated as a draft placeholder, not a polished business pack
+
+## 12. manifest.json 结构
 
 `manifest.json` 必须表达：
 
@@ -402,7 +403,7 @@ paths:
 {
   "registry_version": "1.0.0",
   "generated_at": "2026-04-29T00:00:00Z",
-  "default_pack": "product-default",
+  "default_pack": "agent-baseline",
   "agents": {
     "codex": { "support_level": "A" },
     "claude-code": { "support_level": "B" },
@@ -414,12 +415,12 @@ paths:
   },
   "packs": [
     {
-      "id": "product-default",
+      "id": "agent-baseline",
       "version": "1.0.0",
       "items": [
-        "skill:prd-review",
-        "script:forum-demand-crawler",
-        "wrapper:opencode-review"
+        "addon:gh-cli",
+        "addon:opencli",
+        "addon:cc-switch"
       ]
     }
   ],
@@ -447,7 +448,11 @@ paths:
 }
 ```
 
-Interpretation rules:`r`n`r`n- `baseline + install`: install proactively when compatible`r`n- `dependency + block/install`: only resolve when another item requires it`r`n- `reference + suggest`: never auto-install, only surface to the user or agent`r`n`r`nImportant distinction:`r`n`r`n- `agent runtime` is the execution surface, for example `codex`, `claude-code`, `cursor`, `gemini-cli`, `opencode``r`n- `registry resource` is what the registry indexes, for example `skill`, `script`, `wrapper`, `addon`, `reference``r`n- a resource may depend on an addon like `opencli``r`n- a resource may proactively install a baseline addon like `gh-cli` or `cc-switch``r`n- a resource may expose an optional addon like `lark-cli``r`n- a resource should not model `opencode` itself as a dependency addon
+Interpretation rules:
+
+- `baseline + install`: install proactively when compatible
+- `dependency + block/install`: only resolve when another item requires it
+- `reference + suggest`: never auto-install, only surface to the user or agent
 
 Important distinction:
 
@@ -588,18 +593,17 @@ Important distinction:
 
 1. 建立 canonical registry 结构
 2. 建立 `manifest.json` 与 `adapter.yaml` 结构
-3. 先完成 `codex`、`gemini-cli`、`opencode` 的 materialization
-4. 再完成 `claude-code`、`cursor` 的适配
+3. 先完成目标兼容度较高的 agent 路径，例如 `codex`、`gemini-cli`、`opencode`
+4. 再完成更依赖适配的 `claude-code`、`cursor`
 5. 最后评估 `openclaw`、`hermes`
 
 ## 20. MVP 完成标准
 
 MVP 真正完成的标准：
 
-- `codex` 在真实机器上能安装并识别至少一个 skill
-- `gemini-cli` 能通过 extension 安装并更新至少一个资源包
-- `opencode` 能发现并使用至少一个 skill
-- `claude-code` 或 `cursor` 至少有一个成功完成适配式落地
+- registry 结构可支持 `type`、`role`、`source`、`requires.items`
+- 至少一个 agent 能完整走通从扫描到 materialization 的链路
+- project-scoped 与 global-scoped 资源都能被正确区分
 - 已验证 materialization 不会覆盖用户既有配置
 - 文档中不再存在统一格式误导
 
