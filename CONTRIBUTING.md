@@ -2,7 +2,7 @@
 
 ## Branch rules
 
-- `main`: protected, merge by PR only
+- `main`: stable branch; Pull Request merge is preferred
 - `beta`: optional pre-release validation
 - feature branches:
   - `feat/<scope>`
