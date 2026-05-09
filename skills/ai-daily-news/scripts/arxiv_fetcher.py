@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # 配置
-ARXIV_AI_RSS = "http://export.arxiv.org/rss/cs.AI"
+ARXIV_AI_RSS = "https://export.arxiv.org/rss/cs.AI"
 MAX_ITEMS = 3  # 只返回Top 3
 
 class ArxivFetcher:

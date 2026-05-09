@@ -1,0 +1,28 @@
+id: browserbase-skills
+name: Browserbase Skills
+version: 0.1.0
+description: Reference browser-automation and UI-testing skill library for browse CLI, Browserbase sessions, and web QA workflows
+source:
+  kind: reference
+  url: https://github.com/browserbase/skills
+  ref: main
+  docs_url: https://github.com/browserbase/skills#readme
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask about browser automation, website QA, authenticated browsing, screenshot-driven inspection, or Browserbase-specific skill design
+  - Treat upstream as a reference library first because real execution depends on network, login state, browser availability, and environment-specific constraints

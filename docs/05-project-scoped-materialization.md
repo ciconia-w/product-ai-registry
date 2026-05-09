@@ -8,7 +8,11 @@ Examples:
 - repo-specific skills
 - repository-local wrappers
 
-The Linglong deepin-color-correction assets are the first concrete example.
+The original deepin-color-correction Linglong assets were the first concrete example.
+The registry now separates:
+
+- generic Linglong workflow assets that can be reused across repositories
+- project-specific Linglong references or examples that should not be treated as universal build logic
 
 ## Rules
 

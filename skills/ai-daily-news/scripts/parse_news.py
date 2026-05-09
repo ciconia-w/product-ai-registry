@@ -1,28 +1,69 @@
 #!/usr/bin/env python3
 """
 AI 新闻解析工具
-从 ai.hubtoday.app 的 HTML 中提取新闻条目
+从当前配置中的中文主源 HTML 中提取新闻条目。
+默认主源为 hex2077.dev（原 ai.hubtoday.app）。
 """
 
-import subprocess
-import re
 import json
+import re
+import subprocess
 import sys
-from typing import List, Dict
+from pathlib import Path
+from typing import Dict, List
+
+import yaml
+
+SKILL_DIR = Path(__file__).parent.parent
+CONFIG_PATH = SKILL_DIR / "references" / "sources.yaml"
+DEFAULT_PRIMARY_SOURCE = {
+    "name": "hex2077.dev",
+    "url": "https://hex2077.dev/docs/{date:YYYY-MM}/{date:YYYY-MM-DD}/",
+    "parser": "parse_news.py",
+}
+
+
+def load_primary_source() -> Dict[str, str]:
+    """从 sources.yaml 中读取当前脚本对应的中文主源定义。"""
+    try:
+        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f) or {}
+        primary_sources = config.get("sources", {}).get("chinese", {}).get("primary", [])
+        for source in primary_sources:
+            if source.get("parser") == "parse_news.py":
+                return source
+        if primary_sources:
+            return primary_sources[0]
+    except Exception as e:
+        print(f"Warning: failed to load primary source config: {e}", file=sys.stderr)
+    return DEFAULT_PRIMARY_SOURCE
+
+
+def build_source_url(template: str, date_str: str) -> str:
+    """将日期占位符替换为具体日期。"""
+    return (
+        template
+        .replace("{date:YYYY-MM}", date_str[:7])
+        .replace("{date:YYYY-MM-DD}", date_str)
+    )
+
 
 def fetch_html(date_str: str) -> str:
     """获取 HTML 内容"""
-    url = f"https://ai.hubtoday.app/{date_str[:7]}/{date_str}/"
+    primary_source = load_primary_source()
+    template = primary_source.get("url", DEFAULT_PRIMARY_SOURCE["url"])
+    url = build_source_url(template, date_str)
     cmd = [
         "curl", "-s", "-L",
         "-H", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         "-H", "Accept: text/html,application/xhtml+xml",
-        url
+        url,
     ]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
         raise Exception(f"Failed to fetch {url}")
     return result.stdout
+
 
 def extract_sections(html: str) -> Dict[str, str]:
     """从 HTML 中提取各个分类的 HTML 内容"""
@@ -32,87 +73,85 @@ def extract_sections(html: str) -> Dict[str, str]:
         "产品与功能更新",
         "前沿研究",
         "行业展望与社会影响",
-        "开源TOP项目",
-        "社媒分享"
+        "开源top项目",
+        "社媒分享",
     ]
 
     for i, section_name in enumerate(section_names):
-        # 找到当前分类的起始位置
-        start_pattern = f"<h3>{section_name}"
-        start_pos = html.find(start_pattern)
-
-        if start_pos == -1:
+        pattern = rf'<h3[^>]*id="{section_name}"[^>]*>'
+        match = re.search(pattern, html)
+        if not match:
             print(f"Warning: Section '{section_name}' not found", file=sys.stderr)
             sections[section_name] = ""
             continue
+        start_pos = match.start()
 
-        # 找到下一个分类的起始位置
         if i + 1 < len(section_names):
             next_section_name = section_names[i + 1]
-            end_pattern = f"<h3>{next_section_name}"
-            end_pos = html.find(end_pattern, start_pos)
+            end_pattern = rf'<h3[^>]*id="{next_section_name}"[^>]*>'
+            end_match = re.search(end_pattern, html[start_pos:])
+            end_pos = start_pos + end_match.start() if end_match else -1
         else:
-            # 最后一个分类，找到页面结束或下一个 h2/h3
-            # 查找 AI资讯日报多渠道 作为结束标记
-            end_pattern = '<h2><strong>AI资讯日报多渠道</strong>'
-            end_pos = html.find(end_pattern, start_pos)
-            if end_pos == -1:
-                # 如果没找到，就用下一个 h2
-                end_pos = html.find("<h2", start_pos)
+            end_match = re.search(r'<h2|AI资讯日报多渠道|<footer', html[start_pos:])
+            end_pos = start_pos + end_match.start() if end_match else -1
 
         if end_pos == -1:
-            # 没找到结束标记，截取到末尾（最多 10000 字符）
-            sections[section_name] = html[start_pos:start_pos + 10000]
+            sections[section_name] = html[start_pos:start_pos + 15000]
         else:
             sections[section_name] = html[start_pos:end_pos]
 
     return sections
 
+
 def extract_news_from_section(section_html: str) -> List[Dict[str, str]]:
     """从一个分类的 HTML 中提取新闻条目"""
     news_list = []
 
-    # 新格式：<li><strong>标题。</strong>内容</li>（无<p>标签）
-    # 同时支持旧格式：<li><p><strong>标题。</strong>内容</p></li>
-    pattern_new = r'<li><strong>([^<]+)</strong>(.*?)(?:</li>|<li>|$)'
-    pattern_old = r'<li><p><strong>([^<]+)</strong>(.*?)</p></li>'
-    
-    # 先尝试新格式
-    matches = re.findall(pattern_new, section_html, re.DOTALL)
-    
-    # 如果新格式没匹配到，尝试旧格式
-    if not matches:
-        matches = re.findall(pattern_old, section_html, re.DOTALL)
+    li_pattern = r'<li[^>]*>(.*?)</li>'
+    li_matches = re.findall(li_pattern, section_html, re.DOTALL)
 
-    for title, content in matches:
-        # 清理标题（去掉句号）
-        title = title.strip().rstrip('。')
+    for li_content in li_matches:
+        if "<p" not in li_content:
+            continue
 
-        # 提取链接（查找内容中的 <a href="...">）
-        link_match = re.search(r'<a[^>]+href="([^"]+)"', content)
+        title_match = re.search(r'<strong[^>]*>([^<]+)</strong>', li_content)
+        if not title_match:
+            continue
+        title = title_match.group(1).strip().rstrip("。")
+
+        link_match = re.search(r'<a[^>]+href="([^"]+)"[^>]*>', li_content)
         link = link_match.group(1) if link_match else ""
 
-        # 清理内容（移除 HTML 标签和多余空白，但保留关键词）
-        content_clean = re.sub(r'<[^>]+>', ' ', content)
-        content_clean = re.sub(r'\s+', ' ', content_clean)
-        content_clean = content_clean.strip()
+        p_match = re.search(r'<p[^>]*>(.*?)</p>', li_content, re.DOTALL)
+        content_html = p_match.group(1) if p_match else li_content
 
-        if title and content_clean:
-            item = {
-                "title": title,
-                "content": content_clean
-            }
-            # 只在有链接时添加 link 字段
+        content = re.sub(r'<a[^>]*>([^<]*)</a>', r"\1", content_html)
+        content = re.sub(r"<[^>]+>", " ", content)
+        content = re.sub(r"\s+", " ", content).strip()
+        if len(content) > 300:
+            content = content[:300] + "..."
+
+        if title and content:
+            item = {"title": title, "content": content}
             if link:
                 item["link"] = link
             news_list.append(item)
 
     return news_list
 
+
 def parse_news(date_str: str) -> List[Dict[str, str]]:
     """解析指定日期的新闻"""
     html = fetch_html(date_str)
     sections = extract_sections(html)
+
+    section_display_names = {
+        "产品与功能更新": "产品与功能更新",
+        "前沿研究": "前沿研究",
+        "行业展望与社会影响": "行业展望与社会影响",
+        "开源top项目": "开源TOP项目",
+        "社媒分享": "社媒分享",
+    }
 
     all_news = []
     for section_name, section_html in sections.items():
@@ -120,13 +159,13 @@ def parse_news(date_str: str) -> List[Dict[str, str]]:
             continue
 
         news_list = extract_news_from_section(section_html)
-
-        # 添加分类信息
+        display_name = section_display_names.get(section_name, section_name)
         for news in news_list:
-            news["category"] = section_name
+            news["category"] = display_name
             all_news.append(news)
 
     return all_news
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
@@ -137,15 +176,12 @@ if __name__ == "__main__":
 
     try:
         news_list = parse_news(date_str)
-
-        # 输出为 JSON
         output = {
             "date": date_str,
-            "news": news_list
+            "count": len(news_list),
+            "news": news_list,
         }
-
         print(json.dumps(output, ensure_ascii=False, indent=2))
-
     except Exception as e:
         print(f"Error: {e}", file=sys.stderr)
         sys.exit(1)

@@ -25,17 +25,48 @@ sources:
 
   # 中文源
   chinese:
-    # 主要源（必须使用）
+    # 主源（必须全部尝试）
     primary:
-      - name: "ai.hubtoday.app"
-        url: "https://ai.hubtoday.app/{date:YYYY-MM}/{date:YYYY-MM-DD}/"
+      - name: "hex2077.dev"
+        url: "https://hex2077.dev/docs/{date:YYYY-MM}/{date:YYYY-MM-DD}/"
         method: "curl"
-        weight: 100
+        weight: 60
         max_items: 25
         language: "zh"
         parser: "parse_news.py"
+        required: true
+      - name: "AI HOT"
+        url: "https://aihot.virxact.com/daily"
+        method: "direct_http_or_agent_fetch"
+        weight: 40
+        max_items: 20
+        language: "zh"
+        parser: "aihot_fetcher.py"
+        required: true
+        notes: "Mandatory Chinese source. First try bundled aihot_fetcher.py. If blocked, fetch the page text through agent web tools or browser automation and pipe it into aihot_parser.py."
 
-    # 备用源（主要源失败时使用）
+    # 可选补充源（当前 agent 有网页抓取或浏览器能力时再使用）
+    supplemental:
+      - name: "AI HOT MP"
+        url: "https://aihot.virxact.com/mp"
+        method: "direct_http_or_agent_fetch"
+        weight: 10
+        max_items: 10
+        language: "zh"
+        optional: true
+        parser: "aihot_fetcher.py"
+        notes: "Optional hot-article board from AI HOT."
+      - name: "新智元微信公众号"
+        url: "https://mp.weixin.qq.com/s/sC39X7EsSzy79usg8am64w"
+        method: "wechat_html"
+        weight: 15
+        max_items: 10
+        language: "zh"
+        optional: true
+        parser: "wechat_fetcher.py"
+        notes: "Optional supplemental source. Use only when the current agent can safely read or fetch the article page."
+
+    # 备用源（仅脚本主源失败时使用，不能替代 AI HOT）
     fallback:
       - name: "量子位"
         url: "https://www.qbitai.com/feed"
@@ -48,7 +79,7 @@ sources:
   research:
     arxiv:
       topic: "cs.AI"
-      url: "http://export.arxiv.org/rss/cs.AI"
+      url: "https://export.arxiv.org/rss/cs.AI"
       max_items: 3  # Top 3最新论文
       # 注意：该URL可能存在网络访问限制，已添加异常处理
 

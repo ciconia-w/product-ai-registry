@@ -1,0 +1,31 @@
+id: open-slide
+name: Open Slide CLI
+version: 0.1.0
+description: Optional slide-workspace scaffolder for agent-authored presentation decks and HTML or PDF slide output
+source:
+  kind: external_git
+  url: https://github.com/1weiho/open-slide
+  ref: main
+  install_method: external_package
+  docs_url: https://github.com/1weiho/open-slide/tree/main/packages/cli#readme
+install:
+  commands:
+    - npm install -g @open-slide/cli
+  verify:
+    - open-slide --help
+  post_install:
+    - Use open-slide init <dir> to scaffold a presentation workspace, then install that workspace dependencies before authoring slides
+policy:
+  role: optional
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Optional toolchain for presentation work, not a default baseline capability
+  - Produces agent-friendly slide workspaces and HTML or PDF deck outputs rather than native office slideshow files

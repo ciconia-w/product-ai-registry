@@ -1,0 +1,23 @@
+id: linglong-deepin-color-correction-example
+name: Linglong deepin-color-correction Example
+version: 0.1.0
+description: Project-specific example and pitfall reference for a validated deepin-color-correction Linglong packaging path
+source:
+  kind: reference
+  url: https://github.com/ciconia-w/product-ai-registry
+  ref: main
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Do not auto-install
+  - Surface this reference when users want a concrete Linglong example with Python or Qt vendoring, launcher patching, or UAB export troubleshooting
+  - This reference is an example, not a generic workflow
