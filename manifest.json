@@ -1259,6 +1259,38 @@
         "role": "optional",
         "action_on_missing": "install"
       }
+    },
+    {
+      "type": "skill",
+      "id": "desktop-help-manual-updater",
+      "version": "0.1.0",
+      "path": "skills/desktop-help-manual-updater",
+      "description": "Update, rewrite, or draft desktop app help manuals by verifying the live UI, flows, screenshots, and output artifacts against real product behavior",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
     }
   ]
 }
