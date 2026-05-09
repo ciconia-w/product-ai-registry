@@ -22,7 +22,7 @@ Each agent in `manifest.json` carries a `support_level` field.
 
 | Level | Meaning |
 |---|---|
-| A | Fully validated on target OS. Adapter complete. All resource modes tested. |
+| A | Fully validated on target OS. Adapter complete. All declared resource modes tested with materialization evidence. |
 | B | Adapter defined. Basic install tested. Some modes may be untested. |
 | C | Adapter skeleton only. Experimental. Not for production use. |
 

@@ -1,7 +1,7 @@
 id: superpowers
 name: Superpowers
 version: 0.1.0
-description: Shared enhancement plugin or addon layer commonly used with local coding agents
+description: Cross-agent enhancement suite for Codex, OpenCode, Gemini CLI, Claude Code, and other supported coding agents
 source:
   kind: external_git
   url: https://github.com/obra/superpowers
@@ -9,17 +9,17 @@ source:
   install_method: external_git
 install:
   commands:
-    - git clone https://github.com/obra/superpowers.git ~/.local/share/superpowers
+    - 'echo "Install Superpowers using the harness-specific upstream instructions for the current agent"'
   verify:
-    - test -d ~/.local/share/superpowers
+    - 'echo "Verify Superpowers is installed through the current agent marketplace or extension system"'
 policy:
-  role: baseline
-  action_on_missing: install
+  role: optional
+  action_on_missing: suggest
 agents:
   - codex
   - claude-code
 os:
   - linux
 notes:
-  - Treat as a baseline addon when the current agent supports it
-  - If the current agent cannot use it directly, report as skipped-unsupported
+  - Installation differs by harness and should follow upstream marketplace or extension guidance
+  - Report skipped-unsupported when the current agent lacks a supported install path

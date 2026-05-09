@@ -6,7 +6,7 @@
 
 - 集中存放团队共享的 `skills`、`scripts`、`wrappers`、`packs`
 - 让不同本地 Agent 按统一规则读取、安装、更新这些资源
-- 让新成员只需要一个链接或一段提示词，就能让自己的 Agent 自行完成配置
+- 让新成员只需要一个链接或一段提示词，就能让自己的 Agent 读取注册表、尝试配置，并在能力不足时明确报告阻断
 
 ## 架构图
 
@@ -40,6 +40,12 @@ flowchart LR
 - 注册表统一的是**资源源头**
 - 不同 Agent 通过各自 adapter 决定本地落地方式
 - 资源角色决定是默认安装、按依赖安装，还是只做参考返回
+
+当前仓库状态：
+
+- 规范、编目和验证约束已经成型
+- 自动 materialization helper 仍在建设中
+- 带 placeholder 入口的能力当前不应被视为可直接安装或可直接执行
 
 ## 适合什么场景
 
@@ -88,8 +94,6 @@ flowchart LR
 - `gh-cli`
 - `cc-switch`
 - `oh-my-codex`
-- `oh-my-claudecode`
-- `superpowers`
 
 ### dependency
 
@@ -121,6 +125,8 @@ flowchart LR
 适合：
 
 - `lark-cli`
+- `oh-my-claudecode`
+- `superpowers`
 - 只在特定工作流里需要的增强工具
 
 ## 怎么用
@@ -175,6 +181,7 @@ Agent 进入仓库后，按这个顺序工作：
 - 不同 Agent 的本地落地格式不一样
 - 不要假设所有 Agent 都支持同一种 `skill` 安装方式
 - 是否能在当前机器和当前 Agent 上实际安装、更新、运行，由执行中的 Agent 根据 `REGISTRY.md`、adapter、自检结果自行判断
+- 当前仓库更适合作为 canonical registry 和验证基线，而不是“拿来即用”的通用安装器
 - 未通过自检时，Agent 必须报告阻断，而不是继续安装
 - `baseline` 资源可以主动安装
 - `dependency` 资源只在命中依赖时处理

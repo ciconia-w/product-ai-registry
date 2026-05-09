@@ -5,9 +5,7 @@
                   "addon:gh-cli",
                   "addon:opencli",
                   "addon:cc-switch",
-                  "addon:oh-my-codex",
-                  "addon:oh-my-claudecode",
-                  "addon:superpowers"
+                  "addon:oh-my-codex"
               ],
     "version":  "0.2.0"
 }
