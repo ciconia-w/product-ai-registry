@@ -191,19 +191,29 @@ Agent 进入仓库后，按这个顺序工作：
 - `addon:oh-my-claudecode`
 - `addon:superpowers`
 - `addon:opencli`
+- `addon:context-mode`
+- `addon:open-slide`
 - `pack:agent-baseline`
+- `pack:agent-references`
+- `pack:presentation-workflow`
 - `pack:product-default`
 - `skill:prd-review`
 - `script:forum-demand-crawler`
 - `wrapper:opencode-review`
-- `pack:deepin-color-correction-linglong`
+- `pack:linglong-packaging`
 - `skill:linglong-uab-shortest-path`
+- `skill:linglong-packaging-retrospective`
 - `script:reset-linglong-builder-env`
 - `script:rebuild-linglong-uab-shortest-path`
+- `script:write-linglong-retrospective`
 - `reference:rag-anything`
 - `reference:ui-skills-catalog`
 - `reference:ai-handbook-sdd-overview`
 - `reference:awesome-design-md`
+- `reference:linglong-deepin-color-correction-example`
+- `reference:agent-skills`
+- `reference:browserbase-skills`
+- `reference:khazix-skills`
 - `skill:ai-daily-news`
 - `skill:triage-issue`
 - `skill:spec-to-backlog`
@@ -230,6 +240,9 @@ Agent 进入仓库后，按这个顺序工作：
 - 当前默认基础 pack 仍应视为基础应用与增强包集合
 - `agent-baseline` 用于默认基础安装与环境引导
 - `product-default` 当前只是草稿包，不应被当成可直接使用的业务包
+- `agent-references` 用于把外部技能库和工作流资料作为 reference-only 资源统一收口
+- `presentation-workflow` 用于按需安装 `open-slide` 这类演示稿工具链，而不是默认基础能力
+- `linglong-packaging` 用于给已有 `linglong.yaml` 或项目自带 Linglong 脚本的仓库提供通用打包工作流，并在打包完成后沉淀踩坑样例
 
 ## 重要原则
 
@@ -249,5 +262,3 @@ Agent 进入仓库后，按这个顺序工作：
 - [docs/03-registry-schemas.md](docs/03-registry-schemas.md)
 - [docs/04-bootstrap-and-helpers.md](docs/04-bootstrap-and-helpers.md)
 - [docs/05-project-scoped-materialization.md](docs/05-project-scoped-materialization.md)
-
-

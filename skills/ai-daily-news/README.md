@@ -14,7 +14,10 @@
 
 | 脚本 | 用途 |
 |------|------|
-| `scripts/parse_news.py` | 解析 ai.hubtoday.app |
+| `scripts/parse_news.py` | 解析当前脚本主源（默认 `hex2077.dev`） |
+| `scripts/aihot_fetcher.py` | 直接抓取并解析 AI HOT |
+| `scripts/aihot_parser.py` | 解析 AI HOT 的网页文本输出 |
+| `scripts/merge_sources.py` | 合并主中文源与 AI HOT |
 | `scripts/rss_fetcher.py` | RSS新闻获取 |
 | `scripts/arxiv_fetcher.py` | arXiv论文 (Top 3) |
 | `scripts/dedupe.py` | 新闻去重 |
@@ -41,6 +44,8 @@ python3 scripts/lunar.py 2026 4 24
 - 收件人: 通过环境变量或宿主配置提供
 - 配比: 中文65% / 英文35%
 - 详细配置: `references/sources.yaml`
+- 强制中文源: `hex2077.dev` + `AI HOT`
+- 可选补充源: `AI HOT MP`、`新智元微信公众号`
 
 ## 目录结构
 

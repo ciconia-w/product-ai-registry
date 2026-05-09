@@ -19,9 +19,11 @@
 - [ ] `wrappers/opencode-review`
 - [ ] `packs/product-default.json`
 - [x] `skills/linglong-uab-shortest-path`
+- [x] `skills/linglong-packaging-retrospective`
 - [x] `scripts/reset-linglong-builder-env`
 - [x] `scripts/rebuild-linglong-uab-shortest-path`
-- [x] `packs/deepin-color-correction-linglong.json`
+- [x] `scripts/write-linglong-retrospective`
+- [x] `packs/linglong-packaging.json`
 - [x] `addon:oh-my-codex`
 - [x] `addon:oh-my-claudecode`
 - [x] `addon:superpowers`

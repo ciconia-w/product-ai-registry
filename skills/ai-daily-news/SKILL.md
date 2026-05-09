@@ -18,11 +18,25 @@ description: 生成AI日报！自动抓取中英文AI新闻，Agent直接翻译�
 ### Step 1: 获取新闻源（原文模式）
 
 ```bash
-# 中文主源（ai.hubtoday.app）
-python3 scripts/parse_news.py YYYY-MM-DD > /tmp/chinese_news.json
+# 中文脚本主源（默认 hex2077.dev）
+python3 scripts/parse_news.py YYYY-MM-DD > /tmp/chinese_primary.json
 
-# 中文备用源（仅主源失败时）
+# AI HOT（强制中文源）
+python3 scripts/aihot_fetcher.py daily > /tmp/aihot_news.json
+
+# 合并两条强制中文源
+python3 scripts/merge_sources.py \
+  --primary /tmp/chinese_primary.json \
+  --aihot /tmp/aihot_news.json \
+  > /tmp/chinese_news.json
+
+# 中文备用源（仅脚本主源失败时）
 python3 scripts/rss_fetcher.py chinese > /tmp/chinese_fallback.json
+# 如果脚本主源失败，用 fallback 重新合并，但 AI HOT 仍然必须存在
+python3 scripts/merge_sources.py \
+  --primary /tmp/chinese_fallback.json \
+  --aihot /tmp/aihot_news.json \
+  > /tmp/chinese_news.json
 
 # 英文源（原文，由Agent翻译）
 python3 scripts/rss_fetcher.py english --no-translation > /tmp/english_news.json
@@ -31,9 +45,22 @@ python3 scripts/rss_fetcher.py english --no-translation > /tmp/english_news.json
 python3 scripts/arxiv_fetcher.py > /tmp/arxiv_papers.json
 ```
 
+**AI HOT 获取要求：**
+- `AI HOT` 是强制中文源，不可跳过。
+- 先尝试 `python3 scripts/aihot_fetcher.py daily`。
+- 如果目标环境拦截直接 HTTP 获取，必须改用当前 Agent 的网页抓取、web_fetch、或浏览器自动化能力获取 `https://aihot.virxact.com/daily` 的页面文本，再执行：
+
+```bash
+python3 scripts/aihot_parser.py daily < /tmp/aihot-text.txt > /tmp/aihot_news.json
+```
+
+- 如果 `AI HOT` 经过 direct fetch 与 agent web fetch 两条路径都失败，停止并报告 `blocked`，不要伪造日报完成状态。
+
 **新闻源优先级：**
-- 优先级1: ai.hubtoday.app（主要源，5大分类：产品更新、前沿研究、行业展望、开源项目、社媒分享）
-- 优先级2: 量子位RSS（仅主源失败时fallback）
+- 优先级1: `hex2077.dev`（脚本主源，5大分类：产品更新、前沿研究、行业展望、开源项目、社媒分享）
+- 优先级2: `AI HOT`（强制中文源，必须尝试）
+- 优先级3: 量子位RSS（仅脚本主源失败时 fallback）
+- 优先级4: `AI HOT MP` / 新智元（可选补充）
 
 ### Step 2: 内容配比与去重
 
@@ -120,7 +147,10 @@ echo "{news_json}" > history/YYYY-MM-DD.json
 ## 新闻源架构
 
 ### 中文源
-- **ai.hubtoday.app**（主源）: https://ai.hubtoday.app/YYYY-MM/YYYY-MM-DD/
+- **hex2077.dev**（脚本主源，原 ai.hubtoday.app）: https://hex2077.dev/docs/YYYY-MM/YYYY-MM-DD/
+- **AI HOT**（强制中文源）: https://aihot.virxact.com/daily
+- **AI HOT MP**（可选补充）: https://aihot.virxact.com/mp
+- **新智元微信公众号**（可选补充）: 文章页 HTML
 - **量子位**（备用）: https://www.qbitai.com/feed
 
 ### 英文源
@@ -129,7 +159,7 @@ echo "{news_json}" > history/YYYY-MM-DD.json
 - MIT News AI: https://news.mit.edu/topic/mitartificial-intelligence2-rss.xml
 
 ### 研究源
-- arXiv AI: http://export.arxiv.org/rss/cs.AI（取Top 3）
+- arXiv AI: https://export.arxiv.org/rss/cs.AI（取Top 3）
 
 详细配置见 `references/config.md`
 
@@ -149,7 +179,9 @@ echo "{news_json}" > history/YYYY-MM-DD.json
 
 ## 错误处理
 
-- ai.hubtoday.app失败 → 自动fallback到量子位
+- hex2077.dev失败 → 自动fallback到量子位
+- AI HOT direct fetch失败 → 改用 agent 网页抓取 + `aihot_parser.py`
+- AI HOT 两条路径都失败 → `blocked`
 - arXv网络超时 → 跳过该源，继续生成日报
 - 邮件发送失败 → 保存日报到文件，记录错误日志
 

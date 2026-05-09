@@ -46,18 +46,24 @@
       "description": "Default starter pack for product team members",
       "path": "packs/product-default.json",
       "items": [
-        "skill:deepin-dev"
+        "skill:deepin-dev",
+        "reference:agent-skills",
+        "reference:khazix-skills"
       ]
     },
     {
-      "id": "deepin-color-correction-linglong",
-      "version": "0.1.0",
-      "description": "Repo-specific Linglong packaging pack for deepin-color-correction on Linux hosts",
-      "path": "packs/deepin-color-correction-linglong.json",
+      "id": "linglong-packaging",
+      "version": "0.2.0",
+      "description": "Generic Linglong packaging workflow pack for Linux repositories that already contain linglong.yaml or project-native Linglong build scripts",
+      "path": "packs/linglong-packaging.json",
       "items": [
         "skill:linglong-uab-shortest-path",
+        "skill:linglong-packaging-retrospective",
         "script:reset-linglong-builder-env",
-        "script:rebuild-linglong-uab-shortest-path"
+        "script:rebuild-linglong-uab-shortest-path",
+        "script:write-linglong-retrospective",
+        "script:check-linglong-retrospective",
+        "reference:linglong-deepin-color-correction-example"
       ]
     },
     {
@@ -103,6 +109,26 @@
       "path": "packs/uniontech-ai-point-extract.json",
       "items": [
         "skill:uniontech-ai-point-export"
+      ]
+    },
+    {
+      "id": "agent-references",
+      "version": "0.1.0",
+      "description": "Reference-only pack for external skill libraries and workflow catalogs that should be discovered, not auto-installed",
+      "path": "packs/agent-references.json",
+      "items": [
+        "reference:agent-skills",
+        "reference:browserbase-skills",
+        "reference:khazix-skills"
+      ]
+    },
+    {
+      "id": "presentation-workflow",
+      "version": "0.1.0",
+      "description": "Optional presentation-workflow pack for agent-authored slide deck scaffolding with open-slide",
+      "path": "packs/presentation-workflow.json",
+      "items": [
+        "addon:open-slide"
       ]
     }
   ],
@@ -216,23 +242,24 @@
     {
       "type": "skill",
       "id": "linglong-uab-shortest-path",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "skills/linglong-uab-shortest-path",
-      "description": "Repo-specific playbook for rebuilding the deepin-color-correction Linglong UAB on Linux hosts",
-      "install_scope": "project",
-      "target_path_hint": ".agents/skills/linglong-uab-shortest-path/SKILL.md",
+      "description": "Generic Linglong packaging workflow for Linux projects that already contain a linglong.yaml manifest or an equivalent Linglong build path",
       "support": {
         "codex": {
-          "mode": "project_native_skill_dir"
+          "mode": "native_skill_dir"
         },
         "opencode": {
-          "mode": "project_native_skill_dir"
+          "mode": "native_skill_dir"
         },
         "claude-code": {
-          "mode": "project_generated_subagent"
+          "mode": "generated_subagent"
         },
         "cursor": {
-          "mode": "project_generated_rules"
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
         }
       },
       "checksum": "TBD",
@@ -247,20 +274,24 @@
     {
       "type": "script",
       "id": "reset-linglong-builder-env",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "scripts/reset-linglong-builder-env",
-      "description": "Reset stale Linglong builder state before a deepin-color-correction rebuild",
-      "install_scope": "project",
-      "target_path_hint": "scripts/reset-linglong-builder-env.sh",
+      "description": "Reset stale Linglong builder state before rebuilding or exporting Linglong artifacts on Linux",
       "support": {
         "codex": {
-          "mode": "project_local_copy"
+          "mode": "local_copy"
         },
         "claude-code": {
-          "mode": "project_local_copy"
+          "mode": "local_copy"
         },
         "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
           "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
         }
       },
       "requires": {
@@ -287,20 +318,24 @@
     {
       "type": "script",
       "id": "rebuild-linglong-uab-shortest-path",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "path": "scripts/rebuild-linglong-uab-shortest-path",
-      "description": "Rebuild deepin-color-correction Linglong UAB using the shortest known-good path",
-      "install_scope": "project",
-      "target_path_hint": "scripts/rebuild-linglong-uab-shortest-path.sh",
+      "description": "Rebuild or export Linglong artifacts for the current project by preferring project-native build scripts and falling back to generic linglong.yaml packaging",
       "support": {
         "codex": {
-          "mode": "project_local_copy"
+          "mode": "local_copy"
         },
         "claude-code": {
-          "mode": "project_local_copy"
+          "mode": "local_copy"
         },
         "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
           "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
         }
       },
       "requires": {
@@ -313,9 +348,6 @@
         ],
         "scripts": [
           "reset-linglong-builder-env"
-        ],
-        "items": [
-          "addon:opencli"
         ]
       },
       "entry": "run.sh",
@@ -1404,6 +1436,368 @@
           "mode": "extension_bundle"
         }
       },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "addon",
+      "id": "context-mode",
+      "version": "0.1.0",
+      "path": "addons/context-mode",
+      "description": "Optional cross-agent MCP and hook enhancement layer for context compression, session continuity, and routing guidance",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/mksglu/context-mode",
+        "ref": "main",
+        "install_method": "external_git",
+        "docs_url": "https://github.com/mksglu/context-mode#readme"
+      },
+      "install": {
+        "commands": [
+          "npm install -g context-mode"
+        ],
+        "verify": [
+          "context-mode --help"
+        ],
+        "post_install": [
+          "Follow the upstream per-agent setup guide to register MCP config, hooks, and optional instruction files for the current agent"
+        ]
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        },
+        "openclaw": {
+          "mode": "external_upstream"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "open-slide",
+      "version": "0.1.0",
+      "path": "addons/open-slide",
+      "description": "Optional slide-workspace scaffolder for agent-authored presentation decks and HTML or PDF slide output",
+      "source": {
+        "kind": "external_package",
+        "url": "https://github.com/1weiho/open-slide",
+        "ref": "main",
+        "install_method": "external_package",
+        "docs_url": "https://github.com/1weiho/open-slide/tree/main/packages/cli#readme"
+      },
+      "install": {
+        "commands": [
+          "npm install -g @open-slide/cli"
+        ],
+        "verify": [
+          "open-slide --help"
+        ],
+        "post_install": [
+          "Use open-slide init <dir> to scaffold a presentation workspace, then install that workspace dependencies before authoring slides"
+        ]
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "agent-skills",
+      "version": "0.1.0",
+      "path": "references/agent-skills",
+      "description": "Reference engineering-skill library for structured software-delivery workflows such as planning, testing, code review, and context engineering",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/addyosmani/agent-skills",
+        "ref": "main",
+        "docs_url": "https://github.com/addyosmani/agent-skills#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "browserbase-skills",
+      "version": "0.1.0",
+      "path": "references/browserbase-skills",
+      "description": "Reference browser-automation and UI-testing skill library for browse CLI, Browserbase sessions, and web QA workflows",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/browserbase/skills",
+        "ref": "main",
+        "docs_url": "https://github.com/browserbase/skills#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "khazix-skills",
+      "version": "0.1.0",
+      "path": "references/khazix-skills",
+      "description": "Reference library of practical cross-agent skills and prompts for cleanup, research, writing, and AI news workflows",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/KKKKhazix/khazix-skills",
+        "ref": "main",
+        "docs_url": "https://github.com/KKKKhazix/khazix-skills#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "linglong-deepin-color-correction-example",
+      "version": "0.1.0",
+      "path": "references/linglong-deepin-color-correction-example",
+      "description": "Project-specific example and pitfall reference for a validated deepin-color-correction Linglong packaging path",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/ciconia-w/product-ai-registry",
+        "ref": "main"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "skill",
+      "id": "linglong-packaging-retrospective",
+      "version": "0.1.0",
+      "path": "skills/linglong-packaging-retrospective",
+      "description": "Capture a structured Linglong packaging pitfall report after a build or export run so future agents can reuse the host and project-specific lessons",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "write-linglong-retrospective",
+      "version": "0.1.0",
+      "path": "scripts/write-linglong-retrospective",
+      "description": "Write a structured Linglong packaging retrospective JSON and Markdown note into the target repository",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "check-linglong-retrospective",
+      "version": "0.1.0",
+      "path": "scripts/check-linglong-retrospective",
+      "description": "Verify that a recent Linglong packaging retrospective exists and contains the required fields",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
       "checksum": "TBD",
       "source": {
         "kind": "local"

@@ -1,0 +1,12 @@
+{
+  "id": "presentation-workflow",
+  "version": "0.1.0",
+  "description": "Optional presentation-workflow pack for agent-authored slide deck scaffolding with open-slide",
+  "items": [
+    "addon:open-slide"
+  ],
+  "notes": [
+    "This pack installs an optional slide-workspace scaffolder rather than a universal presentation runtime.",
+    "Use it when the user wants an agent-friendly deck workflow that outputs HTML or PDF slides instead of native office slideshow files."
+  ]
+}

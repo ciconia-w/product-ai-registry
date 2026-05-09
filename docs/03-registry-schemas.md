@@ -55,6 +55,9 @@ Examples:
 - `oh-my-claudecode` -> likely `addon + baseline`
 - `opencli` -> likely `addon + dependency`
 - `RAG-Anything` -> likely `reference + suggest`
+- `context-mode` -> likely `addon + optional`
+- `open-slide` -> likely `addon + optional`
+- `agent-skills` -> likely `reference + suggest`
 
 ## Runtime vs resource
 

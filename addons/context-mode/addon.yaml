@@ -1,0 +1,33 @@
+id: context-mode
+name: Context Mode
+version: 0.1.0
+description: Optional cross-agent MCP and hook enhancement layer for context compression, session continuity, and routing guidance
+source:
+  kind: external_git
+  url: https://github.com/mksglu/context-mode
+  ref: main
+  install_method: external_git
+  docs_url: https://github.com/mksglu/context-mode#readme
+install:
+  commands:
+    - npm install -g context-mode
+  verify:
+    - context-mode --help
+  post_install:
+    - Follow the upstream per-agent setup guide to register MCP config, hooks, and optional instruction files for the current agent
+policy:
+  role: optional
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+os:
+  - linux
+notes:
+  - Optional enhancement layer, not a baseline dependency
+  - Upstream setup is agent-specific and may require hooks, MCP config, or instruction-file copy steps
+  - Recommend only when the user wants context compression, stronger session continuity, or richer tool-routing guidance

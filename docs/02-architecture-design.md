@@ -296,6 +296,7 @@ product-ai-registry/
 - 表示一个可安装的上游增强包
 - 自身可能不是单文件 skill 或脚本
 - 常见为外部 git 仓库、release 或 package manager 目标
+- 适合建模那些需要额外 CLI、hooks、MCP 配置、脚手架或上游安装流程的能力
 
 ### 8.6 reference
 
@@ -304,6 +305,7 @@ product-ai-registry/
 - 表示一个可供 Agent 发现和引用的上游项目
 - 默认不自动安装
 - 用于“有没有这类能力可以参考”这种问题
+- 适合收口外部 skill 库、工作流 catalog、实现参考、方法论资料，而不是把整仓上游直接当 baseline 安装
 
 ## 9. Adapter 模型
 

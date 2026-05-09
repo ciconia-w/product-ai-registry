@@ -8,22 +8,30 @@
 
 ## 新闻源
 
-### 新架构（2026-03-16最终版）
+### 当前架构（2026-05-09）
 
-#### 中文源（主要源，必须使用）
-- **主要源（优先级1）**：
-  - ai.hubtoday.app - 使用脚本自动解析HTML
-  - URL格式: `https://ai.hubtoday.app/YYYY-MM/YYYY-MM-DD/`
+#### 中文源
+
+- **脚本主源（优先级1，必试）**：
+  - hex2077.dev（原 ai.hubtoday.app）- 使用脚本自动解析 HTML
+  - URL格式: `https://hex2077.dev/docs/YYYY-MM/YYYY-MM-DD/`
   - 包含5大分类：产品与功能更新、前沿研究、行业展望与社会影响、开源TOP项目、社媒分享
 
-- **主要源2（优先级2）**：
-  - 新智元微信公众号 -每日最新文章
-  - URL格式: `https://mp.weixin.qq.com/s/sC39X7EsSzy79usg8am64w`
-  - 使用脚本解析微信公众号HTML
+- **强制中文源（优先级2，必试）**：
+  - AI HOT (https://aihot.virxact.com/daily)
+  - 优先使用 `scripts/aihot_fetcher.py`
+  - 若直连抓取失败，必须改用当前 agent 的网页抓取或浏览器能力获取页面文本，再交给 `scripts/aihot_parser.py`
+  - AI HOT 是强制中文源，不能静默跳过
 
-- **备用源（主要源失败时使用）**：
+- **可选补充源（按能力启用）**：
+  - AI HOT MP 热文榜
+  - 新智元微信公众号（示例文章页）
+  - 只有当前 agent 具备网页抓取、浏览器自动化、或稳定网页读取能力时才使用
+
+- **备用源（脚本主源失败时使用）**：
   - 量子位 (https://www.qbitai.com/feed) - RSS格式
-  - 仅当ai.hubtoday.app和新智元都获取失败时使用
+  - 仅当脚本主源失败时使用
+  - 不能替代 AI HOT
 
 #### 英文源（RSS）
 - MIT Technology Review (https://www.technologyreview.com/feed/)
@@ -42,7 +50,7 @@
   - 学术研究动态
 
 #### 研究源
-- arXiv AI (http://export.arxiv.org/rss/cs.AI)
+- arXiv AI (https://export.arxiv.org/rss/cs.AI)
   - 全球最大AI论文预印本服务器
   - 每日更新数百篇
   - 每日只取Top 3最新论文
@@ -60,7 +68,7 @@
 
 ### 英文新闻处理
 
-翻译时机：在生成日报时使用GLM模型翻译，而非RSS获取时翻译。
+翻译时机：在生成日报时由当前 Agent 直接翻译，而非在 RSS 获取阶段翻译。
 
 最终格式：
 
@@ -73,7 +81,7 @@
 
 处理规则：
 - ✅ RSS获取时保留原文（--no-translation参数）
-- ✅ 生成日报时用GLM模型翻译标题和内容
+- ✅ 生成日报时由当前 Agent 翻译标题和内容
 - ✅ 保留英文原文标题
 - ✅ 包含原文链接
 - ✅ 标注来源
@@ -83,8 +91,14 @@
 
 ```
 Step 1: 获取新闻源（原文模式）
-   ├─ 中文主源: python3 scripts/parse_news.py {date}
+   ├─ 中文脚本主源: python3 scripts/parse_news.py {date}
    │   └─ 失败 → python3 scripts/rss_fetcher.py chinese (量子位fallback)
+   │
+   ├─ 中文强制源: python3 scripts/aihot_fetcher.py daily
+   │   └─ 失败 → 用当前 agent 的网页抓取能力获取 https://aihot.virxact.com/daily 文本，再执行:
+   │      python3 scripts/aihot_parser.py daily < /tmp/aihot-text.txt
+   │
+   ├─ 合并中文源: python3 scripts/merge_sources.py --primary ... --aihot ...
    │
    ├─ 英文源: python3 scripts/rss_fetcher.py english --no-translation
    │   ├─ MIT Technology Review
@@ -101,9 +115,9 @@ Step 2: 内容配比控制
 Step 3: 去重
    - python3 scripts/dedupe.py
 
-Step 4: 使用GLM翻译英文新闻
+Step 4: 使用当前 Agent 翻译英文新闻
    - 遍历英文新闻列表
-   - 调用GLM模型翻译标题和内容
+   - 由当前 Agent 翻译标题和内容
    - 保留原文和链接
 
 Step 5: 生成日报（中文优先）
@@ -153,8 +167,10 @@ Step 7: 保存历史
 
 ### 中文源优先级
 ```
-优先级1: ai.hubtoday.app (必须尝试)
-优先级2: 量子位 (仅当ai.hubtoday.app失败时)
+优先级1: hex2077.dev (脚本主源，必须尝试)
+优先级2: AI HOT (强制中文源，必须尝试)
+优先级3: 量子位 (仅当脚本主源失败时)
+优先级4: AI HOT MP / 新智元 (可选补充)
 ```
 
 ## 农历计算
@@ -165,7 +181,10 @@ Step 7: 保存历史
 ## 脚本说明
 
 ### 核心脚本
-- `scripts/parse_news.py` - 解析ai.hubtoday.app HTML
+- `scripts/parse_news.py` - 解析当前脚本主源 HTML（默认 hex2077.dev）
+- `scripts/aihot_fetcher.py` - 直接抓取并解析 AI HOT
+- `scripts/aihot_parser.py` - 解析 AI HOT 纯文本输出
+- `scripts/merge_sources.py` - 合并脚本主源与 AI HOT
 - `scripts/rss_fetcher.py` - RSS新闻获取引擎
 - `scripts/arxiv_fetcher.py` - arXiv论文获取器（Top 3）
 - `scripts/dedupe.py` - 新闻去重工具

@@ -1,119 +1,133 @@
 ---
 name: linglong-uab-shortest-path
-version: 0.1.0
-description: Repo-specific playbook for rebuilding the deepin-color-correction Linglong UAB on a Linux host using the shortest known-good path
+version: 0.2.0
+description: Generic Linglong packaging workflow for Linux projects that already contain a linglong.yaml manifest or an equivalent Linglong build path
 ---
 
-# deepin-color-correction Linglong UAB: Shortest Correct Path
+# Linglong Packaging Workflow
 
-This skill is **repo-specific**. It is not a general Linglong packaging guide.
+This skill is a **generic Linglong packaging workflow** for Linux projects.
+It is not limited to one repository.
 
 Use it when the goal is:
 
-- rebuild `deepin-color-correction` as Linglong
-- export a fresh UAB on this machine
-- avoid the previously observed failure classes:
-  - stale `~/.cache/linglong-builder`
-  - stale `linglong/` project cache
-  - stale `/tmp/linglong-runtime-0`
-  - repeated mount residue
-  - "install success but kontainer misses Qt Python runtime"
+- rebuild or export a Linglong `.layer` or `.uab`
+- clean stale local Linglong builder state before packaging
+- validate the produced artifacts
+- hand off a reusable Linglong package to another agent or teammate
 
-## What already converged
+## Activation conditions
 
-Do **not** re-infer the package from scratch unless asked.
+Use this workflow when at least one of the following is true:
 
-The repository already contains the converged inputs:
+- the repository contains `linglong.yaml`
+- the repository contains `build-linglong.sh` or `build-linglong-*.sh`
+- the user asks to package an app as Linglong or export a `.uab`
+- the user mentions `ll-builder`, `ll-cli`, `linyaps`, or `Linglong`
 
-- `linglong.yaml`
+## Preconditions
+
+Before you run any packaging command, check:
+
+1. current host is Linux
+2. target repository exists and is writable
+3. repository contains `linglong.yaml` or a known Linglong build script
+4. required CLIs exist:
+   - `ll-builder`
+   - `ll-cli`
+   - `bash`
+5. if the repo depends on a custom build script, confirm that script exists
+
+If the repository has neither `linglong.yaml` nor a recognizable Linglong build script, stop and report `blocked`.
+
+## Workflow
+
+### Path A: project already has a Linglong build script
+
+If the repository contains one of these, prefer it:
+
 - `scripts/build-linglong.sh`
-- `scripts/build-linglong-pica.sh`
-- `docs/linglong-packaging.md`
+- `scripts/build-linglong-*.sh`
 
-Current known-good package metadata target:
-
-- package id: `org.deepin.deepin-color-correction`
-- version: `0.1.0.6`
-- base: `main:org.deepin.base/25.2.2/x86_64`
-- runtime: `main:org.deepin.runtime.dtk/25.2.2/x86_64`
-
-## Important repo-specific facts
-
-1. `scripts/build-linglong.sh` is the primary build path on this host.
-2. The script currently vendors:
-   - `dbus`
-   - `Xlib`
-   - `PIL`
-   - `six`
-   - `PySide6`
-   - `shiboken6`
-   - their Qt runtime subtree
-3. The previous "UAB can install but run fails with `ModuleNotFoundError: PySide2`" issue was addressed by vendoring `PySide6/shiboken6` into the layer/UAB.
-4. The previous "cannot export UAB" issue was addressed by resetting the HOME builder repo and stale runtime/mount state before export.
-
-## Shortest path
-
-### Path A: Rebuild UAB from a dirty host
-
-If this host has already been used for Linglong export/debugging, do this exact sequence:
-
-1. Stop lingering Linglong-related processes.
-2. Reset the local builder environment.
-3. Rebuild the layer/UAB using the in-repo script.
-4. Validate the rebuilt UAB locally.
-5. Hand the UAB to the field-validation agent.
-
-### Commands
-
-From repo root:
+Then run:
 
 ```bash
-./scripts/reset-linglong-builder-env.sh
-./scripts/rebuild-linglong-uab-shortest-path.sh
+reset-linglong-builder-env.sh
+rebuild-linglong-uab-shortest-path.sh
 ```
 
-## Validation checklist
+This path preserves project-local packaging knowledge and should be your default.
 
-After rebuild, verify:
+### Path B: project has `linglong.yaml` but no build script
+
+Use the generic workflow:
+
+1. reset stale Linglong builder state
+2. run `ll-builder build -f ./linglong.yaml`
+3. export a `.layer`
+4. attempt `.uab` export if the host runtime supports it
+5. verify metadata and extracted payload
+
+## Generic verification checklist
+
+After packaging, verify whichever artifacts were produced:
 
 ```bash
-./dist/deepin-color-correction_x86_64_0.1.0.6_main.uab --print-meta
-./dist/deepin-color-correction_x86_64_0.1.0.6_main.uab --extract=/tmp/dcc-uab-check
-sha256sum ./dist/deepin-color-correction_x86_64_0.1.0.6_main.uab
+find ./dist -maxdepth 1 \( -name '*.layer' -o -name '*.uab' \) | sort
 ```
 
-Expected high-level signals:
-
-- `--print-meta` succeeds
-- metadata still reports `0.1.0.6 / 25.2.2 / 25.2.2`
-- extracted payload contains:
-  - `files/lib/python3/dist-packages/PySide6`
-  - `files/lib/python3/dist-packages/shiboken6`
-- package size is much larger than the earlier "thin" UAB because the Qt Python runtime is now included
-
-## Field handoff rule
-
-If the rebuilt UAB exceeds Slock attachment size, do **not** waste time retrying upload.
-
-Instead:
-
-1. provide the absolute local path
-2. provide the SHA-256
-3. tell the field agent to:
+If a `.uab` exists, verify:
 
 ```bash
-sudo ll-cli uninstall org.deepin.deepin-color-correction
-sudo ll-cli install /absolute/path/to/deepin-color-correction_x86_64_0.1.0.6_main.uab
-ll-cli info org.deepin.deepin-color-correction
-ll-cli run org.deepin.deepin-color-correction
+./dist/<name>.uab --print-meta
+./dist/<name>.uab --extract=/tmp/linglong-uab-check
+sha256sum ./dist/<name>.uab
 ```
+
+If only a `.layer` exists, report that clearly and keep the layer path.
+
+## Fallback rules
+
+- If direct `ll-builder export` fails but the `.layer` exists, keep the `.layer` and report partial success.
+- If the host has stale Linglong mounts or cache residue, always reset first.
+- If the project has custom vendoring or runtime patching inside its own build script, do not replace that logic with the generic path unless the user asks.
+
+## Common pitfalls
+
+Keep these checks in mind across projects:
+
+- stale `~/.cache/linglong-builder`, repository-local `linglong/`, or `/tmp/linglong-runtime-*` can break export even when build steps look correct
+- stale Linglong mounts can keep old payloads alive; reset before retrying difficult failures
+- a project-specific `build-linglong*.sh` often contains critical vendoring, launcher patching, or runtime-path fixes; prefer it over generic `ll-builder build`
+- `.uab` export may fail on one host while `.layer` export still succeeds; keep the `.layer` and report partial success instead of discarding work
+- packaging can succeed but runtime can still fail if the app misses vendored Python, Qt, plugin, or icon assets inside the package payload
+- if the project already has a validated base/runtime combination in `linglong.yaml`, do not casually switch it during troubleshooting
 
 ## When not to use this skill
 
 Do not use this skill:
 
-- to re-design the package layout from zero
-- to switch base/runtime families casually
-- to replace the in-repo manifest with a generic auto-generated one
+- for non-Linux hosts
+- for projects that have no `linglong.yaml` and no recognizable Linglong build path
+- to redesign an app’s package manifest from zero without project context
 
-This skill exists specifically to preserve the already-converged packaging path.
+## Output contract
+
+Return:
+
+- which path you used: project build script or generic manifest path
+- produced artifact paths
+- SHA-256 if a `.uab` was produced
+- whether the result is full success, partial success (`layer` only), or blocked
+
+## Completion gate
+
+Linglong packaging is **not complete** until a retrospective has been written and validated.
+
+After the build or export step, the packaging agent must:
+
+1. produce a retrospective payload
+2. pipe it into `write-linglong-retrospective`
+3. run `check-linglong-retrospective`
+
+If `check-linglong-retrospective` fails, the overall Linglong workflow must be reported as `incomplete` or `blocked`, not `complete`.

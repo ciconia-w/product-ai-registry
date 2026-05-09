@@ -1,0 +1,25 @@
+id: check-linglong-retrospective
+name: Check Linglong Retrospective
+version: 0.1.0
+description: Verify that a recent Linglong packaging retrospective exists and contains the required fields
+entry: run.py
+runtime: python
+os:
+  - linux
+agents:
+  - codex
+  - claude-code
+  - opencode
+  - cursor
+  - gemini-cli
+description_scope: generic
+requires:
+  cli:
+    - python3
+permissions:
+  workspace_only: true
+  network: false
+  destructive: false
+notes:
+  - Fails if no retrospective JSON exists under .ai-registry/linglong-retrospectives
+  - Fails if the latest retrospective is missing required keys

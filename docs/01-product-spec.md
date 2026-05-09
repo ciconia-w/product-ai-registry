@@ -138,6 +138,8 @@ GitHub 仓库是唯一事实来源。
 - `gh-cli`、`cc-switch` 适合建模为 `baseline`
 - `lark-cli` 适合建模为 `optional`
 - `opencli` 适合建模为 `dependency`
+- `context-mode`、`open-slide` 适合建模为 `optional`
+- `agent-skills`、`browserbase-skills`、`khazix-skills` 适合建模为 `reference`
 
 ### 6.2 Agent runtime 与 registry 资源的区别
 
