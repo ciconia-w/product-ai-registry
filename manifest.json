@@ -42,10 +42,12 @@
     },
     {
       "id": "product-default",
-      "version": "0.1.2",
-      "description": "Draft product workflow pack. Not ready-to-use yet; resources are still being integrated.",
+      "version": "0.1.3",
+      "description": "Default starter pack for product team members",
       "path": "packs/product-default.json",
-      "items": []
+      "items": [
+        "skill:deepin-dev"
+      ]
     },
     {
       "id": "deepin-color-correction-linglong",
@@ -56,6 +58,51 @@
         "skill:linglong-uab-shortest-path",
         "script:reset-linglong-builder-env",
         "script:rebuild-linglong-uab-shortest-path"
+      ]
+    },
+    {
+      "id": "deepin-dev",
+      "version": "0.1.0",
+      "description": "deepin v20/v25 application development - Qt/DTK/Python/D-Bus compatibility constraints",
+      "path": "packs/deepin-dev.json",
+      "items": [
+        "skill:deepin-dev",
+        "reference:deepin-compat"
+      ]
+    },
+    {
+      "id": "product-insight-workflow",
+      "version": "0.1.0",
+      "description": "Requirement collection, analysis, prioritization, and backlog-writing workflow pack for product teams",
+      "path": "packs/product-insight-workflow.json",
+      "items": [
+        "skill:triage-issue",
+        "skill:prd-review",
+        "skill:spec-to-backlog",
+        "skill:deepin-requirement-crawler",
+        "skill:requirement-analyzer",
+        "skill:requirement-prioritizer",
+        "skill:requirement-writer"
+      ]
+    },
+    {
+      "id": "ai-daily-news-workflow",
+      "version": "0.1.0",
+      "description": "AI daily news collection, drafting, and SMTP delivery workflow pack",
+      "path": "packs/ai-daily-news-workflow.json",
+      "items": [
+        "skill:ai-daily-news",
+        "skill:send-email",
+        "script:send-email"
+      ]
+    },
+    {
+      "id": "uniontech-ai-point-extract",
+      "version": "0.1.0",
+      "description": "Minimal UnionTech AI point extraction workflow pack centered on the logged-in browser extraction skill",
+      "path": "packs/uniontech-ai-point-extract.json",
+      "items": [
+        "skill:uniontech-ai-point-export"
       ]
     }
   ],
@@ -519,6 +566,46 @@
       "version": "0.1.0",
       "path": "skills/requirement-writer",
       "description": "Guide a user through structured requirement conversations and generate Problem Framing, SRD, or PRD outputs",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "send-email",
+      "version": "0.1.0",
+      "path": "skills/send-email",
+      "description": "Safely use the registry send-email script by checking SMTP prerequisites and environment configuration before delivery",
+      "requires": {
+        "items": [
+          "script:send-email"
+        ],
+        "cli": [
+          "python3"
+        ]
+      },
       "support": {
         "codex": {
           "mode": "native_skill_dir"
@@ -1191,6 +1278,40 @@
           "mode": "reference_only"
         },
         "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "deepin-compat",
+      "version": "0.1.0",
+      "path": "references/deepin-compat",
+      "description": "Environment snapshot and constraint rules for deepin v20 and v25 application development",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/ciconia-w/product-ai-registry",
+        "ref": "main"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "block"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
           "mode": "reference_only"
         }
       },
