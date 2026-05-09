@@ -9,6 +9,8 @@ os:
 requires:
   cli:
     - opencode
+  items:
+    - addon:opencli
 dispatch:
   runtime: opencode
   mode: wrapper

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Align manifest metadata with canonical resource files, downgrade unproven support claims, and strengthen registry validation
 - Bootstrap repository skeleton
 - Add governance and contribution rules
 - Add initial registry contract and adapter-first architecture

@@ -9,9 +9,11 @@ source:
   install_method: external_git
 install:
   commands:
-    - echo "Install lark-cli from the upstream project release or package instructions for the current platform"
+    - npm install -g @larksuite/cli
+    - npx skills add larksuite/cli -y -g
   verify:
-    - echo "Verify the lark-cli executable is available in PATH"
+    - lark-cli --help
+    - lark-cli auth status
 policy:
   role: optional
   action_on_missing: suggest

@@ -6,12 +6,12 @@ source:
   kind: external_git
   url: https://github.com/Yeachan-Heo/oh-my-codex
   ref: main
-  install_method: external_git
+  install_method: external_package
 install:
   commands:
-    - git clone https://github.com/Yeachan-Heo/oh-my-codex.git ~/.local/share/oh-my-codex
+    - npm install -g oh-my-codex
   verify:
-    - test -d ~/.local/share/oh-my-codex
+    - omx --help
 policy:
   role: baseline
   action_on_missing: install
@@ -20,5 +20,5 @@ agents:
 os:
   - linux
 notes:
-  - Baseline addon for Codex users
-  - Agent should install only if current agent is Codex-compatible and addon is absent
+  - Baseline addon for Codex users when Node.js and Codex CLI are already available
+  - Follow upstream setup guidance after install to wire runtime hooks and prompts

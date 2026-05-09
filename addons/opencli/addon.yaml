@@ -6,12 +6,13 @@ source:
   kind: external_git
   url: https://github.com/jackwener/opencli
   ref: main
-  install_method: external_git
+  install_method: external_package
 install:
   commands:
-    - git clone https://github.com/jackwener/opencli.git ~/.local/share/opencli
+    - npm install -g @jackwener/opencli
   verify:
-    - test -d ~/.local/share/opencli
+    - opencli --version
+    - opencli doctor
 policy:
   role: dependency
   action_on_missing: install

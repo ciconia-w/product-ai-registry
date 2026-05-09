@@ -6,19 +6,20 @@ source:
   kind: external_git
   url: https://github.com/Yeachan-Heo/oh-my-claudecode
   ref: main
-  install_method: external_git
+  install_method: external_package
 install:
   commands:
-    - git clone https://github.com/Yeachan-Heo/oh-my-claudecode.git ~/.local/share/oh-my-claudecode
+    - /plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode
+    - /plugin install oh-my-claudecode
   verify:
-    - test -d ~/.local/share/oh-my-claudecode
+    - 'echo "Verify the oh-my-claudecode plugin is visible in the current Claude Code session"'
 policy:
-  role: baseline
-  action_on_missing: install
+  role: optional
+  action_on_missing: suggest
 agents:
   - claude-code
 os:
   - linux
 notes:
-  - Baseline addon for Claude Code users
-  - Agent should install only if current agent is Claude Code-compatible and addon is absent
+  - Prefer the official Claude Code marketplace flow because installation is harness-specific
+  - Use the npm runtime path only when the local Claude Code environment explicitly supports it

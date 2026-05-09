@@ -83,7 +83,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `codex` 适合作为一等支持对象
+- `codex` 适合作为优先验证对象
 - canonical `skill` 可直接 materialize 成 `SKILL.md` 目录
 
 ### 4.2 Claude Code
@@ -134,7 +134,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `gemini-cli` 是一等支持对象
+- `gemini-cli` 是优先验证对象
 - registry 可以为 Gemini 输出原生 extension 包
 
 ### 4.5 OpenCode
@@ -147,7 +147,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `opencode` 是一等支持对象
+- `opencode` 是优先验证对象
 - canonical `skill` 可直接 materialize 成 `SKILL.md`
 
 ### 4.6 OpenClaw 与 Hermes
@@ -407,11 +407,11 @@ paths:
   "generated_at": "2026-04-29T00:00:00Z",
   "default_pack": "agent-baseline",
   "agents": {
-    "codex": { "support_level": "A" },
+    "codex": { "support_level": "B" },
     "claude-code": { "support_level": "B" },
     "cursor": { "support_level": "B" },
-    "gemini-cli": { "support_level": "A" },
-    "opencode": { "support_level": "A" },
+    "gemini-cli": { "support_level": "B" },
+    "opencode": { "support_level": "B" },
     "openclaw": { "support_level": "C" },
     "hermes": { "support_level": "C" }
   },
@@ -619,4 +619,3 @@ MVP 真正完成的标准：
 - Google Gemini CLI `GEMINI.md`、extensions、skills、agents
 - OpenCode 官方 `AGENTS.md` 与 Skills 文档
 - OpenClaw 与 Hermes 主仓公开资料
-
