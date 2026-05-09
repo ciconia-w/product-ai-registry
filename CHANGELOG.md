@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Align manifest metadata with canonical resource files, downgrade unproven support claims, and strengthen registry validation
+- Replace the broken README Mermaid architecture block with a generated repository overview, add `tools/update_readme_structure.py`, and tighten contribution guidance so README manual edits stay limited to overview-level changes
 - Bootstrap repository skeleton
 - Add governance and contribution rules
 - Add initial registry contract and adapter-first architecture

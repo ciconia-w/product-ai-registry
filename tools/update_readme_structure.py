@@ -1,0 +1,225 @@
+#!/usr/bin/env python3
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+README = ROOT / "README.md"
+MANIFEST = ROOT / "manifest.json"
+
+START_MARKER = "<!-- repo-structure:start -->"
+END_MARKER = "<!-- repo-structure:end -->"
+
+PREVIEW_LIMITS = {
+    ".github": 2,
+    "adapters": 4,
+    "skills": 3,
+    "scripts": 3,
+    "wrappers": 2,
+    "addons": 3,
+    "packs": 3,
+    "references": 3,
+    "schemas": 2,
+    "docs": 2,
+    "tools": 2,
+}
+
+TOP_LEVEL_ORDER = [
+    "AGENTS.md",
+    "REGISTRY.md",
+    "manifest.json",
+    "adapters",
+    "skills",
+    "scripts",
+    "wrappers",
+    "addons",
+    "packs",
+    "references",
+    "schemas",
+    "docs",
+    ".github",
+    "tools",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "GOVERNANCE.md",
+]
+
+DESCRIPTIONS = {
+    "AGENTS.md": "agent entry point",
+    "REGISTRY.md": "registry contract and execution rules",
+    "manifest.json": "machine-readable index of packs and items",
+    "adapters": "adapter rules by agent",
+    "skills": "reusable skill definitions",
+    "scripts": "shared executable tools",
+    "wrappers": "controlled CLI wrappers",
+    "addons": "installable upstream enhancements",
+    "packs": "composed bundles for roles and workflows",
+    "references": "discoverable external references",
+    "schemas": "JSON schemas for registry objects",
+    "docs": "product, architecture, and schema docs",
+    ".github": "CI and contribution templates",
+    "tools": "maintenance helpers for this repository",
+    "CHANGELOG.md": "user-visible change log",
+    "CONTRIBUTING.md": "branch, PR, and verification rules",
+    "GOVERNANCE.md": "support levels and review policy",
+}
+
+INVENTORY_ORDER = [
+    ("adapters", "adapters"),
+    ("skill", "skills"),
+    ("script", "scripts"),
+    ("wrapper", "wrappers"),
+    ("addon", "addons"),
+    ("reference", "references"),
+    ("packs", "packs"),
+]
+
+
+def load_manifest() -> dict:
+    return json.loads(MANIFEST.read_text(encoding="utf-8"))
+
+
+def visible_children(path: Path) -> list[Path]:
+    children = []
+    for child in path.iterdir():
+        if child.name == ".git" or child.name == "__pycache__":
+            continue
+        children.append(child)
+    return sorted(children, key=lambda child: (not child.is_dir(), child.name))
+
+
+def preview_names(path: Path) -> list[str]:
+    names = []
+    for child in visible_children(path):
+        names.append(f"{child.name}/" if child.is_dir() else child.name)
+    return names
+
+
+def visible_dir_count(path: Path) -> int:
+    return sum(1 for child in visible_children(path) if child.is_dir())
+
+
+def visible_pack_count(path: Path) -> int:
+    return sum(1 for child in visible_children(path) if child.is_file() and child.suffix == ".json")
+
+
+def count_label(name: str, path: Path, manifest: dict) -> str:
+    if name == "packs":
+        return f"{visible_pack_count(path)}"
+    if name in {"adapters", "skills", "scripts", "wrappers", "addons", "references"}:
+        return f"{visible_dir_count(path)}"
+    return ""
+
+
+def build_tree_lines(manifest: dict) -> list[str]:
+    lines = ["```text", "product-ai-registry/"]
+
+    existing = [name for name in TOP_LEVEL_ORDER if (ROOT / name).exists()]
+    for index, name in enumerate(existing):
+        path = ROOT / name
+        is_last = index == len(existing) - 1
+        connector = "└──" if is_last else "├──"
+        display_name = f"{name}/" if path.is_dir() and not name.endswith("/") else name
+
+        description = DESCRIPTIONS[name]
+        if path.is_dir():
+            count = count_label(name, path, manifest)
+            if count:
+                description = f"{description} ({count})"
+
+        line = f"{connector} {display_name}"
+        lines.append(f"{line:<32} # {description}")
+
+        if not path.is_dir():
+            continue
+
+        preview_limit = PREVIEW_LIMITS.get(name, 0)
+        if preview_limit <= 0:
+            continue
+
+        children = preview_names(path)
+        if not children:
+            continue
+
+        preview = children[:preview_limit]
+        if len(children) > preview_limit:
+            preview.append(f"... ({len(children) - preview_limit} more)")
+
+        child_prefix = "    " if is_last else "│   "
+        for child_index, child_name in enumerate(preview):
+            child_is_last = child_index == len(preview) - 1
+            child_connector = "└──" if child_is_last else "├──"
+            lines.append(f"{child_prefix}{child_connector} {child_name}")
+
+    lines.append("```")
+    return lines
+
+
+def build_inventory_lines(manifest: dict) -> list[str]:
+    inventory_counts = {
+        "adapters": visible_dir_count(ROOT / "adapters"),
+        "skill": visible_dir_count(ROOT / "skills"),
+        "script": visible_dir_count(ROOT / "scripts"),
+        "wrapper": visible_dir_count(ROOT / "wrappers"),
+        "addon": visible_dir_count(ROOT / "addons"),
+        "reference": visible_dir_count(ROOT / "references"),
+        "packs": visible_pack_count(ROOT / "packs"),
+    }
+
+    lines = ["当前规模："]
+    for key, label in INVENTORY_ORDER:
+        lines.append(f"- `{inventory_counts.get(key, 0)}` {label}")
+    return lines
+
+
+def build_block() -> str:
+    manifest = load_manifest()
+    parts = [
+        "_Generated by `python3 tools/update_readme_structure.py`. Do not edit this block manually._",
+        "",
+        *build_inventory_lines(manifest),
+        "",
+        *build_tree_lines(manifest),
+    ]
+    return "\n".join(parts)
+
+
+def replace_block(text: str, block: str) -> str:
+    if START_MARKER not in text or END_MARKER not in text:
+        raise SystemExit("README markers not found")
+
+    before, remainder = text.split(START_MARKER, 1)
+    _, after = remainder.split(END_MARKER, 1)
+    return f"{before}{START_MARKER}\n{block}\n{END_MARKER}{after}"
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description="Refresh the generated README structure block.")
+    parser.add_argument("--check", action="store_true", help="Fail if README is out of date.")
+    args = parser.parse_args()
+
+    original = README.read_text(encoding="utf-8")
+    updated = replace_block(original, build_block())
+
+    if args.check:
+        if original != updated:
+            print("README structure block is out of date.", file=sys.stderr)
+            return 1
+        print("README structure block is up to date.")
+        return 0
+
+    if original != updated:
+        README.write_text(updated, encoding="utf-8")
+        print("Updated README structure block.")
+    else:
+        print("README structure block already up to date.")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
