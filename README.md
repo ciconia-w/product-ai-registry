@@ -213,6 +213,9 @@ Agent 进入仓库后，按这个顺序工作：
 - `skill:requirement-prioritizer`
 - `skill:requirement-writer`
 - `skill:send-email`
+- `skill:deepin-dev`
+- `skill:deepin-ui-design`
+- `skill:desktop-help-manual-updater`
 - `script:send-email`
 - `pack:product-insight-workflow`
 - `pack:ai-daily-news-workflow`
@@ -246,6 +249,5 @@ Agent 进入仓库后，按这个顺序工作：
 - [docs/03-registry-schemas.md](docs/03-registry-schemas.md)
 - [docs/04-bootstrap-and-helpers.md](docs/04-bootstrap-and-helpers.md)
 - [docs/05-project-scoped-materialization.md](docs/05-project-scoped-materialization.md)
-
 
 

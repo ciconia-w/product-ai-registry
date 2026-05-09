@@ -1,0 +1,4 @@
+interface:
+  display_name: "桌面应用帮助手册更新"
+  short_description: "核验真实桌面应用界面与流程，并编写、重写或更新对应帮助手册"
+  default_prompt: "使用 $desktop-help-manual-updater 基于真实运行中的桌面应用与现有资料，判断应增量更新、重写还是从零编写帮助手册，逐项核验界面与流程，并将交付物输出到约定的 output 目录。"
