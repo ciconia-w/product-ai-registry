@@ -4,6 +4,8 @@
 
 它只解决一件事：把团队共用的 `skills`、`scripts`、`wrappers`、`packs`、`addons`、`references` 集中管理，并通过不同 Agent 的 `adapter` 决定如何在本地落地。
 
+如果你想看偏门技巧、实践经验、工具使用小抄，直接看 [FIELD_NOTES.md](FIELD_NOTES.md)。
+
 当前仓库状态：
 
 - 规范、编目和验证约束已经成型
