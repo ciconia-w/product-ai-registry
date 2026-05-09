@@ -53,6 +53,7 @@ product-ai-registry/
 ├── AGENTS.md                    # agent entry point
 ├── REGISTRY.md                  # registry contract and execution rules
 ├── manifest.json                # machine-readable index of packs and items
+├── FIELD_NOTES.md               # human-oriented practical notes and usage tips
 ├── adapters/                    # adapter rules by agent (7)
 │   ├── claude-code/
 │   ├── codex/
@@ -110,6 +111,7 @@ product-ai-registry/
 
 - `manifest.json`：完整资源索引、pack 关系、默认 pack
 - `REGISTRY.md`：安装、更新、自检、阻断约定
+- `FIELD_NOTES.md`：偏门技巧、实践经验、使用小抄
 - `docs/01-product-spec.md`：产品目标和边界
 - `docs/02-architecture-design.md`：架构和本地落地设计
 - `docs/03-registry-schemas.md`：结构和 schema 说明
@@ -138,6 +140,7 @@ https://github.com/ciconia-w/product-ai-registry
 
 - [REGISTRY.md](REGISTRY.md)
 - [AGENTS.md](AGENTS.md)
+- [FIELD_NOTES.md](FIELD_NOTES.md)
 - [CONTRIBUTING.md](CONTRIBUTING.md)
 - [GOVERNANCE.md](GOVERNANCE.md)
 - [docs/01-product-spec.md](docs/01-product-spec.md)
