@@ -9,7 +9,7 @@
 当前仓库状态：
 
 - 规范、编目和验证约束已经成型
-- 自动 materialization helper 仍在建设中
+- 资源是否安装、更新或仅引用，应由访问仓库的 agent 按当前任务和环境自行判断
 - 带 placeholder 入口的能力当前不应被视为可直接安装或可直接执行
 
 ## 适合什么场景
@@ -20,6 +20,19 @@
 - 但 Agent 不统一，例如 `Claude Code`、`Codex`、`Cursor`、`Gemini CLI`、`OpenCode`
 - 希望把常用提示词、脚本、封装器、能力包统一收口
 - 希望后续更新直接通过 GitHub 仓库分发
+
+## 快速使用
+
+把下面这段提示词发给团队成员，让他们直接贴给自己的 Agent：
+
+```text
+请使用以下资源注册表判断当前任务需要哪些 AI 资源：
+https://github.com/ciconia-w/product-ai-registry
+
+按 AGENTS.md 和 REGISTRY.md 执行。
+结合当前任务、当前环境和当前 Agent 能力，自行判断哪些资源需要安装、更新、或仅引用。
+如果无法安全安装或自检失败，请明确报告阻断，不要伪造完成状态。
+```
 
 ## 入口顺序
 
@@ -119,18 +132,6 @@ product-ai-registry/
 - `docs/03-registry-schemas.md`：结构和 schema 说明
 
 资源角色 `baseline`、`dependency`、`reference`、`optional` 的语义以 `REGISTRY.md` 为准，不在 README 重复维护。
-
-## 快速使用
-
-把下面这段提示词发给团队成员，让他们直接贴给自己的 Agent：
-
-```text
-请使用以下资源注册表配置或更新我的本机 AI 资源：
-https://github.com/ciconia-w/product-ai-registry
-
-按 AGENTS.md 和 REGISTRY.md 执行。
-如果无法安全安装或自检失败，请明确报告阻断，不要伪造完成状态。
-```
 
 ## 维护方式
 
