@@ -117,6 +117,29 @@ xdg-open "/目标路径/full.png"
 2. 名称里包含场景关键词，例如 `home`、`settings`、`export-dialog`
 3. 不要使用 `截图1.png`、`新建位图.png` 这类不可回溯名称
 
+## 截图元数据与状态缓存
+
+如果同一项目后续还要产出英文版、双语版或二次重写，不要只保存截图文件本身。建议为每张通过复核的截图同步记录一份轻量缓存，至少包括：
+
+1. `scene_id`
+2. `ui_state`
+3. `locale`
+4. `caption_zh`
+5. `caption_en`
+6. `screenshot_path`
+7. `verified_at`
+8. `reusable_for_en`
+
+推荐理解方式：
+
+- `scene_id`：语言无关、可跨中文/英文输出复用的场景 ID
+- `ui_state`：这张图对应的真实界面状态，例如 `welcome-idle`、`history-search-open`
+- `locale`：采图时的语言环境，例如 `zh_CN`、`en_US`
+- `caption_zh` / `caption_en`：中文说明和英文说明
+- `reusable_for_en`：这张图是否可直接用于英文输出
+
+如果英文交付和中文交付使用的是同一个真实界面状态，只是说明文字不同，优先复用同一张截图并更新缓存里的英文说明，而不是机械重截。
+
 ## 本机推荐执行顺序
 
 在当前设备上做截图，推荐按以下顺序执行：
