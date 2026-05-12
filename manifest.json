@@ -1771,6 +1771,38 @@
         "role": "optional",
         "action_on_missing": "install"
       }
+    },
+    {
+      "type": "skill",
+      "id": "company-pm-opencli",
+      "version": "0.1.0",
+      "path": "skills/company-pm-opencli",
+      "description": "Use the local OpenCLI company-pm plugin for PMS/禅道 inspection, batch workflows, and guarded preview-first automation",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
     }
   ]
 }
