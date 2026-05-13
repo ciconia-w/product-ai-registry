@@ -17,4 +17,55 @@ jobs:
       - name: Validate manifest and references
         shell: bash
         run: |
-          python3 scripts/bootstrap/validate_registry.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+          manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+
+          assert "items" in manifest, "manifest missing items"
+
+          item_ids = set()
+          for item in manifest["items"]:
+            item_ids.add(f'{item["type"]}:{item["id"]}')
+            assert "source" in item, f'item missing source: {item["type"]}:{item["id"]}'
+            assert "policy" in item, f'item missing policy: {item["type"]}:{item["id"]}'
+            item_path = root / item["path"]
+            assert item_path.exists(), f'missing path: {item["path"]}'
+            if item["type"] == "skill":
+              assert (item_path / "SKILL.md").exists(), f'missing SKILL.md for {item["id"]}'
+            if item["type"] == "script":
+              assert (item_path / "tool.yaml").exists(), f'missing tool.yaml for {item["id"]}'
+            if item["type"] == "addon":
+              assert (item_path / "addon.yaml").exists(), f'missing addon.yaml for {item["id"]}'
+              addon_text = (item_path / "addon.yaml").read_text(encoding="utf-8")
+              assert "source:" in addon_text, f'addon missing source block: {item["id"]}'
+              assert "url:" in addon_text, f'addon missing source url: {item["id"]}'
+              assert "policy:" in addon_text, f'addon missing policy block: {item["id"]}'
+              assert "install:" in addon_text, f'addon missing install block: {item["id"]}'
+              assert "commands:" in addon_text, f'addon missing install commands: {item["id"]}'
+            if item["type"] == "reference":
+              assert (item_path / "reference.yaml").exists(), f'missing reference.yaml for {item["id"]}'
+              ref_text = (item_path / "reference.yaml").read_text(encoding="utf-8")
+              assert "source:" in ref_text, f'reference missing source block: {item["id"]}'
+              assert "url:" in ref_text, f'reference missing source url: {item["id"]}'
+              assert "policy:" in ref_text, f'reference missing policy block: {item["id"]}'
+
+          for adapter in (root / "adapters").glob("*/adapter.yaml"):
+            assert adapter.exists(), f'missing adapter file: {adapter}'
+            adapter_text = adapter.read_text(encoding="utf-8")
+            adapter_name = adapter.parent.name
+            support_line = next((line for line in adapter_text.splitlines() if line.startswith("support_level:")), "")
+            if adapter_name in manifest["agents"] and support_line:
+              adapter_level = support_line.split(":", 1)[1].strip()
+              manifest_level = manifest["agents"][adapter_name]["support_level"]
+              assert adapter_level == manifest_level, f'support_level mismatch for {adapter_name}: manifest={manifest_level} adapter={adapter_level}'
+
+          print("registry validation passed")
+          PY
+
+      - name: Check README structure block
+        shell: bash
+        run: |
+          python3 tools/update_readme_structure.py --check

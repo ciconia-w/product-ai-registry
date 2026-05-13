@@ -1,0 +1,20 @@
+id: pm-batch-config-example
+name: Company PM Batch Config Example
+version: 0.1.0
+description: Reference for the batch JSON structure and $prev style parameter chaining used by company-pm batch execution
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference whenever an agent needs to prepare or review a company-pm batch config file

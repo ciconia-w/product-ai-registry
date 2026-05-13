@@ -3,7 +3,6 @@ support_level: B
 instruction_mode: agents_md_or_rules
 skill_mode: generated_rules
 script_mode: project_local_copy
-wrapper_mode: project_local_copy
 install_strategy: prompt_or_helper
 supported_os:
   - linux

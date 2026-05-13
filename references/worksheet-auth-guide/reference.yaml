@@ -1,0 +1,21 @@
+id: worksheet-auth-guide
+name: Company PM Product Feedback Auth Guide
+version: 0.1.0
+description: Reference for credentials and auth prerequisites of the product feedback platform used by company-pm commands
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference whenever product-requirements or collect-requirements is used against the feedback platform
+  - Required credentials include COMPANY_PM_APP_KEY and COMPANY_PM_SIGN

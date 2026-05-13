@@ -20,7 +20,6 @@ Changes to these areas require extra scrutiny:
 - `REGISTRY.md`
 - `AGENTS.md`
 - `adapters/**`
-- `packs/**`
 - `.github/**`
 - `GOVERNANCE.md`
 - `CONTRIBUTING.md`
@@ -38,7 +37,7 @@ The following changes require validation notes in the PR:
 
 - adding a new Agent adapter
 - changing local materialization mode
-- changing pack composition
+- changing workflow composition guidance
 - changing dependency or install assumptions
 - promoting an adapter from experimental to supported
 

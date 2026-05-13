@@ -1,9 +1,8 @@
 agent_id: codex
-support_level: B
+support_level: A
 instruction_mode: agents_md
 skill_mode: native_skill_dir
 script_mode: local_copy
-wrapper_mode: local_copy
 install_strategy: prompt_first
 supported_os:
   - linux

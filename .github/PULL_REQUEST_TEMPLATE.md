@@ -7,7 +7,7 @@
 
 - [ ] capability
 - [ ] adapter
-- [ ] pack
+- [ ] workflow-doc / composition
 - [ ] governance
 - [ ] CI
 - [ ] docs
@@ -25,10 +25,9 @@
 ## Validation
 
 - [ ] `manifest.json` updated if needed
-- [ ] related `pack` updated if needed
+- [ ] related workflow docs updated if needed
 - [ ] related `CHANGELOG.md` entry added if needed
-- [ ] generated README structure block refreshed if repository structure changed
-- [ ] `README.md` manually updated only when entry flow, repository navigation, or user-facing behavior changed
+- [ ] `README.md` updated when user-facing behavior changed
 - [ ] `docs/01-product-spec.md`, `docs/02-architecture-design.md`, and `docs/03-registry-schemas.md` updated when semantics changed
 - [ ] addon or reference entries include source address and install or usage guidance when applicable
 - [ ] real validation evidence attached if support level changed
@@ -37,3 +36,4 @@
 
 - Compatibility impact:
 - Risks:
+

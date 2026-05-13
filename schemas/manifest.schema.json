@@ -3,11 +3,10 @@
   "$id": "https://example.com/product-ai-registry/schemas/manifest.schema.json",
   "title": "Registry Manifest",
   "type": "object",
-  "required": ["registry_version", "generated_at", "default_pack", "agents", "packs", "items"],
+  "required": ["registry_version", "generated_at", "agents", "items"],
   "properties": {
     "registry_version": { "type": "string" },
     "generated_at": { "type": "string" },
-    "default_pack": { "type": "string" },
     "agents": {
       "type": "object",
       "additionalProperties": {
@@ -18,35 +17,17 @@
         }
       }
     },
-    "packs": {
-      "type": "array",
-      "items": { "$ref": "#/$defs/packRef" }
-    },
     "items": {
       "type": "array",
       "items": { "$ref": "#/$defs/itemRef" }
     }
   },
   "$defs": {
-    "packRef": {
-      "type": "object",
-      "required": ["id", "version", "description", "path", "items"],
-      "properties": {
-        "id": { "type": "string" },
-        "version": { "type": "string" },
-        "description": { "type": "string" },
-        "path": { "type": "string" },
-        "items": {
-          "type": "array",
-          "items": { "type": "string" }
-        }
-      }
-    },
     "itemRef": {
       "type": "object",
       "required": ["type", "id", "version", "path", "description", "support", "checksum"],
       "properties": {
-        "type": { "type": "string", "enum": ["skill", "script", "wrapper", "addon", "reference"] },
+        "type": { "type": "string", "enum": ["skill", "script", "addon", "reference"] },
         "id": { "type": "string" },
         "version": { "type": "string" },
         "path": { "type": "string" },

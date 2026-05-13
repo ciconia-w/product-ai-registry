@@ -20,9 +20,7 @@ PREVIEW_LIMITS = {
     "adapters": 4,
     "skills": 3,
     "scripts": 3,
-    "wrappers": 2,
     "addons": 3,
-    "packs": 3,
     "references": 3,
     "schemas": 2,
     "docs": 2,
@@ -37,9 +35,7 @@ TOP_LEVEL_ORDER = [
     "adapters",
     "skills",
     "scripts",
-    "wrappers",
     "addons",
-    "packs",
     "references",
     "schemas",
     "docs",
@@ -53,14 +49,12 @@ TOP_LEVEL_ORDER = [
 DESCRIPTIONS = {
     "AGENTS.md": "agent entry point",
     "REGISTRY.md": "registry contract and execution rules",
-    "manifest.json": "machine-readable index of packs and items",
+    "manifest.json": "machine-readable index of registry items",
     "FIELD_NOTES.md": "human-oriented practical notes and usage tips",
     "adapters": "adapter rules by agent",
     "skills": "reusable skill definitions",
     "scripts": "shared executable tools",
-    "wrappers": "controlled CLI wrappers",
     "addons": "installable upstream enhancements",
-    "packs": "composed bundles for roles and workflows",
     "references": "discoverable external references",
     "schemas": "JSON schemas for registry objects",
     "docs": "product, architecture, and schema docs",
@@ -75,10 +69,8 @@ INVENTORY_ORDER = [
     ("adapters", "adapters"),
     ("skill", "skills"),
     ("script", "scripts"),
-    ("wrapper", "wrappers"),
     ("addon", "addons"),
     ("reference", "references"),
-    ("packs", "packs"),
 ]
 
 
@@ -106,14 +98,8 @@ def visible_dir_count(path: Path) -> int:
     return sum(1 for child in visible_children(path) if child.is_dir())
 
 
-def visible_pack_count(path: Path) -> int:
-    return sum(1 for child in visible_children(path) if child.is_file() and child.suffix == ".json")
-
-
 def count_label(name: str, path: Path, manifest: dict) -> str:
-    if name == "packs":
-        return f"{visible_pack_count(path)}"
-    if name in {"adapters", "skills", "scripts", "wrappers", "addons", "references"}:
+    if name in {"adapters", "skills", "scripts", "addons", "references"}:
         return f"{visible_dir_count(path)}"
     return ""
 
@@ -167,10 +153,8 @@ def build_inventory_lines(manifest: dict) -> list[str]:
         "adapters": visible_dir_count(ROOT / "adapters"),
         "skill": visible_dir_count(ROOT / "skills"),
         "script": visible_dir_count(ROOT / "scripts"),
-        "wrapper": visible_dir_count(ROOT / "wrappers"),
         "addon": visible_dir_count(ROOT / "addons"),
         "reference": visible_dir_count(ROOT / "references"),
-        "packs": visible_pack_count(ROOT / "packs"),
     }
 
     lines = ["当前规模："]

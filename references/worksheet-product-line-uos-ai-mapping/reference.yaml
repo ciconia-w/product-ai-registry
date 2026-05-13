@@ -1,0 +1,20 @@
+id: worksheet-product-line-uos-ai-mapping
+name: Company PM Product Line UOS AI Mapping
+version: 0.1.0
+description: Reference mapping between stable company-pm product line identifiers and the UOS AI related product lines used in feedback workflows
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/product-line-uos-ai-mapping.json
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference when UOS AI specific product line mapping is required during feedback operations
