@@ -1,5 +1,5 @@
 ﻿---
-name: deepin-design
+name: deepin-ui-design
 description: Reference a UOS and Deepin style QML design system for DTK-first desktop UI work on Linux desktops. Use when designing, implementing, or reviewing theme variables, layout, window behavior, platform compatibility, blur effects, common desktop components, or mandatory control-center style left-sidebar desktop layouts.
 ---
 

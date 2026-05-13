@@ -19,10 +19,9 @@ Canonical Registry (GitHub)
   ├─ REGISTRY.md
   ├─ skills/
   ├─ scripts/
-  ├─ wrappers/
   ├─ addons/
   ├─ references/
-  └─ packs/
+  └─ docs/workflows/
 
 Agent-specific adapters
   ├─ codex
@@ -41,7 +40,7 @@ Local materialization
   ├─ .claude/agents/*.md
   ├─ .gemini/agents/*.md
   ├─ .opencode/skills/*/SKILL.md
-  └─ executable scripts / wrappers
+  └─ executable scripts
 ```
 
 一句话：
@@ -83,7 +82,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `codex` 适合作为优先验证对象
+- `codex` 适合作为一等支持对象
 - canonical `skill` 可直接 materialize 成 `SKILL.md` 目录
 
 ### 4.2 Claude Code
@@ -102,7 +101,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 - 对 Claude Code 的正确架构是：
   - 生成 `CLAUDE.md` 导航或导入
   - 视需要生成 `.claude/agents/*.md`
-  - 把脚本与 wrapper 落到本地受控路径
+  - 把脚本落到本地受控路径
 
 ### 4.3 Cursor
 
@@ -134,7 +133,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `gemini-cli` 是优先验证对象
+- `gemini-cli` 是一等支持对象
 - registry 可以为 Gemini 输出原生 extension 包
 
 ### 4.5 OpenCode
@@ -147,7 +146,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `opencode` 是优先验证对象
+- `opencode` 是一等支持对象
 - canonical `skill` 可直接 materialize 成 `SKILL.md`
 
 ### 4.6 OpenClaw 与 Hermes
@@ -184,19 +183,25 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 ## 6. 支持策略
 
-当前不是“硬支持名单”，而是“目标兼容名单 + 运行时自判”。
+### 6.1 正式支持对象
 
-也就是说：
+第一阶段正式支持：
 
-- registry 提供结构和 adapter
-- agent 在当前机器上决定是否执行
-- 自检失败时阻断
+- `codex`
+- `gemini-cli`
+- `opencode`
 
-现实上的兼容成熟度仍有差异：
+### 6.2 适配支持对象
 
-- `codex`、`gemini-cli`、`opencode` 更适合作为优先验证对象
-- `claude-code`、`cursor` 更依赖适配策略
-- `openclaw`、`hermes` 保持实验性质
+第一阶段适配支持：
+
+- `claude-code`
+- `cursor`
+
+### 6.3 实验对象
+
+- `openclaw`
+- `hermes`
 
 ## 7. 仓库目录结构
 
@@ -221,14 +226,13 @@ product-ai-registry/
       tool.yaml
       run.sh
 
-  wrappers/
-    opencode-review/
-      tool.yaml
-      run.sh
+  references/
+    deepin-compat/
+      reference.yaml
 
-  packs/
-    agent-baseline.json
-    product-default.json
+  docs/
+    workflows/
+      ai-daily-news.md
 
   adapters/
     codex/
@@ -273,39 +277,21 @@ product-ai-registry/
 - 描述依赖 CLI
 - 描述输入输出
 
-### 8.3 wrapper
-
-规范化 wrapper 的职责：
-
-- 绑定某个本地 CLI
-- 固定受控参数
-- 定义允许的调用方式
-
-### 8.4 pack
-
-规范化 pack 的职责：
-
-- 聚合一组 capability
-- 标记默认角色或场景
-- 为不同 Agent 指定不同 materialization 目标
-
-### 8.5 addon
+### 8.3 addon
 
 规范化 addon 的职责：
 
 - 表示一个可安装的上游增强包
 - 自身可能不是单文件 skill 或脚本
 - 常见为外部 git 仓库、release 或 package manager 目标
-- 适合建模那些需要额外 CLI、hooks、MCP 配置、脚手架或上游安装流程的能力
 
-### 8.6 reference
+### 8.4 reference
 
 规范化 reference 的职责：
 
 - 表示一个可供 Agent 发现和引用的上游项目
 - 默认不自动安装
 - 用于“有没有这类能力可以参考”这种问题
-- 适合收口外部 skill 库、工作流 catalog、实现参考、方法论资料，而不是把整仓上游直接当 baseline 安装
 
 ## 9. Adapter 模型
 
@@ -316,7 +302,6 @@ product-ai-registry/
 - `instruction_mode`
 - `skill_mode`
 - `script_mode`
-- `wrapper_mode`
 - `install_strategy`
 - `supported_os`
 
@@ -328,7 +313,6 @@ support_level: B
 instruction_mode: claude_md
 skill_mode: generated_subagent
 script_mode: local_copy
-wrapper_mode: local_copy
 install_strategy: prompt_or_helper
 supported_os:
   - linux
@@ -352,8 +336,8 @@ paths:
 | `project_generated_rules` | 在目标仓库内生成规则文件 |
 | `memory_import` | 写入主 memory 文件并导入其他内容 |
 | `extension_bundle` | 生成原生 extension 包 |
-| `local_copy` | 复制脚本或 wrapper 到本地目录 |
-| `project_local_copy` | 复制脚本或 wrapper 到目标仓库路径 |
+| `local_copy` | 复制脚本到本地目录 |
+| `project_local_copy` | 复制脚本到目标仓库路径 |
 
 例子：
 
@@ -361,7 +345,7 @@ paths:
 - OpenCode skill -> `native_skill_dir`
 - Claude Code skill -> `generated_subagent` 或 `memory_import`
 - Cursor skill -> `generated_rules`
-- Gemini CLI skill pack -> `extension_bundle`
+- Gemini CLI skill bundle -> `extension_bundle`
 - Repo-specific build assets -> `project_*` modes
 
 ## 11. Materialization 路径策略
@@ -382,11 +366,12 @@ paths:
 - 删除未知来源的用户文件
 - 直接重写现有主配置文件的全部内容
 
-## 11.1 Pack maturity
+## 11.1 Workflow composition maturity
 
-- `agent-baseline` is the default baseline pack for required applications and addons
-- ready-to-use workflow packs are still being curated
-- `product-default` should currently be treated as a draft placeholder, not a polished business pack
+- workflow 组合说明应逐步迁移到 `docs/workflows/`
+- 原子资源由 `skill`、`script`、`addon`、`reference` 维护
+- workflow 文档负责说明组合顺序、前置检查和阻断条件
+- 当前优先保留确实需要跨资源编排说明的 workflow，例如 AI 日报
 
 ## 12. manifest.json 结构
 
@@ -405,27 +390,15 @@ paths:
 {
   "registry_version": "1.0.0",
   "generated_at": "2026-04-29T00:00:00Z",
-  "default_pack": "agent-baseline",
   "agents": {
-    "codex": { "support_level": "B" },
+    "codex": { "support_level": "A" },
     "claude-code": { "support_level": "B" },
     "cursor": { "support_level": "B" },
-    "gemini-cli": { "support_level": "B" },
-    "opencode": { "support_level": "B" },
+    "gemini-cli": { "support_level": "A" },
+    "opencode": { "support_level": "A" },
     "openclaw": { "support_level": "C" },
     "hermes": { "support_level": "C" }
   },
-  "packs": [
-    {
-      "id": "agent-baseline",
-      "version": "1.0.0",
-      "items": [
-        "addon:gh-cli",
-        "addon:opencli",
-        "addon:cc-switch"
-      ]
-    }
-  ],
   "items": [
     {
       "type": "skill",
@@ -450,16 +423,10 @@ paths:
 }
 ```
 
-Interpretation rules:
-
-- `baseline + install`: install proactively when compatible
-- `dependency + block/install`: only resolve when another item requires it
-- `reference + suggest`: never auto-install, only surface to the user or agent
-
 Important distinction:
 
 - `agent runtime` is the execution surface, for example `codex`, `claude-code`, `cursor`, `gemini-cli`, `opencode`
-- `registry resource` is what the registry indexes, for example `skill`, `script`, `wrapper`, `addon`, `reference`
+- `registry resource` is what the registry indexes, for example `skill`, `script`, `addon`, `reference`
 - a resource may depend on an addon like `opencli`
 - a resource may proactively install a baseline addon like `gh-cli` or `cc-switch`
 - a resource may expose an optional addon like `lark-cli`
@@ -497,7 +464,6 @@ Important distinction:
 {
   "registry_url": "https://github.com/your-org/product-ai-registry",
   "last_synced": "2026-04-29T10:40:00Z",
-  "active_pack": "product-default",
   "agent_type": "codex",
   "items": {
     "skill:prd-review": {
@@ -524,8 +490,8 @@ Important distinction:
 1. 读取 `manifest.json`
 2. 识别 `agent_type`
 3. 加载该 Agent 的 `adapter.yaml`
-4. 选择默认 `pack`
-5. 对 pack 中每项执行：
+4. 选择相关资源和 workflow 文档
+5. 对每个目标资源执行：
    - 取 canonical 资源
    - 根据 adapter 选择 materialization 模式
    - 选择 namespaced 路径
@@ -550,7 +516,7 @@ Important distinction:
 
 - 当前 Agent 是否属于支持矩阵
 - 当前 Agent 的 adapter 是否存在
-- pack 中每个项目是否对当前 Agent 可 materialize
+- 每个目标资源是否对当前 Agent 可 materialize
 - 本地入口文件或目标文件是否存在
 - 依赖 CLI 是否可用
 - 用户主配置文件是否仍然保留且可解析
@@ -595,17 +561,18 @@ Important distinction:
 
 1. 建立 canonical registry 结构
 2. 建立 `manifest.json` 与 `adapter.yaml` 结构
-3. 先完成目标兼容度较高的 agent 路径，例如 `codex`、`gemini-cli`、`opencode`
-4. 再完成更依赖适配的 `claude-code`、`cursor`
+3. 先完成 `codex`、`gemini-cli`、`opencode` 的 materialization
+4. 再完成 `claude-code`、`cursor` 的适配
 5. 最后评估 `openclaw`、`hermes`
 
 ## 20. MVP 完成标准
 
 MVP 真正完成的标准：
 
-- registry 结构可支持 `type`、`role`、`source`、`requires.items`
-- 至少一个 agent 能完整走通从扫描到 materialization 的链路
-- project-scoped 与 global-scoped 资源都能被正确区分
+- `codex` 在真实机器上能安装并识别至少一个 skill
+- `gemini-cli` 能通过 extension 安装并更新至少一个资源包
+- `opencode` 能发现并使用至少一个 skill
+- `claude-code` 或 `cursor` 至少有一个成功完成适配式落地
 - 已验证 materialization 不会覆盖用户既有配置
 - 文档中不再存在统一格式误导
 
@@ -619,3 +586,4 @@ MVP 真正完成的标准：
 - Google Gemini CLI `GEMINI.md`、extensions、skills、agents
 - OpenCode 官方 `AGENTS.md` 与 Skills 文档
 - OpenClaw 与 Hermes 主仓公开资料
+

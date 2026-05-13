@@ -5,9 +5,8 @@
 - [x] Create repository skeleton
 - [x] Add governance documents
 - [x] Add canonical spec and architecture docs
-- [x] Add initial manifest and default pack
+- [x] Add initial manifest skeleton
 - [x] Add schema skeletons
-- [x] Add bootstrap helper skeletons
 - [x] Add adapter template skeletons
 - [ ] Add CI validation workflow
 - [ ] Protect `main`
@@ -16,14 +15,9 @@
 
 - [ ] `skills/prd-review`
 - [ ] `scripts/forum-demand-crawler`
-- [ ] `wrappers/opencode-review`
-- [ ] `packs/product-default.json`
 - [x] `skills/linglong-uab-shortest-path`
-- [x] `skills/linglong-packaging-retrospective`
 - [x] `scripts/reset-linglong-builder-env`
 - [x] `scripts/rebuild-linglong-uab-shortest-path`
-- [x] `scripts/write-linglong-retrospective`
-- [x] `packs/linglong-packaging.json`
 - [x] `addon:oh-my-codex`
 - [x] `addon:oh-my-claudecode`
 - [x] `addon:superpowers`

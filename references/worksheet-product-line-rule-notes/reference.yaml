@@ -1,0 +1,20 @@
+id: worksheet-product-line-rule-notes
+name: Company PM Product Line Rule Notes
+version: 0.1.0
+description: Reference notes describing stable product line mapping rules and field-filling conventions used by company-pm
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/product-line-rule-notes.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference when product line values must be translated into stable field-filling behavior

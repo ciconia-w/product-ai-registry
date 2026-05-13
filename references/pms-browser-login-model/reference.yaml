@@ -1,0 +1,21 @@
+id: pms-browser-login-model
+name: Company PM Browser Login Model
+version: 0.1.0
+description: Reference for how company-pm PMS commands reuse an existing browser login state through OpenCLI browser bridge
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference when a workflow depends on PMS or Zentao browser login-state reuse
+  - Treat browser bridge availability and logged-in profile availability as hard prerequisites

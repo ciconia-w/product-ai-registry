@@ -8,8 +8,6 @@ Resource types:
 
 - `skill`
 - `script`
-- `wrapper`
-- `pack`
 - `addon`
 - `reference`
 
@@ -22,7 +20,7 @@ Each agent in `manifest.json` carries a `support_level` field.
 
 | Level | Meaning |
 |---|---|
-| A | Fully validated on target OS. Adapter complete. All declared resource modes tested with materialization evidence. |
+| A | Fully validated on target OS. Adapter complete. All resource modes tested. |
 | B | Adapter defined. Basic install tested. Some modes may be untested. |
 | C | Adapter skeleton only. Experimental. Not for production use. |
 
@@ -34,7 +32,7 @@ When asked to configure, update, or validate local resources, follow this order:
 2. Detect the current OS
 3. Read `manifest.json`
 4. Read `adapters/<agent-id>/adapter.yaml`
-5. Select the target `pack`
+5. Select the target resources and any relevant workflow guidance
 6. Evaluate each item's `policy`
 7. Materialize only the items supported by that adapter and policy
 8. Validate results

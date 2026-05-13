@@ -11,7 +11,7 @@
 ## 2. 一句话定义
 
 一个为多种本地 AI 编码 Agent 提供共享资源的 GitHub 注册表。  
-团队成员只需把一个链接或一段固定提示词发给自己的 Agent，Agent 即可读取注册表、选择适配方案、尝试安装或更新本地资源，并在能力不足时汇报明确阻断。
+团队成员只需把一个链接或一段固定提示词发给自己的 Agent，Agent 即可读取注册表、选择适配方案、安装或更新本地资源，并汇报健康状态。
 
 ## 3. 解决的问题
 
@@ -27,7 +27,7 @@
 
 当前痛点不是 Agent 不够多，而是：
 
-- 共享提示词、脚本、封装器和工作流散落在不同机器和聊天记录里
+- 共享提示词、脚本和工作流散落在不同机器和聊天记录里
 - 没有统一的版本源头
 - 没有统一的更新方式
 - 没有人知道自己本机到底装了什么、缺了什么
@@ -65,8 +65,6 @@ GitHub 仓库是唯一事实来源。
 - 注册表能够管理规范化资源，并且当前正式建模包括：
   - `skill`
   - `script`
-  - `wrapper`
-  - `pack`
   - `addon`
   - `reference`
 - 对多种 Agent 提供明确、可验证的适配策略
@@ -79,7 +77,7 @@ GitHub 仓库是唯一事实来源。
 - 用户锁定特定资源版本
 - 角色能力包
 - Agent 启动时做更新提示
-- 轻量兜底安装脚本
+- 轻量兜底安装能力
 
 ### 5.3 不做的事
 
@@ -92,16 +90,14 @@ GitHub 仓库是唯一事实来源。
 
 ## 6. 规范化资源模型
 
-注册表当前正式建模的资源类型包括：
+注册表当前正式管理四类规范化对象：
 
 | 类型 | 含义 |
 |---|---|
 | `skill` | 可复用的任务能力定义 |
 | `script` | 带元数据的独立脚本 |
-| `wrapper` | 对本地 CLI 的受控封装 |
-| `pack` | 一组角色化资源的集合 |
-| `addon` | 可安装的上游增强包或基础应用 |
-| `reference` | 只供发现和引用的外部项目或资料 |
+| `addon` | 需要单独安装、同步或版本管理的能力包或运行时 |
+| `reference` | 只读参考资料、映射、说明和外部能力索引 |
 
 注意：
 
@@ -138,8 +134,6 @@ GitHub 仓库是唯一事实来源。
 - `gh-cli`、`cc-switch` 适合建模为 `baseline`
 - `lark-cli` 适合建模为 `optional`
 - `opencli` 适合建模为 `dependency`
-- `context-mode`、`open-slide` 适合建模为 `optional`
-- `agent-skills`、`browserbase-skills`、`khazix-skills` 适合建模为 `reference`
 
 ### 6.2 Agent runtime 与 registry 资源的区别
 
@@ -148,16 +142,16 @@ GitHub 仓库是唯一事实来源。
 - `Agent runtime`
   - 例如 `codex`、`claude-code`、`cursor`、`gemini-cli`、`opencode`
 - `Registry resource`
-  - 例如 `skill`、`script`、`wrapper`、`addon`、`reference`
+  - 例如 `skill`、`script`、`addon`、`reference`
 
 `opencode` 本身属于 **基础 Agent runtime**，不属于依赖型 addon。
 
 但：
 
-- 某个 `wrapper` 可以依赖 `opencli`
-- 某个 `pack` 可以把 `gh-cli`、`cc-switch` 标成 `baseline addon`
-- 某个 `pack` 可以把 `lark-cli` 标成 `optional addon`
-- 某个 `pack` 可以把 `oh-my-codex` 标成 `baseline addon`
+- 某个 `script` 可以依赖 `opencli`
+- 某个 `skill` 可以依赖 `gh-cli`、`cc-switch` 这类 `baseline addon`
+- 某个 `skill` 可以依赖 `lark-cli` 这类 `optional addon`
+- 某个 `skill` 可以依赖 `oh-my-codex` 这类 `baseline addon`
 - 某个外部项目如 `RAG-Anything` 可以标成 `reference`
 
 ## 7. 兼容性设计原则
@@ -199,17 +193,17 @@ GitHub 仓库是唯一事实来源。
 
 ## 8. 多 Agent 兼容矩阵
 
-这是当前仓库的目标兼容矩阵。
+这是第一阶段真正要照着做的兼容表。
 
 | Agent | 官方/主仓原生指令入口 | 官方/主仓原生扩展面 | 推荐适配方式 | 支持等级 |
 |---|---|---|---|---|
-| `codex` | `AGENTS.md` | `SKILL.md` / Codex Skills | 原生 `SKILL.md` + `AGENTS.md` | `B` |
+| `codex` | `AGENTS.md` | `SKILL.md` / Codex Skills | 原生 `SKILL.md` + `AGENTS.md` | `A` |
 | `claude-code` | `CLAUDE.md` | `.claude/agents/*.md`、hooks、settings | 生成 `CLAUDE.md` 导航 + 可选 `.claude/agents` | `B` |
 | `cursor` | `AGENTS.md` 或 `.cursor/rules` | `.mdc` 规则文件 | 生成 `.cursor/rules/*.mdc` 或 repo-root `AGENTS.md`，以项目作用域为主 | `B` |
-| `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `B` |
-| `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `B` |
-| `openclaw` | `AGENTS.md` | ClawHub / plugin / skill 生态 | 由运行中的 agent 自检并自行尝试 | `C` |
-| `hermes` | `AGENTS.md` / workspace instructions | `~/.hermes/skills` 与技能生态 | 由运行中的 agent 自检并自行尝试 | `C` |
+| `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `A` |
+| `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `A` |
+| `openclaw` | `AGENTS.md` | ClawHub / plugin / skill 生态 | 第二阶段再验证 | `C` |
+| `hermes` | `AGENTS.md` / workspace instructions | `~/.hermes/skills` 与技能生态 | 第二阶段再验证 | `C` |
 
 ### 8.1 不能再继续使用的错误假设
 
@@ -220,21 +214,36 @@ GitHub 仓库是唯一事实来源。
 - “所有 Agent 都能安装到统一的 `~/.agents/...` 路径”
 - “只靠一个 `AGENTS.md` 就能覆盖所有 Agent”
 
-## 9. 当前兼容策略
+## 9. 第一阶段验证范围
 
-当前仓库不再对外承诺“某个 Agent 一定可以直接成功安装”。
+为了确保“真的能用”，MVP 不追求一次性覆盖所有 Agent。
 
-统一策略是：
+### 9.1 Phase 1 硬支持
 
-- registry 负责提供规范化资源源头和适配规则
-- 运行中的 agent 负责根据本地能力、自检结果和 adapter 决定是否执行
-- 未通过自检时，必须 `blocked`
+- `codex`
+- `gemini-cli`
+- `opencode`
 
-兼容成熟度仍有差异：
+这三类有较明确的本地扩展或技能能力，最适合先打通。
 
-- `codex`、`gemini-cli`、`opencode` 更接近优先验证对象
-- `claude-code`、`cursor` 更依赖适配层
-- `openclaw`、`hermes` 默认按实验兼容看待
+### 9.2 Phase 1 适配支持
+
+- `claude-code`
+- `cursor`
+
+这两类通过适配实现，但不能假设它们原生支持统一的 skill 安装机制。
+
+其中：
+
+- `claude-code` 主要依赖 memory 与 subagent 适配
+- `cursor` 主要依赖项目作用域规则适配，不应设计成“全局技能目录”
+
+### 9.3 Phase 2 实验支持
+
+- `openclaw`
+- `hermes`
+
+只有在目标机器上完成真实验证后，才能升为正式支持。
 
 ## 10. 用户流程
 
@@ -244,8 +253,8 @@ GitHub 仓库是唯一事实来源。
 2. 用户把它粘贴给自己的 Agent
 3. Agent 读取 `REGISTRY.md` 与 `manifest.json`
 4. Agent 识别当前 Agent 类型、OS、可用 CLI
-5. Agent 选择适配器和默认 `pack`
-6. Agent 安装或更新本地资源
+5. Agent 选择适配器和相关资源
+6. Agent 安装、更新或引用本地资源
 7. Agent 输出健康摘要
 
 ### 10.2 更新
@@ -291,7 +300,6 @@ https://github.com/your-org/product-ai-registry
 
 为了确保“真的能用”，规格必须允许一个**可选兜底路径**：
 
-- 轻量 bootstrap 脚本
 - 或按 Agent 分类的最小安装说明
 
 原因：
@@ -372,17 +380,16 @@ Agent 需要在本地记录同步状态，但本地状态文件不得保存共�
 ## 16. 待确认问题
 
 - registry 公开还是私有
-- 是否提供轻量 bootstrap 兜底
-- `pack` 按角色还是按团队维护
+- workflow 组合说明按角色还是按团队维护
 - 是否要在仓库中提供每种 Agent 的安装适配模板
 - Phase 1 是否必须包含 `claude-code` 与 `cursor` 的真实验证
 
-## 17. Pack 现状
+## 17. Workflow 文档现状
 
-- 现成可直接用于业务工作的 workflow pack 还未开始系统整理
-- 当前默认 pack 应被视为基础应用与增强包集合
-- `agent-baseline` 用于默认基础安装与环境引导
-- `product-default` 当前只是草稿包，不应被当成可直接使用的业务包
+- workflow 不再建模为正式 registry 资源类型
+- 组合方式应迁移到 `docs/workflows/`
+- 原子资源继续由 `skill`、`script`、`addon`、`reference` 承担
+- 当前优先只保留像 AI 日报这样确实跨越多个原子资源的 workflow 文档
 
 ## 18. MVP 范围
 
@@ -391,20 +398,16 @@ MVP 必须包含：
 - `AGENTS.md`
 - `REGISTRY.md`
 - `manifest.json`
-- `packs/agent-baseline.json`
 - 一个 `skill`
 - 一个 `script`
-- 一个 `wrapper`
-- 一个 `addon`
-- 一个 `reference`
 - 至少一个 Agent 适配模板目录
 
 MVP 完成的判据不是“文档写完”，而是：
 
-1. registry 结构可被 agent 正确扫描
-2. manifest 能表达资源类型、资源角色、上游来源、依赖关系
-3. agent 能根据 adapter 和自检结果做出安装、阻断或建议决策
-4. 至少一条真实能力链路被验证可用
+1. `codex` 能成功消费一个 `skill`
+2. `gemini-cli` 能通过 extension 方式消费一个资源包
+3. `opencode` 能发现一个本地 skill
+4. `claude-code` 或 `cursor` 至少有一个完成适配式落地验证
 
 ## 19. 验收标准
 
@@ -412,4 +415,5 @@ MVP 完成的判据不是“文档写完”，而是：
 - 每个正式支持的 Agent 都有明确的适配路径
 - manifest 能表达按 Agent 的支持矩阵
 - 状态文件不要求保存共享密钥
-- 至少一个默认 `pack` 可以被真实安装并验证
+- 至少一条 workflow 说明文档可以被真实执行并验证
+

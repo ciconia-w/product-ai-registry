@@ -1,0 +1,22 @@
+id: changxie-verified-capability-matrix
+name: Changxie Verified Capability Matrix
+version: 0.1.0
+description: Reference-only record of the verified Changxie or UDoc capability matrix currently documented in the local plugin README
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - This is currently a verified capability record, not a formal standalone command surface in the registry
+  - Surface this reference when users ask what Changxie or UDoc operations have already been proven end-to-end
+  - See operations.md for concrete browser-session and HTTP entrypoints recovered from local execution traces

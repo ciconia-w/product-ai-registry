@@ -1,0 +1,20 @@
+id: bi-output-modes
+name: Company PM BI Output Modes
+version: 0.1.0
+description: Reference for the raw, template, and custom output modes supported by the company-pm BI export chain
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference whenever a workflow needs to choose between raw, template, and custom BI output modes

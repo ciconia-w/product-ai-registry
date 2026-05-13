@@ -1,0 +1,34 @@
+id: pm-opencli-plugin
+name: Company PM OpenCLI Plugin
+version: 0.1.0
+description: Local OpenCLI plugin for PMS or Zentao browser automation, product feedback collection, BI export, Changxie or UDoc document operations, and internal PM workflows
+source:
+  kind: external_git
+  url: file:///home/aaa/opencli-plugin-company-pm-lab
+  ref: refactor/auth-fetch-keychain
+  install_method: opencli_plugin_install
+  docs_url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+install:
+  commands:
+    - opencli plugin install file:///home/aaa/opencli-plugin-company-pm-lab
+  verify:
+    - opencli plugin list
+    - opencli company-pm --help -f yaml
+  post_install:
+    - For PMS and UDoc style browser-backed commands, ensure opencli-browser-bridge is available and the target browser profile is already logged in
+policy:
+  role: optional
+  action_on_missing: install
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - This addon is the executable command surface for company-pm and changxie capabilities
+  - Changxie or UDoc capability belongs to this addon as part of the same plugin install surface, not as a separate install unit
+  - Read and preview paths are the default posture; write commands stay guarded
+  - It depends on addon:opencli and browser-backed flows also depend on addon:opencli-browser-bridge

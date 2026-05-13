@@ -1,10 +1,9 @@
 {
   "registry_version": "1.0.0",
   "generated_at": "2026-04-29T12:00:00Z",
-  "default_pack": "agent-baseline",
   "agents": {
     "codex": {
-      "support_level": "B"
+      "support_level": "A"
     },
     "claude-code": {
       "support_level": "B"
@@ -13,10 +12,10 @@
       "support_level": "B"
     },
     "gemini-cli": {
-      "support_level": "B"
+      "support_level": "A"
     },
     "opencode": {
-      "support_level": "B"
+      "support_level": "A"
     },
     "openclaw": {
       "support_level": "C"
@@ -25,835 +24,132 @@
       "support_level": "C"
     }
   },
-  "packs": [
-    {
-      "id": "agent-baseline",
-      "version": "0.2.0",
-      "description": "Default baseline applications and addons. Ready-to-use workflow packs are still being curated.",
-      "path": "packs/agent-baseline.json",
-      "items": [
-        "addon:gh-cli",
-        "addon:opencli",
-        "addon:cc-switch",
-        "addon:oh-my-codex"
-      ]
-    },
-    {
-      "id": "product-default",
-      "version": "0.1.3",
-      "description": "Default starter pack for product team members",
-      "path": "packs/product-default.json",
-      "items": [
-        "skill:deepin-dev",
-        "reference:agent-skills",
-        "reference:khazix-skills"
-      ]
-    },
-    {
-      "id": "linglong-packaging",
-      "version": "0.2.0",
-      "description": "Generic Linglong packaging workflow pack for Linux repositories that already contain linglong.yaml or project-native Linglong build scripts",
-      "path": "packs/linglong-packaging.json",
-      "items": [
-        "skill:linglong-uab-shortest-path",
-        "skill:linglong-packaging-retrospective",
-        "script:reset-linglong-builder-env",
-        "script:rebuild-linglong-uab-shortest-path",
-        "script:write-linglong-retrospective",
-        "script:check-linglong-retrospective",
-        "reference:linglong-deepin-color-correction-example"
-      ]
-    },
-    {
-      "id": "deepin-dev",
-      "version": "0.1.0",
-      "description": "deepin v20/v25 application development - Qt/DTK/Python/D-Bus compatibility constraints",
-      "path": "packs/deepin-dev.json",
-      "items": [
-        "skill:deepin-dev",
-        "reference:deepin-compat"
-      ]
-    },
-    {
-      "id": "product-insight-workflow",
-      "version": "0.1.0",
-      "description": "Requirement collection, analysis, prioritization, and backlog-writing workflow pack for product teams",
-      "path": "packs/product-insight-workflow.json",
-      "items": [
-        "skill:triage-issue",
-        "skill:prd-review",
-        "skill:spec-to-backlog",
-        "skill:deepin-requirement-crawler",
-        "skill:requirement-analyzer",
-        "skill:requirement-prioritizer",
-        "skill:requirement-writer"
-      ]
-    },
-    {
-      "id": "ai-daily-news-workflow",
-      "version": "0.1.0",
-      "description": "AI daily news collection, drafting, and SMTP delivery workflow pack",
-      "path": "packs/ai-daily-news-workflow.json",
-      "items": [
-        "skill:ai-daily-news",
-        "skill:send-email",
-        "script:send-email"
-      ]
-    },
-    {
-      "id": "uniontech-ai-point-extract",
-      "version": "0.1.0",
-      "description": "Minimal UnionTech AI point extraction workflow pack centered on the logged-in browser extraction skill",
-      "path": "packs/uniontech-ai-point-extract.json",
-      "items": [
-        "skill:uniontech-ai-point-export"
-      ]
-    },
-    {
-      "id": "agent-references",
-      "version": "0.1.0",
-      "description": "Reference-only pack for external skill libraries and workflow catalogs that should be discovered, not auto-installed",
-      "path": "packs/agent-references.json",
-      "items": [
-        "reference:agent-skills",
-        "reference:browserbase-skills",
-        "reference:khazix-skills"
-      ]
-    },
-    {
-      "id": "presentation-workflow",
-      "version": "0.1.0",
-      "description": "Optional presentation-workflow pack for agent-authored slide deck scaffolding with open-slide",
-      "path": "packs/presentation-workflow.json",
-      "items": [
-        "addon:open-slide"
-      ]
-    }
-  ],
   "items": [
     {
-      "type": "skill",
-      "id": "prd-review",
+      "type": "addon",
+      "id": "cc-switch",
       "version": "0.1.0",
-      "path": "skills/prd-review",
-      "description": "Review product requirement documents with structured output",
+      "path": "addons/cc-switch",
+      "description": "Baseline application for Claude Code related environment switching and provider routing",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/farion1231/cc-switch",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "install": {
+        "commands": [
+          "gh release download --repo farion1231/cc-switch --pattern \"CC-Switch-*-Linux-*.deb\" --dir /tmp/cc-switch-install",
+          "sudo apt install -y /tmp/cc-switch-install/CC-Switch-*-Linux-*.deb"
+        ],
+        "verify": [
+          "cc-switch --help"
+        ]
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
       "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
         "claude-code": {
-          "mode": "generated_subagent"
+          "mode": "external_upstream"
         },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
+        "codex": {
+          "mode": "external_upstream"
         }
       },
-      "checksum": "TBD",
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "pm-opencli-plugin",
+      "version": "0.1.0",
+      "path": "addons/pm-opencli-plugin",
+      "description": "Local OpenCLI plugin for PMS or Zentao browser automation, product feedback collection, BI export, Changxie or UDoc document operations, and internal PM workflows",
       "source": {
-        "kind": "local"
+        "kind": "external_git",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab",
+        "ref": "refactor/auth-fetch-keychain",
+        "install_method": "opencli_plugin_install",
+        "docs_url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
       },
       "policy": {
         "role": "optional",
         "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "forum-demand-crawler",
-      "version": "0.1.0",
-      "path": "scripts/forum-demand-crawler",
-      "description": "Crawl approved forums and export product demand findings",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
       },
       "requires": {
-        "cli": [
-          "curl",
-          "python3"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "suggest"
-      }
-    },
-    {
-      "type": "wrapper",
-      "id": "opencode-review",
-      "version": "0.1.0",
-      "path": "wrappers/opencode-review",
-      "description": "Controlled local wrapper for repository review via opencode",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "opencode"
-        ],
         "items": [
           "addon:opencli"
         ]
       },
-      "entry": "run.sh",
+      "support": {
+        "codex": {
+          "mode": "addon_install"
+        },
+        "claude-code": {
+          "mode": "addon_install"
+        },
+        "cursor": {
+          "mode": "addon_install"
+        },
+        "gemini-cli": {
+          "mode": "addon_install"
+        },
+        "opencode": {
+          "mode": "addon_install"
+        }
+      },
       "checksum": "TBD"
     },
     {
-      "type": "skill",
-      "id": "linglong-uab-shortest-path",
-      "version": "0.2.0",
-      "path": "skills/linglong-uab-shortest-path",
-      "description": "Generic Linglong packaging workflow for Linux projects that already contain a linglong.yaml manifest or an equivalent Linglong build path",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
+      "type": "addon",
+      "id": "context-mode",
+      "version": "0.1.0",
+      "path": "addons/context-mode",
+      "description": "Optional cross-agent MCP and hook enhancement layer for context compression, session continuity, and routing guidance",
       "source": {
-        "kind": "local"
+        "kind": "external_git",
+        "url": "https://github.com/mksglu/context-mode",
+        "ref": "main",
+        "install_method": "external_git",
+        "docs_url": "https://github.com/mksglu/context-mode#readme"
       },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "reset-linglong-builder-env",
-      "version": "0.2.0",
-      "path": "scripts/reset-linglong-builder-env",
-      "description": "Reset stale Linglong builder state, mounts, caches, and temp runtime paths before rebuilding or exporting a Linglong package on Linux",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "requires": {
-        "cli": [
-          "bash",
-          "pkill",
-          "mount",
-          "grep",
-          "awk",
-          "sort",
-          "sudo"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "rebuild-linglong-uab-shortest-path",
-      "version": "0.2.0",
-      "path": "scripts/rebuild-linglong-uab-shortest-path",
-      "description": "Rebuild or export Linglong artifacts for the current project by preferring project-native build scripts and falling back to the generic linglong.yaml workflow",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "requires": {
-        "cli": [
-          "bash",
-          "sha256sum",
-          "find",
-          "grep",
-          "sort",
-          "ll-builder",
-          "ll-cli",
-          "sudo"
+      "install": {
+        "commands": [
+          "npm install -g context-mode"
         ],
-        "scripts": [
-          "reset-linglong-builder-env"
-        ]
-      },
-      "entry": "run.sh",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "ai-daily-news",
-      "version": "0.1.0",
-      "path": "skills/ai-daily-news",
-      "description": "Generate a structured AI daily news digest from multiple Chinese and English sources and hand off to a local mail sender",
-      "requires": {
-        "items": [
-          "script:send-email"
+        "verify": [
+          "context-mode --help"
         ],
-        "cli": [
-          "python3"
+        "post_install": [
+          "Follow the upstream per-agent setup guide to register MCP config, hooks, and optional instruction files for the current agent"
         ]
       },
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
       "policy": {
         "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "triage-issue",
-      "version": "0.1.0",
-      "path": "skills/triage-issue",
-      "description": "Triage bug reports or requirement-like issues by searching for duplicates and structuring the next action",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "spec-to-backlog",
-      "version": "0.1.0",
-      "path": "skills/spec-to-backlog",
-      "description": "Break a specification into an Epic plus implementation backlog tickets",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "uniontech-ai-point-export",
-      "version": "0.1.0",
-      "path": "skills/uniontech-ai-point-export",
-      "description": "Extract UnionTech AI point dashboard data from the live logged-in page and optionally write workbook totals",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "deepin-requirement-crawler",
-      "version": "0.1.0",
-      "path": "skills/deepin-requirement-crawler",
-      "description": "Collect requirements from forum, email, and product feedback sources and generate normalized markdown or Excel outputs",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "requirement-analyzer",
-      "version": "0.1.0",
-      "path": "skills/requirement-analyzer",
-      "description": "Analyze raw requirement text into structured fields such as type, module, complexity, scenario, and expected behavior",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "requirement-prioritizer",
-      "version": "0.1.0",
-      "path": "skills/requirement-prioritizer",
-      "description": "Score and rank requirements across six dimensions to produce a P0 to P4 priority level",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "requirement-writer",
-      "version": "0.1.0",
-      "path": "skills/requirement-writer",
-      "description": "Guide a user through structured requirement conversations and generate Problem Framing, SRD, or PRD outputs",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "send-email",
-      "version": "0.1.0",
-      "path": "skills/send-email",
-      "description": "Safely use the registry send-email script by checking SMTP prerequisites and environment configuration before delivery",
-      "requires": {
-        "items": [
-          "script:send-email"
-        ],
-        "cli": [
-          "python3"
-        ]
+        "action_on_missing": "suggest"
       },
       "support": {
         "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
+          "mode": "external_upstream"
         },
         "claude-code": {
-          "mode": "generated_subagent"
+          "mode": "external_upstream"
         },
         "cursor": {
-          "mode": "generated_rules"
+          "mode": "external_upstream"
         },
         "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "send-email",
-      "version": "0.1.0",
-      "path": "scripts/send-email",
-      "description": "Send plaintext email through an SMTP server configured entirely by environment variables",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
+          "mode": "external_upstream"
         },
         "opencode": {
-          "mode": "local_copy"
+          "mode": "external_upstream"
+        },
+        "openclaw": {
+          "mode": "external_upstream"
         }
       },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "analyze-7day-vs-benchmark",
-      "version": "0.1.0",
-      "path": "scripts/analyze-7day-vs-benchmark",
-      "description": "Analyze day-by-day UOS AI app stats from a current aggregated JSON payload",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "analyze-morning-current",
-      "version": "0.1.0",
-      "path": "scripts/analyze-morning-current",
-      "description": "Compare a morning-captured UOS AI response set against a later aggregated JSON payload",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "check-benchmark-days",
-      "version": "0.1.0",
-      "path": "scripts/check-benchmark-days",
-      "description": "Inspect row count and date coverage in a benchmark Excel workbook",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "script",
-      "id": "compare-benchmark-morning",
-      "version": "0.1.0",
-      "path": "scripts/compare-benchmark-morning",
-      "description": "Compare benchmark workbook totals against a morning captured UOS AI response set",
-      "support": {
-        "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
-        },
-        "cursor": {
-          "mode": "project_local_copy"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        },
-        "opencode": {
-          "mode": "local_copy"
-        }
-      },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
+      "checksum": "TBD"
     },
     {
       "type": "addon",
@@ -893,41 +189,6 @@
           "mode": "external_upstream"
         },
         "opencode": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "cc-switch",
-      "version": "0.1.0",
-      "path": "addons/cc-switch",
-      "description": "Baseline application for Claude Code related environment switching and provider routing",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/farion1231/cc-switch",
-        "ref": "main",
-        "install_method": "external_git"
-      },
-      "install": {
-        "commands": [
-          "gh release download --repo farion1231/cc-switch --pattern \"CC-Switch-*-Linux-*.deb\" --dir /tmp/cc-switch-install",
-          "sudo apt install -y /tmp/cc-switch-install/CC-Switch-*-Linux-*.deb"
-        ],
-        "verify": [
-          "cc-switch --help"
-        ]
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "codex": {
           "mode": "external_upstream"
         }
       },
@@ -980,37 +241,6 @@
     },
     {
       "type": "addon",
-      "id": "oh-my-codex",
-      "version": "0.1.0",
-      "path": "addons/oh-my-codex",
-      "description": "Multi-agent orchestration and enhancement layer for OpenAI Codex CLI",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/Yeachan-Heo/oh-my-codex",
-        "ref": "main",
-        "install_method": "external_package"
-      },
-      "install": {
-        "commands": [
-          "npm install -g oh-my-codex"
-        ],
-        "verify": [
-          "omx --help"
-        ]
-      },
-      "policy": {
-        "role": "baseline",
-        "action_on_missing": "install"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
       "id": "oh-my-claudecode",
       "version": "0.1.0",
       "path": "addons/oh-my-claudecode",
@@ -1043,22 +273,57 @@
     },
     {
       "type": "addon",
-      "id": "superpowers",
+      "id": "oh-my-codex",
       "version": "0.1.0",
-      "path": "addons/superpowers",
-      "description": "Cross-agent enhancement suite for Codex, OpenCode, Gemini CLI, Claude Code, and other supported coding agents",
+      "path": "addons/oh-my-codex",
+      "description": "Multi-agent orchestration and enhancement layer for OpenAI Codex CLI",
       "source": {
         "kind": "external_git",
-        "url": "https://github.com/obra/superpowers",
+        "url": "https://github.com/Yeachan-Heo/oh-my-codex",
         "ref": "main",
-        "install_method": "external_git"
+        "install_method": "external_package"
       },
       "install": {
         "commands": [
-          "echo \"Install Superpowers using the harness-specific upstream instructions for the current agent\""
+          "npm install -g oh-my-codex"
         ],
         "verify": [
-          "echo \"Verify Superpowers is installed through the current agent marketplace or extension system\""
+          "omx --help"
+        ]
+      },
+      "policy": {
+        "role": "baseline",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "codex": {
+          "mode": "external_upstream"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "open-slide",
+      "version": "0.1.0",
+      "path": "addons/open-slide",
+      "description": "Optional slide-workspace scaffolder for agent-authored presentation decks and HTML or PDF slide output",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/1weiho/open-slide",
+        "ref": "main",
+        "install_method": "external_package",
+        "docs_url": "https://github.com/1weiho/open-slide/tree/main/packages/cli#readme"
+      },
+      "install": {
+        "commands": [
+          "npm install -g @open-slide/cli"
+        ],
+        "verify": [
+          "open-slide --help"
+        ],
+        "post_install": [
+          "Use open-slide init <dir> to scaffold a presentation workspace, then install that workspace dependencies before authoring slides"
         ]
       },
       "policy": {
@@ -1070,6 +335,15 @@
           "mode": "external_upstream"
         },
         "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
           "mode": "external_upstream"
         }
       },
@@ -1120,15 +394,86 @@
       "checksum": "TBD"
     },
     {
-      "type": "reference",
-      "id": "rag-anything",
+      "type": "addon",
+      "id": "opencli-browser-bridge",
       "version": "0.1.0",
-      "path": "references/rag-anything",
-      "description": "Upstream multimodal RAG project for knowledge-base related capability discovery",
+      "path": "addons/opencli-browser-bridge",
+      "description": "Required browser bridge and extension layer for OpenCLI browser-backed commands that reuse live login state",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/jackwener/opencli",
+        "ref": "main",
+        "install_method": "external_git",
+        "docs_url": "https://github.com/jackwener/opencli#readme"
+      },
+      "policy": {
+        "role": "dependency",
+        "action_on_missing": "install"
+      },
+      "support": {
+        "codex": {
+          "mode": "addon_install"
+        },
+        "claude-code": {
+          "mode": "addon_install"
+        },
+        "cursor": {
+          "mode": "addon_install"
+        },
+        "gemini-cli": {
+          "mode": "addon_install"
+        },
+        "opencode": {
+          "mode": "addon_install"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "addon",
+      "id": "superpowers",
+      "version": "0.1.0",
+      "path": "addons/superpowers",
+      "description": "Shared enhancement plugin or addon layer commonly used with local coding agents",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/obra/superpowers",
+        "ref": "main",
+        "install_method": "external_git"
+      },
+      "install": {
+        "commands": [
+          "echo \"Install Superpowers using the harness-specific upstream instructions for the current agent\""
+        ],
+        "verify": [
+          "echo \"Verify Superpowers is installed through the current agent marketplace or extension system\""
+        ]
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "agent-skills",
+      "version": "0.1.0",
+      "path": "references/agent-skills",
+      "description": "Reference engineering-skill library for structured software-delivery workflows such as planning, testing, code review, and context engineering",
       "source": {
         "kind": "reference",
-        "url": "https://github.com/HKUDS/RAG-Anything",
-        "ref": "main"
+        "url": "https://github.com/addyosmani/agent-skills",
+        "ref": "main",
+        "docs_url": "https://github.com/addyosmani/agent-skills#readme"
       },
       "policy": {
         "role": "reference",
@@ -1169,46 +514,6 @@
         "kind": "reference",
         "url": "https://jimmysong.io/zh/book/ai-handbook/sdd/overview/",
         "docs_url": "https://jimmysong.io/zh/book/ai-handbook/sdd/overview/"
-      },
-      "policy": {
-        "role": "reference",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "reference_only"
-        },
-        "claude-code": {
-          "mode": "reference_only"
-        },
-        "cursor": {
-          "mode": "reference_only"
-        },
-        "gemini-cli": {
-          "mode": "reference_only"
-        },
-        "opencode": {
-          "mode": "reference_only"
-        },
-        "openclaw": {
-          "mode": "reference_only"
-        },
-        "hermes": {
-          "mode": "reference_only"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "reference",
-      "id": "ui-skills-catalog",
-      "version": "0.1.0",
-      "path": "references/ui-skills-catalog",
-      "description": "Reference catalog of UI and design-engineering skills for interface design, polish, accessibility, animation, and frontend craft",
-      "source": {
-        "kind": "reference",
-        "url": "https://www.ui-skills.com/skills/",
-        "docs_url": "https://www.ui-skills.com/skills/"
       },
       "policy": {
         "role": "reference",
@@ -1282,274 +587,6 @@
     },
     {
       "type": "reference",
-      "id": "deepin-compat",
-      "version": "0.1.0",
-      "path": "references/deepin-compat",
-      "description": "Environment snapshot and constraint rules for deepin v20 (UOS 20) and v25 application development",
-      "source": {
-        "kind": "reference",
-        "url": "https://github.com/ciconia-w/product-ai-registry",
-        "ref": "main"
-      },
-      "policy": {
-        "role": "reference",
-        "action_on_missing": "block"
-      },
-      "support": {
-        "codex": {
-          "mode": "reference_only"
-        },
-        "claude-code": {
-          "mode": "reference_only"
-        },
-        "cursor": {
-          "mode": "reference_only"
-        },
-        "gemini-cli": {
-          "mode": "reference_only"
-        },
-        "opencode": {
-          "mode": "reference_only"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "skill",
-      "id": "deepin-dev",
-      "version": "0.1.0",
-      "path": "skills/deepin-dev",
-      "description": "deepin v20/v25 dual-version development constraints for Qt, DTK, Python, and D-Bus compatibility",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "deepin-ui-design",
-      "version": "0.1.0",
-      "path": "skills/deepin-ui-design",
-      "description": "Reference a UOS/Deepin style desktop QML design system for DTK-first UI work",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "skill",
-      "id": "desktop-help-manual-updater",
-      "version": "0.1.0",
-      "path": "skills/desktop-help-manual-updater",
-      "description": "Update, rewrite, or draft desktop app help manuals by verifying the live UI, flows, screenshots, and output artifacts against real product behavior",
-      "support": {
-        "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
-        },
-        "claude-code": {
-          "mode": "generated_subagent"
-        },
-        "cursor": {
-          "mode": "generated_rules"
-        },
-        "gemini-cli": {
-          "mode": "extension_bundle"
-        }
-      },
-      "checksum": "TBD",
-      "source": {
-        "kind": "local"
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "install"
-      }
-    },
-    {
-      "type": "addon",
-      "id": "context-mode",
-      "version": "0.1.0",
-      "path": "addons/context-mode",
-      "description": "Optional cross-agent MCP and hook enhancement layer for context compression, session continuity, and routing guidance",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/mksglu/context-mode",
-        "ref": "main",
-        "install_method": "external_git",
-        "docs_url": "https://github.com/mksglu/context-mode#readme"
-      },
-      "install": {
-        "commands": [
-          "npm install -g context-mode"
-        ],
-        "verify": [
-          "context-mode --help"
-        ],
-        "post_install": [
-          "Follow the upstream per-agent setup guide to register MCP config, hooks, and optional instruction files for the current agent"
-        ]
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        },
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "cursor": {
-          "mode": "external_upstream"
-        },
-        "gemini-cli": {
-          "mode": "external_upstream"
-        },
-        "opencode": {
-          "mode": "external_upstream"
-        },
-        "openclaw": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "addon",
-      "id": "open-slide",
-      "version": "0.1.0",
-      "path": "addons/open-slide",
-      "description": "Optional slide-workspace scaffolder for agent-authored presentation decks and HTML or PDF slide output",
-      "source": {
-        "kind": "external_git",
-        "url": "https://github.com/1weiho/open-slide",
-        "ref": "main",
-        "install_method": "external_package",
-        "docs_url": "https://github.com/1weiho/open-slide/tree/main/packages/cli#readme"
-      },
-      "install": {
-        "commands": [
-          "npm install -g @open-slide/cli"
-        ],
-        "verify": [
-          "open-slide --help"
-        ],
-        "post_install": [
-          "Use open-slide init <dir> to scaffold a presentation workspace, then install that workspace dependencies before authoring slides"
-        ]
-      },
-      "policy": {
-        "role": "optional",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "external_upstream"
-        },
-        "claude-code": {
-          "mode": "external_upstream"
-        },
-        "cursor": {
-          "mode": "external_upstream"
-        },
-        "gemini-cli": {
-          "mode": "external_upstream"
-        },
-        "opencode": {
-          "mode": "external_upstream"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "reference",
-      "id": "agent-skills",
-      "version": "0.1.0",
-      "path": "references/agent-skills",
-      "description": "Reference engineering-skill library for structured software-delivery workflows such as planning, testing, code review, and context engineering",
-      "source": {
-        "kind": "reference",
-        "url": "https://github.com/addyosmani/agent-skills",
-        "ref": "main",
-        "docs_url": "https://github.com/addyosmani/agent-skills#readme"
-      },
-      "policy": {
-        "role": "reference",
-        "action_on_missing": "suggest"
-      },
-      "support": {
-        "codex": {
-          "mode": "reference_only"
-        },
-        "claude-code": {
-          "mode": "reference_only"
-        },
-        "cursor": {
-          "mode": "reference_only"
-        },
-        "gemini-cli": {
-          "mode": "reference_only"
-        },
-        "opencode": {
-          "mode": "reference_only"
-        },
-        "openclaw": {
-          "mode": "reference_only"
-        },
-        "hermes": {
-          "mode": "reference_only"
-        }
-      },
-      "checksum": "TBD"
-    },
-    {
-      "type": "reference",
       "id": "browserbase-skills",
       "version": "0.1.0",
       "path": "references/browserbase-skills",
@@ -1584,6 +621,337 @@
           "mode": "reference_only"
         },
         "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "pm-batch-config-example",
+      "version": "0.1.0",
+      "path": "references/pm-batch-config-example",
+      "description": "Reference for the batch JSON structure and $prev style parameter chaining used by company-pm batch execution",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "bi-output-modes",
+      "version": "0.1.0",
+      "path": "references/bi-output-modes",
+      "description": "Reference for the raw, template, and custom output modes supported by the company-pm BI export chain",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "pms-browser-login-model",
+      "version": "0.1.0",
+      "path": "references/pms-browser-login-model",
+      "description": "Reference for how company-pm PMS commands reuse an existing browser login state through OpenCLI browser bridge",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "worksheet-auth-guide",
+      "version": "0.1.0",
+      "path": "references/worksheet-auth-guide",
+      "description": "Reference for credentials and auth prerequisites of the product feedback platform used by company-pm commands",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "worksheet-product-line-enum",
+      "version": "0.1.0",
+      "path": "references/worksheet-product-line-enum",
+      "description": "Reference mapping for stable product line identifiers used by company-pm product feedback commands",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-enum.json"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "worksheet-product-line-rule-notes",
+      "version": "0.1.0",
+      "path": "references/worksheet-product-line-rule-notes",
+      "description": "Reference notes describing stable product line mapping rules and field-filling conventions used by company-pm",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-rule-notes.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "worksheet-product-line-uos-ai-mapping",
+      "version": "0.1.0",
+      "path": "references/worksheet-product-line-uos-ai-mapping",
+      "description": "Reference mapping between stable company-pm product line identifiers and the UOS AI related product lines used in feedback workflows",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-uos-ai-mapping.json"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "changxie-verified-capability-matrix",
+      "version": "0.1.0",
+      "path": "references/changxie-verified-capability-matrix",
+      "description": "Reference-only record of the verified Changxie or UDoc capability matrix currently documented in the local plugin README",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "pms-write-safety-policy",
+      "version": "0.1.0",
+      "path": "references/pms-write-safety-policy",
+      "description": "Reference for the preview-first and explicit-apply safety model of company-pm write commands",
+      "source": {
+        "kind": "reference",
+        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "deepin-compat",
+      "version": "0.1.0",
+      "path": "references/deepin-compat",
+      "description": "Environment snapshot and constraint rules for deepin v20 (UOS 20) and v25 application development",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/ciconia-w/product-ai-registry",
+        "ref": "main"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "block"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
           "mode": "reference_only"
         }
       },
@@ -1665,28 +1033,473 @@
       "checksum": "TBD"
     },
     {
-      "type": "skill",
-      "id": "linglong-packaging-retrospective",
+      "type": "reference",
+      "id": "rag-anything",
       "version": "0.1.0",
-      "path": "skills/linglong-packaging-retrospective",
-      "description": "Capture a structured Linglong packaging pitfall report after a build or export run so future agents can reuse the host and project-specific lessons",
+      "path": "references/rag-anything",
+      "description": "Upstream multimodal RAG project for knowledge-base related capability discovery",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/HKUDS/RAG-Anything",
+        "ref": "main"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
       "support": {
         "codex": {
-          "mode": "native_skill_dir"
-        },
-        "opencode": {
-          "mode": "native_skill_dir"
+          "mode": "reference_only"
         },
         "claude-code": {
-          "mode": "generated_subagent"
+          "mode": "reference_only"
         },
         "cursor": {
-          "mode": "generated_rules"
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "ui-skills-catalog",
+      "version": "0.1.0",
+      "path": "references/ui-skills-catalog",
+      "description": "Reference catalog of UI and design-engineering skills for interface design, polish, accessibility, animation, and frontend craft",
+      "source": {
+        "kind": "reference",
+        "url": "https://www.ui-skills.com/skills/",
+        "docs_url": "https://www.ui-skills.com/skills/"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "script",
+      "id": "check-linglong-retrospective",
+      "version": "0.1.0",
+      "path": "scripts/check-linglong-retrospective",
+      "description": "Verify that a recent Linglong packaging retrospective exists and contains the required fields",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
         },
         "gemini-cli": {
           "mode": "extension_bundle"
         }
       },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "bi-auth-login",
+      "version": "0.1.0",
+      "path": "scripts/bi-auth-login",
+      "description": "Authenticate to UnionTech BI through the company-pm plugin helper chain and return login state or token material",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "tool.yaml",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "bi-export-week-legacy",
+      "version": "0.1.0",
+      "path": "scripts/bi-export-week-legacy",
+      "description": "Legacy one-shot BI export chain for UnionTech AI weekly data",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "tool.yaml",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "bi-fetch-uniontech-ai",
+      "version": "0.1.0",
+      "path": "scripts/bi-fetch-uniontech-ai",
+      "description": "Fetch and render UnionTech AI BI data after authentication, supporting raw, template, and custom output modes",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "tool.yaml",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "forum-export-json",
+      "version": "0.1.0",
+      "path": "scripts/forum-export-json",
+      "description": "Export normalized forum requirement data as JSON through the local company-pm helper chain",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "tool.yaml",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "worksheet-export-json",
+      "version": "0.1.0",
+      "path": "scripts/worksheet-export-json",
+      "description": "Export normalized product feedback requirement data as JSON through the local company-pm helper chain",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "tool.yaml",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "forum-demand-crawler",
+      "version": "0.1.0",
+      "path": "scripts/forum-demand-crawler",
+      "description": "Crawl approved forums and export product demand findings",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "curl",
+          "python3"
+        ]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      }
+    },
+    {
+      "type": "script",
+      "id": "rebuild-linglong-uab-shortest-path",
+      "version": "0.2.0",
+      "path": "scripts/rebuild-linglong-uab-shortest-path",
+      "description": "Reset the local Linglong builder environment and rebuild the deepin-color-correction UAB using the shortest known-good path",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "requires": {
+        "cli": [
+          "bash",
+          "sha256sum",
+          "find",
+          "grep",
+          "sort",
+          "ll-builder",
+          "ll-cli",
+          "sudo"
+        ],
+        "scripts": [
+          "reset-linglong-builder-env"
+        ]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "reset-linglong-builder-env",
+      "version": "0.2.0",
+      "path": "scripts/reset-linglong-builder-env",
+      "description": "Reset stale Linglong builder state, mounts, caches, and temp runtime paths before rebuilding deepin-color-correction as a UAB",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "requires": {
+        "cli": [
+          "bash",
+          "pkill",
+          "mount",
+          "grep",
+          "awk",
+          "sort",
+          "sudo"
+        ]
+      },
+      "entry": "run.sh",
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "script",
+      "id": "send-email",
+      "version": "0.1.0",
+      "path": "scripts/send-email",
+      "description": "Send plaintext email through an SMTP server configured entirely by environment variables",
+      "support": {
+        "codex": {
+          "mode": "local_copy"
+        },
+        "claude-code": {
+          "mode": "local_copy"
+        },
+        "cursor": {
+          "mode": "project_local_copy"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        },
+        "opencode": {
+          "mode": "local_copy"
+        }
+      },
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "entry": "run.py",
       "checksum": "TBD",
       "source": {
         "kind": "local"
@@ -1735,34 +1548,36 @@
       }
     },
     {
-      "type": "script",
-      "id": "check-linglong-retrospective",
+      "type": "skill",
+      "id": "ai-daily-news",
       "version": "0.1.0",
-      "path": "scripts/check-linglong-retrospective",
-      "description": "Verify that a recent Linglong packaging retrospective exists and contains the required fields",
+      "path": "skills/ai-daily-news",
+      "description": "生成AI日报！自动抓取中英文AI新闻，Agent直接翻译英文内容，按中文65%/英文35%配比生成结构化日报，自动发送邮件。适合：AI日报、今日AI资讯、生成新闻日报、发送AI新闻、新闻汇总等场景。",
+      "requires": {
+        "items": [
+          "script:send-email"
+        ],
+        "cli": [
+          "python3"
+        ]
+      },
       "support": {
         "codex": {
-          "mode": "local_copy"
-        },
-        "claude-code": {
-          "mode": "local_copy"
+          "mode": "native_skill_dir"
         },
         "opencode": {
-          "mode": "local_copy"
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
         },
         "cursor": {
-          "mode": "project_local_copy"
+          "mode": "generated_rules"
         },
         "gemini-cli": {
           "mode": "extension_bundle"
         }
       },
-      "requires": {
-        "cli": [
-          "python3"
-        ]
-      },
-      "entry": "run.py",
       "checksum": "TBD",
       "source": {
         "kind": "local"
@@ -1774,10 +1589,953 @@
     },
     {
       "type": "skill",
-      "id": "company-pm-opencli",
+      "id": "changxie-files",
       "version": "0.1.0",
-      "path": "skills/company-pm-opencli",
-      "description": "Use the local OpenCLI company-pm plugin for PMS/禅道 inspection, batch workflows, and guarded preview-first automation",
+      "path": "skills/changxie-files",
+      "description": "使用 opencli changxie files 处理畅写或 UDoc 文件与目录操作",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "addon:opencli-browser-bridge"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "changxie-markdown",
+      "version": "0.1.0",
+      "path": "skills/changxie-markdown",
+      "description": "使用 opencli changxie markdown 读写畅写或 UDoc 中的 Markdown 文件",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "addon:opencli-browser-bridge"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "changxie-objects",
+      "version": "0.1.0",
+      "path": "skills/changxie-objects",
+      "description": "使用 opencli changxie objects 创建文档、表格、演示稿、Markdown 与在线表单",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "addon:opencli-browser-bridge"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "changxie-ops",
+      "version": "0.1.0",
+      "path": "skills/changxie-ops",
+      "description": "用本地插件提供的 opencli changxie 命令面处理畅写或 UDoc 相关操作",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "addon:opencli-browser-bridge"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "changxie-shares",
+      "version": "0.1.0",
+      "path": "skills/changxie-shares",
+      "description": "使用 opencli changxie shares 管理畅写或 UDoc 分享链接生命周期",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "addon:opencli-browser-bridge"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "changxie-tags",
+      "version": "0.1.0",
+      "path": "skills/changxie-tags",
+      "description": "使用 opencli changxie tags 管理畅写或 UDoc 系统标签与文件标签关系",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "addon:opencli-browser-bridge"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "pm-batch-ops",
+      "version": "0.1.0",
+      "path": "skills/pm-batch-ops",
+      "description": "通过 company-pm OpenCLI 插件执行基于配置文件的多步骤串行操作，并优先使用 preview 模式",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "reference:pm-batch-config-example"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "bi-export",
+      "version": "0.1.0",
+      "path": "skills/bi-export",
+      "description": "通过 company-pm OpenCLI 插件执行 BI 登录、认证、取数、模板输出与探索型导出",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "script:bi-auth-login",
+          "script:bi-fetch-uniontech-ai",
+          "script:bi-export-week-legacy"
+        ],
+        "cli": [
+          "python3"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "pm-opencli",
+      "version": "0.1.0",
+      "path": "skills/pm-opencli",
+      "description": "用本地 company-pm OpenCLI 插件处理 PMS或禅道、产品需求反馈平台、BI 导出、畅写或UDoc以及内部 PM 自动化任务",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "pms-read",
+      "version": "0.1.0",
+      "path": "skills/pms-read",
+      "description": "通过 company-pm OpenCLI 插件复用浏览器登录态，读取 PMS或禅道中的产品、项目、任务与详情信息",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:opencli-browser-bridge",
+          "addon:pm-opencli-plugin"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "pms-write-guarded",
+      "version": "0.1.0",
+      "path": "skills/pms-write-guarded",
+      "description": "通过 company-pm OpenCLI 插件在 preview-first 与显式放行前提下执行 PMS或禅道写操作",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:opencli-browser-bridge",
+          "addon:pm-opencli-plugin",
+          "reference:pms-write-safety-policy"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "worksheet-write-guarded",
+      "version": "0.1.0",
+      "path": "skills/worksheet-write-guarded",
+      "description": "通过 company-pm OpenCLI 插件以 preview-first 方式对产品需求反馈平台执行新增、编辑、删除等受保护写操作",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "reference:worksheet-auth-guide",
+          "reference:worksheet-product-line-enum",
+          "reference:worksheet-product-line-rule-notes",
+          "reference:worksheet-product-line-uos-ai-mapping"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "pm-requirement-collection",
+      "version": "0.1.0",
+      "path": "skills/pm-requirement-collection",
+      "description": "通过 company-pm OpenCLI 插件和独立脚本收集论坛与产品需求反馈平台需求",
+      "requires": {
+        "items": [
+          "addon:opencli",
+          "addon:pm-opencli-plugin",
+          "script:forum-export-json",
+          "script:worksheet-export-json"
+        ],
+        "cli": [
+          "python3"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "deepin-dev",
+      "version": "0.1.0",
+      "path": "skills/deepin-dev",
+      "description": "deepin v20/v25 双版本应用开发约束 - 自动防止 Qt/DTK/Python/D-Bus 兼容性返工",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "deepin-requirement-crawler",
+      "version": "0.1.0",
+      "path": "skills/deepin-requirement-crawler",
+      "description": "从 Deepin 论坛、企业邮箱、产品需求反馈系统采集需求数据，自动分析评估优先级，生成 Markdown 和 Excel 两种格式的标准化需求清单。集成 requirement-analyzer 和 requirement-prioritizer，支持两种调用模式（AI skill 独立脚本）。触发词：把P0优先级处理了、分析社区需求、筛选高优先级需求、从论坛收集用户反馈、处理uosai相关需求。",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "deepin-ui-design",
+      "version": "0.1.0",
+      "path": "skills/deepin-ui-design",
+      "description": "Reference a UOS and Deepin style QML design system for DTK-first desktop UI work on Linux desktops. Use when designing, implementing, or reviewing theme variables, layout, window behavior, platform compatibility, blur effects, common desktop components, or mandatory control-center style left-sidebar desktop layouts.",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "desktop-help-manual-updater",
+      "version": "0.1.0",
+      "path": "skills/desktop-help-manual-updater",
+      "description": "更新桌面应用的帮助手册：基于真实运行中的应用与现有资料，制定文档计划，逐项核验界面与流程，采集可复核截图，并产出增量更新或全新编写的手册内容。适用于需要基于真实产品行为编写、校准或重写帮助文档的场景。",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "linglong-packaging-retrospective",
+      "version": "0.1.0",
+      "path": "skills/linglong-packaging-retrospective",
+      "description": "Capture a structured Linglong packaging pitfall report after a build or export run so future agents can reuse the host and project-specific lessons",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "linglong-uab-shortest-path",
+      "version": "0.2.0",
+      "path": "skills/linglong-uab-shortest-path",
+      "description": "Repo-specific playbook for rebuilding the deepin-color-correction Linglong UAB on a Linux host using the shortest known-good path",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "prd-review",
+      "version": "0.1.0",
+      "path": "skills/prd-review",
+      "description": "Review a PRD and produce structured feedback",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "requirement-analyzer",
+      "version": "0.1.0",
+      "path": "skills/requirement-analyzer",
+      "description": "智能分析用户需求，提取需求类型、模块、复杂度、用户场景等关键信息，为后续优先级评估和产品化提供结构化数据。支持AI推断（推荐）或独立脚本调用。触发词：分析需求、提取需求信息、识别需求类型、分析需求复杂度、从需求文本中提取用户场景。",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "requirement-prioritizer",
+      "version": "0.1.0",
+      "path": "skills/requirement-prioritizer",
+      "description": "科学评估需求优先级，基于用户影响力、紧急程度、实现成本、战略价值、依赖关系、社区热度六个维度评分，生成P0-P4等级。支持AI推断（推荐）或独立脚本调用。触发词：评估优先级、需求优先级评分、P0P1评估、排名需求、科学评估需求。",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "requirement-writer",
+      "version": "0.1.0",
+      "path": "skills/requirement-writer",
+      "description": ">",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "send-email",
+      "version": "0.1.0",
+      "path": "skills/send-email",
+      "description": "Use the registry send-email script safely by checking SMTP prerequisites, environment variables, and provider-specific setup before attempting delivery",
+      "requires": {
+        "items": [
+          "script:send-email"
+        ],
+        "cli": [
+          "python3"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "spec-to-backlog",
+      "version": "0.1.0",
+      "path": "skills/spec-to-backlog",
+      "description": "Automatically convert Confluence specification documents into structured Jira backlogs with Epics and implementation tickets. When an agent needs to: (1) Create Jira tickets from a Confluence page, (2) Generate a backlog from a specification, (3) Break down a spec into implementation tasks, or (4) Convert requirements into Jira issues. Handles reading Confluence pages, analyzing specifications, creating Epics with proper structure, and generating detailed implementation tickets linked to the Epic.",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "triage-issue",
+      "version": "0.1.0",
+      "path": "skills/triage-issue",
+      "description": "Intelligently triage bug reports and error messages by searching for duplicates in Jira and offering to create new issues or add comments to existing ones. When an agent needs to: (1) Triage a bug report or error message, (2) Check if an issue is a duplicate, (3) Find similar past issues, (4) Create a new bug ticket with proper context, or (5) Add information to an existing ticket. Searches Jira for similar issues, identifies duplicates, checks fix history, and helps create well-structured bug reports.",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
+      "id": "uniontech-ai-point-export",
+      "version": "0.1.0",
+      "path": "skills/uniontech-ai-point-export",
+      "description": "Extract UnionTech datan AI point statistics from https://datan.uniontech.com/#/ai-point/statics after the user is already logged in, capture the page's real authenticated XHR requests, sum daily rows into totals, and optionally fill the V20 AI point Excel template. Use when the user asks to fetch UnionTech AI埋点统计 data, compare page values, export and sum the last 7 days, or write those values into the workbook.",
       "support": {
         "codex": {
           "mode": "native_skill_dir"
