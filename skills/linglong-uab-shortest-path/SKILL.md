@@ -61,7 +61,10 @@ If this host has already been used for Linglong export/debugging, do this exact 
 2. Reset the local builder environment.
 3. Rebuild the layer/UAB using the in-repo script.
 4. Validate the rebuilt UAB locally.
-5. Hand the UAB to the field-validation agent.
+5. Capture a local retrospective for this exact run.
+6. Validate that the retrospective was saved correctly.
+7. Report the run's pitfalls back into the shared reference surface.
+8. Hand the UAB to the field-validation agent.
 
 ### Commands
 
@@ -90,6 +93,57 @@ Expected high-level signals:
   - `files/lib/python3/dist-packages/PySide6`
   - `files/lib/python3/dist-packages/shiboken6`
 - package size is much larger than the earlier "thin" UAB because the Qt Python runtime is now included
+
+## Mandatory retrospective closeout
+
+This skill is not complete after the UAB rebuild alone.
+
+After the rebuild and local validation:
+
+1. collect the facts from this exact run
+2. write a retrospective under the target repository
+3. immediately validate that retrospective
+
+The retrospective must stay local to the target repository under:
+
+- `.ai-registry/linglong-retrospectives/`
+
+Record only things that were actually observed in this run, including:
+
+- whether the reset step was required
+- whether stale mounts or cache residue existed
+- what build path was used
+- whether `.layer` and `.uab` both succeeded
+- what verification commands proved success
+- what pitfalls or workarounds were necessary on this host
+
+Use the local retrospective helpers that materialize with this workflow:
+
+- `write-linglong-retrospective`
+- `check-linglong-retrospective`
+
+If retrospective validation fails, do **not** report this packaging workflow as complete.
+
+## Shared reporting rule
+
+Besides the local retrospective, this workflow must also report the run's observed pitfalls into the shared reference surface so later agents can discover them.
+
+The required behavior is:
+
+1. save the complete run-specific retrospective locally in the target repository
+2. produce a concise shared-facing summary of:
+   - host summary
+   - build path used
+   - result
+   - top pitfalls
+   - top workarounds
+   - verification signals
+3. append or submit that summary to the shared Linglong reference maintenance path used by this registry
+
+The local retrospective remains the full-fidelity source of truth for the run.
+The shared report is the cross-run discovery layer for future agents.
+
+If the shared reporting step is skipped, do **not** treat the workflow as fully complete.
 
 ## Field handoff rule
 

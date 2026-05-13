@@ -19,10 +19,9 @@ Canonical Registry (GitHub)
   ├─ REGISTRY.md
   ├─ skills/
   ├─ scripts/
-  ├─ wrappers/
   ├─ addons/
   ├─ references/
-  └─ packs/
+  └─ docs/workflows/
 
 Agent-specific adapters
   ├─ codex
@@ -41,7 +40,7 @@ Local materialization
   ├─ .claude/agents/*.md
   ├─ .gemini/agents/*.md
   ├─ .opencode/skills/*/SKILL.md
-  └─ executable scripts / wrappers
+  └─ executable scripts
 ```
 
 一句话：
@@ -102,7 +101,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
 - 对 Claude Code 的正确架构是：
   - 生成 `CLAUDE.md` 导航或导入
   - 视需要生成 `.claude/agents/*.md`
-  - 把脚本与 wrapper 落到本地受控路径
+  - 把脚本落到本地受控路径
 
 ### 4.3 Cursor
 
@@ -227,13 +226,13 @@ product-ai-registry/
       tool.yaml
       run.sh
 
-  wrappers/
-    opencode-review/
-      tool.yaml
-      run.sh
+  references/
+    deepin-compat/
+      reference.yaml
 
-  packs/
-    product-default.json
+  docs/
+    workflows/
+      ai-daily-news.md
 
   adapters/
     codex/
@@ -278,23 +277,7 @@ product-ai-registry/
 - 描述依赖 CLI
 - 描述输入输出
 
-### 8.3 wrapper
-
-规范化 wrapper 的职责：
-
-- 绑定某个本地 CLI
-- 固定受控参数
-- 定义允许的调用方式
-
-### 8.4 pack
-
-规范化 pack 的职责：
-
-- 聚合一组 capability
-- 标记默认角色或场景
-- 为不同 Agent 指定不同 materialization 目标
-
-### 8.5 addon
+### 8.3 addon
 
 规范化 addon 的职责：
 
@@ -302,7 +285,7 @@ product-ai-registry/
 - 自身可能不是单文件 skill 或脚本
 - 常见为外部 git 仓库、release 或 package manager 目标
 
-### 8.6 reference
+### 8.4 reference
 
 规范化 reference 的职责：
 
@@ -319,7 +302,6 @@ product-ai-registry/
 - `instruction_mode`
 - `skill_mode`
 - `script_mode`
-- `wrapper_mode`
 - `install_strategy`
 - `supported_os`
 
@@ -331,7 +313,6 @@ support_level: B
 instruction_mode: claude_md
 skill_mode: generated_subagent
 script_mode: local_copy
-wrapper_mode: local_copy
 install_strategy: prompt_or_helper
 supported_os:
   - linux
@@ -355,8 +336,8 @@ paths:
 | `project_generated_rules` | 在目标仓库内生成规则文件 |
 | `memory_import` | 写入主 memory 文件并导入其他内容 |
 | `extension_bundle` | 生成原生 extension 包 |
-| `local_copy` | 复制脚本或 wrapper 到本地目录 |
-| `project_local_copy` | 复制脚本或 wrapper 到目标仓库路径 |
+| `local_copy` | 复制脚本到本地目录 |
+| `project_local_copy` | 复制脚本到目标仓库路径 |
 
 例子：
 
@@ -364,7 +345,7 @@ paths:
 - OpenCode skill -> `native_skill_dir`
 - Claude Code skill -> `generated_subagent` 或 `memory_import`
 - Cursor skill -> `generated_rules`
-- Gemini CLI skill pack -> `extension_bundle`
+- Gemini CLI skill bundle -> `extension_bundle`
 - Repo-specific build assets -> `project_*` modes
 
 ## 11. Materialization 路径策略
@@ -385,6 +366,13 @@ paths:
 - 删除未知来源的用户文件
 - 直接重写现有主配置文件的全部内容
 
+## 11.1 Workflow composition maturity
+
+- workflow 组合说明应逐步迁移到 `docs/workflows/`
+- 原子资源由 `skill`、`script`、`addon`、`reference` 维护
+- workflow 文档负责说明组合顺序、前置检查和阻断条件
+- 当前优先保留确实需要跨资源编排说明的 workflow，例如 AI 日报
+
 ## 12. manifest.json 结构
 
 `manifest.json` 必须表达：
@@ -402,7 +390,6 @@ paths:
 {
   "registry_version": "1.0.0",
   "generated_at": "2026-04-29T00:00:00Z",
-  "default_pack": "product-default",
   "agents": {
     "codex": { "support_level": "A" },
     "claude-code": { "support_level": "B" },
@@ -412,17 +399,6 @@ paths:
     "openclaw": { "support_level": "C" },
     "hermes": { "support_level": "C" }
   },
-  "packs": [
-    {
-      "id": "product-default",
-      "version": "1.0.0",
-      "items": [
-        "skill:prd-review",
-        "script:forum-demand-crawler",
-        "wrapper:opencode-review"
-      ]
-    }
-  ],
   "items": [
     {
       "type": "skill",
@@ -447,16 +423,10 @@ paths:
 }
 ```
 
-Interpretation rules:
-
-- `baseline + install`: install proactively when compatible
-- `dependency + block/install`: only resolve when another item requires it
-- `reference + suggest`: never auto-install, only surface to the user or agent
-
 Important distinction:
 
 - `agent runtime` is the execution surface, for example `codex`, `claude-code`, `cursor`, `gemini-cli`, `opencode`
-- `registry resource` is what the registry indexes, for example `skill`, `script`, `wrapper`, `addon`, `reference`
+- `registry resource` is what the registry indexes, for example `skill`, `script`, `addon`, `reference`
 - a resource may depend on an addon like `opencli`
 - a resource may proactively install a baseline addon like `gh-cli` or `cc-switch`
 - a resource may expose an optional addon like `lark-cli`
@@ -494,7 +464,6 @@ Important distinction:
 {
   "registry_url": "https://github.com/your-org/product-ai-registry",
   "last_synced": "2026-04-29T10:40:00Z",
-  "active_pack": "product-default",
   "agent_type": "codex",
   "items": {
     "skill:prd-review": {
@@ -521,8 +490,8 @@ Important distinction:
 1. 读取 `manifest.json`
 2. 识别 `agent_type`
 3. 加载该 Agent 的 `adapter.yaml`
-4. 选择默认 `pack`
-5. 对 pack 中每项执行：
+4. 选择相关资源和 workflow 文档
+5. 对每个目标资源执行：
    - 取 canonical 资源
    - 根据 adapter 选择 materialization 模式
    - 选择 namespaced 路径
@@ -547,7 +516,7 @@ Important distinction:
 
 - 当前 Agent 是否属于支持矩阵
 - 当前 Agent 的 adapter 是否存在
-- pack 中每个项目是否对当前 Agent 可 materialize
+- 每个目标资源是否对当前 Agent 可 materialize
 - 本地入口文件或目标文件是否存在
 - 依赖 CLI 是否可用
 - 用户主配置文件是否仍然保留且可解析
@@ -617,3 +586,4 @@ MVP 真正完成的标准：
 - Google Gemini CLI `GEMINI.md`、extensions、skills、agents
 - OpenCode 官方 `AGENTS.md` 与 Skills 文档
 - OpenClaw 与 Hermes 主仓公开资料
+

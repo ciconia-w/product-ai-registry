@@ -16,7 +16,26 @@
         "kind": { "type": "string" },
         "url": { "type": "string" },
         "ref": { "type": "string" },
-        "install_method": { "type": "string" }
+        "install_method": { "type": "string" },
+        "docs_url": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "install": {
+      "type": "object",
+      "properties": {
+        "commands": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "verify": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "post_install": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
       },
       "additionalProperties": true
     },

@@ -1,0 +1,28 @@
+id: khazix-skills
+name: Khazix Skills
+version: 0.1.0
+description: Reference library of practical cross-agent skills and prompts for cleanup, research, writing, and AI news workflows
+source:
+  kind: reference
+  url: https://github.com/KKKKhazix/khazix-skills
+  ref: main
+  docs_url: https://github.com/KKKKhazix/khazix-skills#readme
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask about cleanup or sync skills, deep product research workflows, or reusable Chinese-language prompt assets
+  - Prefer indexing and selective local adaptation of specific skills rather than using the full upstream repository as a baseline pack

@@ -1,0 +1,31 @@
+id: opencli-browser-bridge
+name: OpenCLI Browser Bridge
+version: 0.1.0
+description: Required browser bridge and extension layer for OpenCLI browser-backed commands that reuse live login state
+source:
+  kind: external_git
+  url: https://github.com/jackwener/opencli
+  ref: main
+  install_method: external_git
+  docs_url: https://github.com/jackwener/opencli#readme
+install:
+  commands:
+    - opencli doctor
+  verify:
+    - opencli doctor
+  post_install:
+    - Ensure the OpenCLI browser bridge or extension is installed and a usable browser profile can be attached before relying on browser-backed commands
+policy:
+  role: dependency
+  action_on_missing: install
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - This is a hard dependency for browser-backed company-pm PMS and UDoc style commands
+  - It should be installed whenever a workflow depends on login-state reuse in a live browser

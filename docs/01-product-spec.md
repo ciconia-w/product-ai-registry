@@ -27,7 +27,7 @@
 
 当前痛点不是 Agent 不够多，而是：
 
-- 共享提示词、脚本、封装器和工作流散落在不同机器和聊天记录里
+- 共享提示词、脚本和工作流散落在不同机器和聊天记录里
 - 没有统一的版本源头
 - 没有统一的更新方式
 - 没有人知道自己本机到底装了什么、缺了什么
@@ -62,11 +62,11 @@ GitHub 仓库是唯一事实来源。
 ### 5.1 必须实现
 
 - 任何团队成员通过粘贴一段提示词或给出一个注册表链接，让 Agent 完成本机资源同步
-- 注册表能够管理四类规范化资源：
+- 注册表能够管理规范化资源，并且当前正式建模包括：
   - `skill`
   - `script`
-  - `wrapper`
-  - `pack`
+  - `addon`
+  - `reference`
 - 对多种 Agent 提供明确、可验证的适配策略
 - Agent 在使用某项资源前，能判断本机环境是否满足要求
 - 更新由 GitHub 变更驱动，资源版本可以被 Agent 检查并汇报
@@ -77,7 +77,7 @@ GitHub 仓库是唯一事实来源。
 - 用户锁定特定资源版本
 - 角色能力包
 - Agent 启动时做更新提示
-- 轻量兜底安装脚本
+- 轻量兜底安装能力
 
 ### 5.3 不做的事
 
@@ -90,19 +90,14 @@ GitHub 仓库是唯一事实来源。
 
 ## 6. 规范化资源模型
 
-注册表只管理四类规范化对象：
+注册表当前正式管理四类规范化对象：
 
 | 类型 | 含义 |
 |---|---|
 | `skill` | 可复用的任务能力定义 |
 | `script` | 带元数据的独立脚本 |
-| `wrapper` | 对本地 CLI 的受控封装 |
-| `pack` | 一组角色化资源的集合 |
-
-后续允许扩展为：
-
-- `addon`
-- `reference`
+| `addon` | 需要单独安装、同步或版本管理的能力包或运行时 |
+| `reference` | 只读参考资料、映射、说明和外部能力索引 |
 
 注意：
 
@@ -147,16 +142,16 @@ GitHub 仓库是唯一事实来源。
 - `Agent runtime`
   - 例如 `codex`、`claude-code`、`cursor`、`gemini-cli`、`opencode`
 - `Registry resource`
-  - 例如 `skill`、`script`、`wrapper`、`addon`、`reference`
+  - 例如 `skill`、`script`、`addon`、`reference`
 
 `opencode` 本身属于 **基础 Agent runtime**，不属于依赖型 addon。
 
 但：
 
-- 某个 `wrapper` 可以依赖 `opencli`
-- 某个 `pack` 可以把 `gh-cli`、`cc-switch` 标成 `baseline addon`
-- 某个 `pack` 可以把 `lark-cli` 标成 `optional addon`
-- 某个 `pack` 可以把 `oh-my-codex` 标成 `baseline addon`
+- 某个 `script` 可以依赖 `opencli`
+- 某个 `skill` 可以依赖 `gh-cli`、`cc-switch` 这类 `baseline addon`
+- 某个 `skill` 可以依赖 `lark-cli` 这类 `optional addon`
+- 某个 `skill` 可以依赖 `oh-my-codex` 这类 `baseline addon`
 - 某个外部项目如 `RAG-Anything` 可以标成 `reference`
 
 ## 7. 兼容性设计原则
@@ -258,8 +253,8 @@ GitHub 仓库是唯一事实来源。
 2. 用户把它粘贴给自己的 Agent
 3. Agent 读取 `REGISTRY.md` 与 `manifest.json`
 4. Agent 识别当前 Agent 类型、OS、可用 CLI
-5. Agent 选择适配器和默认 `pack`
-6. Agent 安装或更新本地资源
+5. Agent 选择适配器和相关资源
+6. Agent 安装、更新或引用本地资源
 7. Agent 输出健康摘要
 
 ### 10.2 更新
@@ -305,7 +300,6 @@ https://github.com/your-org/product-ai-registry
 
 为了确保“真的能用”，规格必须允许一个**可选兜底路径**：
 
-- 轻量 bootstrap 脚本
 - 或按 Agent 分类的最小安装说明
 
 原因：
@@ -386,22 +380,26 @@ Agent 需要在本地记录同步状态，但本地状态文件不得保存共�
 ## 16. 待确认问题
 
 - registry 公开还是私有
-- 是否提供轻量 bootstrap 兜底
-- `pack` 按角色还是按团队维护
+- workflow 组合说明按角色还是按团队维护
 - 是否要在仓库中提供每种 Agent 的安装适配模板
 - Phase 1 是否必须包含 `claude-code` 与 `cursor` 的真实验证
 
-## 17. MVP 范围
+## 17. Workflow 文档现状
+
+- workflow 不再建模为正式 registry 资源类型
+- 组合方式应迁移到 `docs/workflows/`
+- 原子资源继续由 `skill`、`script`、`addon`、`reference` 承担
+- 当前优先只保留像 AI 日报这样确实跨越多个原子资源的 workflow 文档
+
+## 18. MVP 范围
 
 MVP 必须包含：
 
 - `AGENTS.md`
 - `REGISTRY.md`
 - `manifest.json`
-- `packs/product-default.json`
 - 一个 `skill`
 - 一个 `script`
-- 一个 `wrapper`
 - 至少一个 Agent 适配模板目录
 
 MVP 完成的判据不是“文档写完”，而是：
@@ -411,10 +409,11 @@ MVP 完成的判据不是“文档写完”，而是：
 3. `opencode` 能发现一个本地 skill
 4. `claude-code` 或 `cursor` 至少有一个完成适配式落地验证
 
-## 18. 验收标准
+## 19. 验收标准
 
 - 不再出现“所有 Agent 都共用同一格式”的表述
 - 每个正式支持的 Agent 都有明确的适配路径
 - manifest 能表达按 Agent 的支持矩阵
 - 状态文件不要求保存共享密钥
-- 至少一个默认 `pack` 可以被真实安装并验证
+- 至少一条 workflow 说明文档可以被真实执行并验证
+

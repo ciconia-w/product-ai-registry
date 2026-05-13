@@ -1,0 +1,27 @@
+id: awesome-design-md
+name: Awesome DESIGN.md
+version: 0.1.0
+description: Reference collection of DESIGN.md files for AI-generated UI and design-system-aligned frontend output
+source:
+  kind: reference
+  url: https://github.com/VoltAgent/awesome-design-md
+  ref: main
+  docs_url: https://github.com/VoltAgent/awesome-design-md#readme
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask about DESIGN.md, design-system prompts, or UI look-and-feel references for agent-generated frontend work

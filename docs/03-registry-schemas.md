@@ -7,7 +7,6 @@ This document defines the schema files used by the registry.
 - `schemas/manifest.schema.json`
 - `schemas/tool.schema.json`
 - `schemas/adapter.schema.json`
-- `schemas/pack.schema.json`
 - `schemas/addon.schema.json`
 - `schemas/reference.schema.json`
 - `schemas/installed.schema.json`
@@ -25,7 +24,7 @@ These schemas are part of the repository skeleton so that future Agents do not n
 ## Rules
 
 - `manifest.json` is the source of capability indexing
-- `tool.yaml` applies to both `script` and `wrapper`
+- `tool.yaml` applies to `script`
 - `adapter.yaml` defines per-Agent materialization strategy
 - local state files must stay separate from the canonical registry
 
@@ -72,7 +71,6 @@ with:
 - `registry resource`
   - `skill`
   - `script`
-  - `wrapper`
   - `addon`
   - `reference`
 
@@ -145,3 +143,4 @@ Example:
   }
 }
 ```
+

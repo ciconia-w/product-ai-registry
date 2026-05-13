@@ -20,7 +20,6 @@ Changes to these areas require extra scrutiny:
 - `REGISTRY.md`
 - `AGENTS.md`
 - `adapters/**`
-- `packs/**`
 - `.github/**`
 - `GOVERNANCE.md`
 - `CONTRIBUTING.md`
@@ -38,7 +37,7 @@ The following changes require validation notes in the PR:
 
 - adding a new Agent adapter
 - changing local materialization mode
-- changing pack composition
+- changing workflow composition guidance
 - changing dependency or install assumptions
 - promoting an adapter from experimental to supported
 
@@ -49,3 +48,13 @@ If safe installation cannot be guaranteed:
 - stop
 - report the blocker
 - do not guess
+
+## Semantic changes
+
+If a PR changes resource semantics, it must update both machine-readable and human-readable layers:
+
+- manifest and schemas
+- README
+- relevant docs under docs/
+- addon or reference install guidance when upstream behavior changes
+

@@ -1,0 +1,28 @@
+id: agent-skills
+name: Agent Skills
+version: 0.1.0
+description: Reference engineering-skill library for structured software-delivery workflows such as planning, testing, code review, and context engineering
+source:
+  kind: reference
+  url: https://github.com/addyosmani/agent-skills
+  ref: main
+  docs_url: https://github.com/addyosmani/agent-skills#readme
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask for software-engineering workflow skills, planning or review process references, or context-engineering guidance
+  - Prefer selective local adaptation of individual skills instead of vendoring the whole upstream pack by default

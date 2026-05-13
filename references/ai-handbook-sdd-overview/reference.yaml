@@ -1,0 +1,26 @@
+id: ai-handbook-sdd-overview
+name: AI Handbook SDD Overview
+version: 0.1.0
+description: Reference material about SDD overview and AI-native software delivery thinking
+source:
+  kind: reference
+  url: https://jimmysong.io/zh/book/ai-handbook/sdd/overview/
+  docs_url: https://jimmysong.io/zh/book/ai-handbook/sdd/overview/
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask about SDD, AI-native development, or AI delivery methodology

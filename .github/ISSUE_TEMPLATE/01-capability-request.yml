@@ -1,5 +1,5 @@
 name: Capability Request
-description: Request a new skill, script, wrapper, or pack
+description: Request a new skill, script, addon, reference, or workflow doc
 title: "[capability] "
 labels:
   - capability
@@ -11,8 +11,9 @@ body:
       options:
         - skill
         - script
-        - wrapper
-        - pack
+        - addon
+        - reference
+        - workflow-doc
     validations:
       required: true
   - type: textarea

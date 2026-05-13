@@ -6,7 +6,6 @@ Examples:
 
 - repo-specific build scripts
 - repo-specific skills
-- repository-local wrappers
 
 The Linglong deepin-color-correction assets are the first concrete example.
 
