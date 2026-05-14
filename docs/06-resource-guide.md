@@ -271,6 +271,10 @@ BI 的三种输出模式说明：`raw / template / custom`。
 
 deepin v20 / v25 的兼容性和环境约束说明。
 
+### `guizang-ppt-skill`
+
+外部网页 PPT / 演讲 deck skill 参考，适合单文件 HTML slides、瑞士风版式、电子杂志风版式和封面生成场景。
+
 ### `khazix-skills`
 
 外部实战型 skill 库，覆盖清理、研究、写作等。
@@ -514,7 +518,23 @@ bootstrap 与辅助脚本的设计说明。
 - `script:check-linglong-retrospective`
 - `reference:linglong-deepin-color-correction-example`
 
-### 10. 不知道先用哪个入口
+### 10. 想做网页 PPT / 演讲 deck / 封面
+
+先看：
+
+- `reference:guizang-ppt-skill`
+
+如果需要本地 slide 工作区，再配：
+
+- `addon:open-slide`
+
+适合的任务：
+
+- 生成单文件 HTML 横向翻页 PPT
+- 参考瑞士国际主义或电子杂志风版式
+- 做公众号头图、分享卡或演讲封面
+
+### 11. 不知道先用哪个入口
 
 可以按这条简单规则：
 

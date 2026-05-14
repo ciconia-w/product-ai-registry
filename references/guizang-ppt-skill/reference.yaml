@@ -1,0 +1,28 @@
+id: guizang-ppt-skill
+name: Guizang PPT Skill
+version: 0.1.0
+description: Reference skill repository for single-file HTML slide decks, Swiss-style presentation systems, editorial magazine layouts, and presentation-cover generation
+source:
+  kind: reference
+  url: https://github.com/op7418/guizang-ppt-skill
+  ref: main
+  docs_url: https://github.com/op7418/guizang-ppt-skill#readme
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask for HTML slide decks, Swiss-style presentations, editorial magazine layouts, horizontal swipe decks, or cover-image generation
+  - Upstream is packaged as an installable skill, but keep it reference-only here until an adapter-specific materialization path is explicitly validated
