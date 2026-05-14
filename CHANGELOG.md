@@ -4,7 +4,7 @@
 
 - Remove placeholder benchmark/bootstrap scripts and retire the wrapper resource surface from the non-Linglong registry contract
 - Remove `pack` as a first-class registry resource type and migrate composition guidance toward workflow documentation
-- Add FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation
+- Add docs/FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation
 - Align manifest metadata with canonical resource files, downgrade unproven support claims, and strengthen registry validation
 - Replace the broken README Mermaid architecture block with a generated repository overview, add `tools/update_readme_structure.py`, and tighten contribution guidance so README manual edits stay limited to overview-level changes
 - Bootstrap repository skeleton

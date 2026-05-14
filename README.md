@@ -4,7 +4,7 @@
 
 它只解决一件事：把团队共用的 `skills`、`scripts`、`addons`、`references` 集中管理，并通过不同 Agent 的 `adapter` 决定如何在本地落地。
 
-如果你想看偏门技巧、实践经验、工具使用小抄，直接看 [FIELD_NOTES.md](FIELD_NOTES.md)。
+如果你想看偏门技巧、实践经验、工具使用小抄，直接看 [docs/FIELD_NOTES.md](docs/FIELD_NOTES.md)。
 
 当前仓库状态：
 
@@ -46,7 +46,7 @@ https://github.com/ciconia-w/product-ai-registry
 如果你是维护这个仓库的人或 Agent，先看：
 
 1. `CONTRIBUTING.md`
-2. `GOVERNANCE.md`
+2. `docs/maintainers/governance.md`
 3. `README.md`
 
 ## 仓库结构
@@ -66,7 +66,6 @@ product-ai-registry/
 ├── AGENTS.md                    # agent entry point
 ├── REGISTRY.md                  # registry contract and execution rules
 ├── manifest.json                # machine-readable index of registry items
-├── FIELD_NOTES.md               # human-oriented practical notes and usage tips
 ├── adapters/                    # adapter rules by agent (7)
 │   ├── claude-code/
 │   ├── codex/
@@ -98,9 +97,9 @@ product-ai-registry/
 │   ├── addon.schema.json
 │   └── ... (5 more)
 ├── docs/                        # product, architecture, and schema docs
+│   ├── maintainers/
 │   ├── workflows/
-│   ├── 01-product-spec.md
-│   └── ... (5 more)
+│   └── ... (7 more)
 ├── .github/                     # CI and contribution templates
 │   ├── ISSUE_TEMPLATE/
 │   ├── workflows/
@@ -108,8 +107,7 @@ product-ai-registry/
 ├── tools/                       # maintenance helpers for this repository
 │   └── update_readme_structure.py
 ├── CHANGELOG.md                 # user-visible change log
-├── CONTRIBUTING.md              # branch, PR, and verification rules
-└── GOVERNANCE.md                # support levels and review policy
+└── CONTRIBUTING.md              # branch, PR, and verification rules
 ```
 <!-- repo-structure:end -->
 
@@ -117,7 +115,7 @@ product-ai-registry/
 
 - `manifest.json`：完整资源索引、依赖关系和策略字段
 - `REGISTRY.md`：安装、更新、自检、阻断约定
-- `FIELD_NOTES.md`：偏门技巧、实践经验、使用小抄
+- `docs/FIELD_NOTES.md`：偏门技巧、实践经验、使用小抄
 - `docs/06-resource-guide.md`：给人看的资源说明，帮助理解每个资源大概是干什么的
 - `docs/01-product-spec.md`：产品目标和边界
 - `docs/02-architecture-design.md`：架构和本地落地设计
@@ -136,9 +134,9 @@ product-ai-registry/
 
 - [REGISTRY.md](REGISTRY.md)
 - [AGENTS.md](AGENTS.md)
-- [FIELD_NOTES.md](FIELD_NOTES.md)
+- [docs/FIELD_NOTES.md](docs/FIELD_NOTES.md)
 - [CONTRIBUTING.md](CONTRIBUTING.md)
-- [GOVERNANCE.md](GOVERNANCE.md)
+- [docs/maintainers/governance.md](docs/maintainers/governance.md)
 - [docs/01-product-spec.md](docs/01-product-spec.md)
 - [docs/02-architecture-design.md](docs/02-architecture-design.md)
 - [docs/03-registry-schemas.md](docs/03-registry-schemas.md)
