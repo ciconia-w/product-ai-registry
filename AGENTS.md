@@ -19,6 +19,6 @@
 如果你是维护这个仓库的 Agent：
 
 1. 先读取 `CONTRIBUTING.md`
-2. 再读取 `GOVERNANCE.md`
+2. 再读取 `docs/maintainers/governance.md`
 3. 确保修改通过 CI
 4. 只在 feature branch 上工作
