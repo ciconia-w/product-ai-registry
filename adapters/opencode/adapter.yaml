@@ -1,5 +1,5 @@
 agent_id: opencode
-support_level: A
+support_level: B
 instruction_mode: agents_md
 skill_mode: native_skill_dir
 script_mode: local_copy

@@ -1,5 +1,5 @@
 agent_id: gemini-cli
-support_level: A
+support_level: B
 instruction_mode: gemini_md
 skill_mode: extension_bundle
 script_mode: extension_bundle

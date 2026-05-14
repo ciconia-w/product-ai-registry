@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Raise `claude-code` support to `A`, set `gemini-cli` and `opencode` to `B`, and require root-cause analysis before issue filing via `triage-issue`
 - Remove placeholder benchmark/bootstrap scripts and retire the wrapper resource surface from the non-Linglong registry contract
 - Remove `pack` as a first-class registry resource type and migrate composition guidance toward workflow documentation
 - Add docs/FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation
