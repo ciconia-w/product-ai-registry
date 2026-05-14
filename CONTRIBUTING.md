@@ -2,7 +2,7 @@
 
 ## Branch rules
 
-- `main`: stable branch; Pull Request merge is preferred
+- `main`: protected, merge by PR only
 - `beta`: optional pre-release validation
 - feature branches:
   - `feat/<scope>`
@@ -15,14 +15,14 @@ One PR should cover one concern:
 
 - one capability
 - one adapter change
-- one pack change
+- one workflow-doc or composition change
 - one governance or CI change
 
 Do not mix unrelated work.
 
 ## Required updates
 
-If you change a capability or pack, update all relevant files:
+If you change a capability or workflow composition, update all relevant files:
 
 - resource files
 - `manifest.json`
@@ -42,9 +42,8 @@ If you change an adapter:
 Before opening a PR:
 
 - `manifest.json` must be valid JSON
-- all `pack` references must point to existing items
 - every `skill` must have `SKILL.md`
-- every `script` and `wrapper` must have `tool.yaml`
+- every `script` must have `tool.yaml`
 - high-risk changes must include validation notes
 
 ## Support-level changes

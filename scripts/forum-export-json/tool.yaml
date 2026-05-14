@@ -1,0 +1,17 @@
+id: forum-export-json
+name: Company PM Forum Export JSON
+version: 0.1.0
+description: Export normalized forum requirement data as JSON through the local company-pm helper chain
+entry: run.sh
+runtime: bash
+os:
+  - linux
+requires:
+  cli:
+    - bash
+    - python3
+permissions:
+  network: true
+  workspace_only: true
+notes:
+  - This script is sourced from the local company-pm plugin repository

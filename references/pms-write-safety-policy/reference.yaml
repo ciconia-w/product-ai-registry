@@ -1,0 +1,21 @@
+id: pms-write-safety-policy
+name: Company PM Write Safety Policy
+version: 0.1.0
+description: Reference for the preview-first and explicit-apply safety model of company-pm write commands
+source:
+  kind: reference
+  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+os:
+  - linux
+notes:
+  - Surface this reference whenever an agent is about to use create-product, create-task, or create-story
+  - Live submission requires both --apply true and COMPANY_PM_ALLOW_WRITE=1

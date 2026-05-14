@@ -1,0 +1,45 @@
+name: Registry Bug
+description: Report a repository bug, resource inconsistency, or registry behavior problem
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - docs
+        - manifest
+        - skill
+        - script
+        - addon
+        - reference
+        - adapter
+        - workflow
+    validations:
+      required: true
+  - type: input
+    id: resource_id
+    attributes:
+      label: Related resource id
+      description: Example: pms-read, bi-export, changxie-files
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Minimal steps, commands, or file paths to reproduce

@@ -3,7 +3,6 @@ support_level: A
 instruction_mode: claude_md
 skill_mode: generated_subagent
 script_mode: local_copy
-wrapper_mode: local_copy
 install_strategy: prompt_or_helper
 supported_os:
   - linux

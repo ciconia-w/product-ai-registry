@@ -1,0 +1,18 @@
+id: bi-fetch-uniontech-ai
+name: Company PM BI Fetch UnionTech AI
+version: 0.1.0
+description: Fetch and render UnionTech AI BI data after authentication, supporting raw, template, and custom output modes
+entry: run.sh
+runtime: bash
+os:
+  - linux
+requires:
+  cli:
+    - bash
+    - python3
+permissions:
+  network: true
+  workspace_only: true
+notes:
+  - This script is sourced from the local company-pm plugin repository
+  - It expects valid login output or token material from the auth chain

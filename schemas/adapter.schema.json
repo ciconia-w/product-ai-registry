@@ -9,7 +9,6 @@
     "instruction_mode",
     "skill_mode",
     "script_mode",
-    "wrapper_mode",
     "install_strategy",
     "supported_os"
   ],
@@ -19,7 +18,6 @@
     "instruction_mode": { "type": "string" },
     "skill_mode": { "type": "string" },
     "script_mode": { "type": "string" },
-    "wrapper_mode": { "type": "string" },
     "install_strategy": { "type": "string" },
     "supported_os": {
       "type": "array",

@@ -1,0 +1,18 @@
+id: bi-auth-login
+name: Company PM BI Auth Login
+version: 0.1.0
+description: Authenticate to UnionTech BI through the company-pm plugin helper chain and return login state or token material
+entry: run.sh
+runtime: bash
+os:
+  - linux
+requires:
+  cli:
+    - bash
+    - python3
+permissions:
+  network: true
+  workspace_only: true
+notes:
+  - This script is sourced from the local company-pm plugin repository
+  - It may require manual captcha fallback when automatic solving is not reliable

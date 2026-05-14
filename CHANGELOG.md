@@ -3,6 +3,11 @@
 ## Unreleased
 
 - Raise `claude-code` support to `A`, set `gemini-cli` and `opencode` to `B`, and require root-cause analysis before issue filing via `triage-issue`
+- Remove placeholder benchmark/bootstrap scripts and retire the wrapper resource surface from the non-Linglong registry contract
+- Remove `pack` as a first-class registry resource type and migrate composition guidance toward workflow documentation
+- Add docs/FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation
+- Align manifest metadata with canonical resource files, downgrade unproven support claims, and strengthen registry validation
+- Replace the broken README Mermaid architecture block with a generated repository overview, add `tools/update_readme_structure.py`, and tighten contribution guidance so README manual edits stay limited to overview-level changes
 - Bootstrap repository skeleton
 - Add governance and contribution rules
 - Add initial registry contract and adapter-first architecture

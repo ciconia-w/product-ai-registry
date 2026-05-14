@@ -6,17 +6,15 @@
 /REGISTRY.md @ciconia-w
 /manifest.json @ciconia-w
 /CONTRIBUTING.md @ciconia-w
-/GOVERNANCE.md @ciconia-w
+/docs/maintainers/governance.md @ciconia-w
 /CHANGELOG.md @ciconia-w
 /.github/ @ciconia-w
 
 # Adapter layer
 /adapters/ @ciconia-w
 
-# Capability packs
-/packs/ @ciconia-w
-
 # Shared capabilities
 /skills/ @ciconia-w
 /scripts/ @ciconia-w
-/wrappers/ @ciconia-w
+/references/ @ciconia-w
+/docs/workflows/ @ciconia-w

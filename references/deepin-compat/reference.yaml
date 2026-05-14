@@ -7,7 +7,7 @@ source:
   url: https://github.com/ciconia-w/product-ai-registry
   ref: main
 policy:
-  role: constraint-reference
+  role: reference
   action_on_missing: block
 agents:
   - claude-code
