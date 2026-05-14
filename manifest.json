@@ -959,6 +959,47 @@
     },
     {
       "type": "reference",
+      "id": "guizang-ppt-skill",
+      "version": "0.1.0",
+      "path": "references/guizang-ppt-skill",
+      "description": "Reference skill repository for single-file HTML slide decks, Swiss-style presentation systems, editorial magazine layouts, and presentation-cover generation",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/op7418/guizang-ppt-skill",
+        "ref": "main",
+        "docs_url": "https://github.com/op7418/guizang-ppt-skill#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
       "id": "khazix-skills",
       "version": "0.1.0",
       "path": "references/khazix-skills",
