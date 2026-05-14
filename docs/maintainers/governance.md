@@ -21,7 +21,7 @@ Changes to these areas require extra scrutiny:
 - `AGENTS.md`
 - `adapters/**`
 - `.github/**`
-- `GOVERNANCE.md`
+- `docs/maintainers/governance.md`
 - `CONTRIBUTING.md`
 
 ## Approval policy
