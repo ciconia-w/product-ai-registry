@@ -100,7 +100,7 @@ product-ai-registry/
 ├── docs/                        # product, architecture, and schema docs
 │   ├── workflows/
 │   ├── 01-product-spec.md
-│   └── ... (4 more)
+│   └── ... (5 more)
 ├── .github/                     # CI and contribution templates
 │   ├── ISSUE_TEMPLATE/
 │   ├── workflows/
@@ -118,6 +118,7 @@ product-ai-registry/
 - `manifest.json`：完整资源索引、依赖关系和策略字段
 - `REGISTRY.md`：安装、更新、自检、阻断约定
 - `FIELD_NOTES.md`：偏门技巧、实践经验、使用小抄
+- `docs/06-resource-guide.md`：给人看的资源说明，帮助理解每个资源大概是干什么的
 - `docs/01-product-spec.md`：产品目标和边界
 - `docs/02-architecture-design.md`：架构和本地落地设计
 - `docs/03-registry-schemas.md`：结构和 schema 说明
@@ -141,4 +142,5 @@ product-ai-registry/
 - [docs/01-product-spec.md](docs/01-product-spec.md)
 - [docs/02-architecture-design.md](docs/02-architecture-design.md)
 - [docs/03-registry-schemas.md](docs/03-registry-schemas.md)
+- [docs/06-resource-guide.md](docs/06-resource-guide.md)
 - [docs/05-project-scoped-materialization.md](docs/05-project-scoped-materialization.md)
