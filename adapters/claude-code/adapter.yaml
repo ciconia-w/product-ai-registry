@@ -1,5 +1,5 @@
 agent_id: claude-code
-support_level: B
+support_level: A
 instruction_mode: claude_md
 skill_mode: generated_subagent
 script_mode: local_copy

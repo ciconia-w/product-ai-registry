@@ -324,7 +324,7 @@ product-ai-registry/
 
 ```yaml
 agent_id: claude-code
-support_level: B
+support_level: A
 instruction_mode: claude_md
 skill_mode: generated_subagent
 script_mode: local_copy
@@ -408,10 +408,10 @@ paths:
   "default_pack": "agent-baseline",
   "agents": {
     "codex": { "support_level": "A" },
-    "claude-code": { "support_level": "B" },
+    "claude-code": { "support_level": "A" },
     "cursor": { "support_level": "B" },
-    "gemini-cli": { "support_level": "A" },
-    "opencode": { "support_level": "A" },
+    "gemini-cli": { "support_level": "B" },
+    "opencode": { "support_level": "B" },
     "openclaw": { "support_level": "C" },
     "hermes": { "support_level": "C" }
   },
@@ -619,4 +619,3 @@ MVP 真正完成的标准：
 - Google Gemini CLI `GEMINI.md`、extensions、skills、agents
 - OpenCode 官方 `AGENTS.md` 与 Skills 文档
 - OpenClaw 与 Hermes 主仓公开资料
-

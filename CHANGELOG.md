@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Raise `claude-code` support to `A`, set `gemini-cli` and `opencode` to `B`, and require root-cause analysis before issue filing via `triage-issue`
 - Bootstrap repository skeleton
 - Add governance and contribution rules
 - Add initial registry contract and adapter-first architecture

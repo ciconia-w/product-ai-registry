@@ -204,10 +204,10 @@ GitHub 仓库是唯一事实来源。
 | Agent | 官方/主仓原生指令入口 | 官方/主仓原生扩展面 | 推荐适配方式 | 支持等级 |
 |---|---|---|---|---|
 | `codex` | `AGENTS.md` | `SKILL.md` / Codex Skills | 原生 `SKILL.md` + `AGENTS.md` | `A` |
-| `claude-code` | `CLAUDE.md` | `.claude/agents/*.md`、hooks、settings | 生成 `CLAUDE.md` 导航 + 可选 `.claude/agents` | `B` |
+| `claude-code` | `CLAUDE.md` | `.claude/agents/*.md`、hooks、settings | 生成 `CLAUDE.md` 导航 + 可选 `.claude/agents` | `A` |
 | `cursor` | `AGENTS.md` 或 `.cursor/rules` | `.mdc` 规则文件 | 生成 `.cursor/rules/*.mdc` 或 repo-root `AGENTS.md`，以项目作用域为主 | `B` |
-| `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `A` |
-| `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `A` |
+| `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `B` |
+| `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `B` |
 | `openclaw` | `AGENTS.md` | ClawHub / plugin / skill 生态 | 由运行中的 agent 自检并自行尝试 | `C` |
 | `hermes` | `AGENTS.md` / workspace instructions | `~/.hermes/skills` 与技能生态 | 由运行中的 agent 自检并自行尝试 | `C` |
 
@@ -413,4 +413,3 @@ MVP 完成的判据不是“文档写完”，而是：
 - manifest 能表达按 Agent 的支持矩阵
 - 状态文件不要求保存共享密钥
 - 至少一个默认 `pack` 可以被真实安装并验证
-

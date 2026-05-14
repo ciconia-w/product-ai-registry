@@ -14,6 +14,8 @@
 - 不要假设所有 Agent 共用同一格式
 - 不要覆盖用户现有的 `CLAUDE.md`、`GEMINI.md`、`AGENTS.md` 或 `.cursor/rules`
 - 不要直接修改本仓库默认分支上的文件，除非你正在一个 feature branch 上执行受控维护任务
+- 在使用过程中如果出问题或遇到卡点，先自行做问题根因分析，再决定是否需要提交 issue
+- 如果判断需要提交 issue，先参考 `skills/triage-issue/SKILL.md`，按其中的分诊和建单约定执行
 - 如果无法安全合并、无法写入、无法访问 GitHub、或不确定兼容性，请明确报告阻断，不要伪造“已完成”
 
 如果你是维护这个仓库的 Agent：

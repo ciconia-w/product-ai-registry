@@ -139,6 +139,7 @@ https://github.com/ciconia-w/product-ai-registry
 3. 安装或更新适用的资源
 4. 输出健康状态摘要
 
+如果使用过程中出问题或遇到卡点，先自行做根因分析，再决定是否需要提交 issue；需要提 issue 时参考 `triage-issue`。
 如果当前 Agent 不具备所需的文件或命令能力，请明确指出阻断原因，不要编造已完成状态。
 ```
 

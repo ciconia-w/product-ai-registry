@@ -7,16 +7,16 @@
       "support_level": "A"
     },
     "claude-code": {
-      "support_level": "B"
+      "support_level": "A"
     },
     "cursor": {
       "support_level": "B"
     },
     "gemini-cli": {
-      "support_level": "A"
+      "support_level": "B"
     },
     "opencode": {
-      "support_level": "A"
+      "support_level": "B"
     },
     "openclaw": {
       "support_level": "C"
