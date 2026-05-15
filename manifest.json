@@ -464,6 +464,53 @@
       "checksum": "TBD"
     },
     {
+      "type": "addon",
+      "id": "wx-cli",
+      "version": "0.1.0",
+      "path": "addons/wx-cli",
+      "description": "Optional local WeChat data CLI for querying sessions, chat history, contacts, favorites, and article metadata from a signed-in desktop WeChat installation",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/jackwener/wx-cli",
+        "ref": "main",
+        "install_method": "external_package",
+        "docs_url": "https://github.com/jackwener/wx-cli#readme"
+      },
+      "install": {
+        "commands": [
+          "npm install -g @jackwener/wx-cli"
+        ],
+        "verify": [
+          "wx --help"
+        ],
+        "post_install": [
+          "Initialize with wx init on a machine where desktop WeChat is already signed in, and follow the upstream OS-specific setup notes before relying on message queries"
+        ]
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
       "type": "reference",
       "id": "agent-skills",
       "version": "0.1.0",
