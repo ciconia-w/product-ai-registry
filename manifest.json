@@ -1047,6 +1047,47 @@
     },
     {
       "type": "reference",
+      "id": "mattpocock-skills",
+      "version": "0.1.0",
+      "path": "references/mattpocock-skills",
+      "description": "Reference library of composable engineering and productivity skills for grilling requirements, TDD, diagnosis, triage, architecture improvement, and issue or PRD workflows",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/mattpocock/skills",
+        "ref": "main",
+        "docs_url": "https://github.com/mattpocock/skills#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
       "id": "khazix-skills",
       "version": "0.1.0",
       "path": "references/khazix-skills",
