@@ -159,6 +159,10 @@ PMS / 禅道写入口，但默认 preview-first，适合受保护写操作。
 
 PRD 评审入口。帮你结构化检查 PRD 的问题和缺口。
 
+### `requirement-analysis`
+
+独立的需求全流程入口。先检查依赖与飞书表头，再采集、分析、补链接与处理外语内容，最后写飞书。
+
 ### `requirement-analyzer`
 
 需求分析入口。把原始需求拆成结构化字段。
@@ -477,6 +481,7 @@ bootstrap 与辅助脚本的设计说明。
 
 先看：
 
+- `skill:requirement-analysis`
 - `skill:requirement-analyzer`
 - `skill:requirement-prioritizer`
 - `skill:requirement-writer`

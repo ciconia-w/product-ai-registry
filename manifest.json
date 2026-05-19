@@ -2332,6 +2332,46 @@
     },
     {
       "type": "skill",
+      "id": "requirement-analysis",
+      "version": "0.1.0",
+      "path": "skills/requirement-analysis",
+      "description": "Linux 桌面操作系统需求的采集、分析与飞书写入全流程 skill。先检查依赖、授权和飞书表头，再采集论坛、需求反馈平台、deepin Home 开放接口的数据，生成结构化分析结果，并在最终写入前补链接与处理外语内容。",
+      "requires": {
+        "cli": [
+          "python3"
+        ],
+        "items": [
+          "addon:lark-cli"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
       "id": "requirement-analyzer",
       "version": "0.1.0",
       "path": "skills/requirement-analyzer",

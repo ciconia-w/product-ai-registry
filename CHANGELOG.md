@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add skill:requirement-analysis as a standalone crawl -> analyze -> finalize -> Feishu-write workflow for Linux desktop product demand intake
 - Remove placeholder benchmark/bootstrap scripts and retire the wrapper resource surface from the non-Linglong registry contract
 - Remove `pack` as a first-class registry resource type and migrate composition guidance toward workflow documentation
 - Add docs/FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation

@@ -1,0 +1,11 @@
+{
+  "wiki_url": "https://your-feishu-domain/wiki/YOUR_WIKI_TOKEN",
+  "wiki_token": "YOUR_WIKI_TOKEN",
+  "resource_type": "sheet",
+  "spreadsheet_token": "YOUR_SPREADSHEET_TOKEN",
+  "sheet_id": "YOUR_SHEET_ID",
+  "sheet_title": "YOUR_SHEET_TITLE",
+  "title": "YOUR_SHEET_TITLE",
+  "start_row": 2,
+  "notes": "当前目标是飞书电子表格（sheet），写入从第 2 行开始。"
+}

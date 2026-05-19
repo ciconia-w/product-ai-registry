@@ -1,0 +1,8 @@
+interface:
+  display_name: "需求采集分析写入"
+  short_description: "采集多渠道需求，分析后写入飞书文档表格"
+  brand_color: "#2563EB"
+  default_prompt: "使用 $requirement-analysis 先检查飞书表头，再采集 deepin 论坛、需求反馈平台和 deepin Home 开放接口的原始需求，分析这些 UOS/deepin 桌面操作系统需求，并把结果写入飞书文档表格。"
+
+policy:
+  allow_implicit_invocation: true

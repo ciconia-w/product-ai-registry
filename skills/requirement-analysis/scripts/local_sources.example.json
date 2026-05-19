@@ -1,0 +1,24 @@
+{
+  "forum": {
+    "thread_api": "YOUR_FORUM_THREAD_API",
+    "detail_api": "YOUR_FORUM_DETAIL_API",
+    "contact_hint": "如论坛 webhook 失效，请联系内部论坛接口维护人排查。"
+  },
+  "feedback_platform": {
+    "base_url": "YOUR_FEEDBACK_BASE_URL",
+    "app_key": "REPLACE_ME",
+    "sign": "REPLACE_ME",
+    "worksheet_id": "REPLACE_ME",
+    "view_id": "REPLACE_ME"
+  },
+  "deepin_home_openapi": {
+    "base_url": "YOUR_DEEPIN_HOME_BASE_URL",
+    "app_key": "REPLACE_ME",
+    "sign": "REPLACE_ME",
+    "worksheet_id": "REPLACE_ME",
+    "view_ids": {
+      "all": "REPLACE_ME",
+      "requirement_feedback": "REPLACE_ME"
+    }
+  }
+}
