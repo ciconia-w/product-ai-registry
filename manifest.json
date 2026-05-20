@@ -68,10 +68,10 @@
       "description": "Local OpenCLI plugin for PMS or Zentao browser automation, product feedback collection, BI export, Changxie or UDoc document operations, and internal PM workflows",
       "source": {
         "kind": "external_git",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab",
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}",
         "ref": "refactor/auth-fetch-keychain",
         "install_method": "opencli_plugin_install",
-        "docs_url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "docs_url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "optional",
@@ -681,7 +681,7 @@
       "description": "Reference for the batch JSON structure and $prev style parameter chaining used by company-pm batch execution",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -714,7 +714,7 @@
       "description": "Reference for the raw, template, and custom output modes supported by the company-pm BI export chain",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -747,7 +747,7 @@
       "description": "Reference for how company-pm PMS commands reuse an existing browser login state through OpenCLI browser bridge",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -780,7 +780,7 @@
       "description": "Reference for credentials and auth prerequisites of the product feedback platform used by company-pm commands",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -813,7 +813,7 @@
       "description": "Reference mapping for stable product line identifiers used by company-pm product feedback commands",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-enum.json"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-enum.json"
       },
       "policy": {
         "role": "reference",
@@ -846,7 +846,7 @@
       "description": "Reference notes describing stable product line mapping rules and field-filling conventions used by company-pm",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-rule-notes.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-rule-notes.md"
       },
       "policy": {
         "role": "reference",
@@ -879,7 +879,7 @@
       "description": "Reference mapping between stable company-pm product line identifiers and the UOS AI related product lines used in feedback workflows",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-uos-ai-mapping.json"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-uos-ai-mapping.json"
       },
       "policy": {
         "role": "reference",
@@ -912,7 +912,7 @@
       "description": "Reference-only record of the verified Changxie or UDoc capability matrix currently documented in the local plugin README",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -945,7 +945,7 @@
       "description": "Reference for the preview-first and explicit-apply safety model of company-pm write commands",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",

@@ -4,7 +4,7 @@ version: 0.1.0
 description: Reference notes describing stable product line mapping rules and field-filling conventions used by company-pm
 source:
   kind: reference
-  url: file:///home/aaa/opencli-plugin-company-pm-lab/product-line-rule-notes.md
+  url: file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-rule-notes.md
 policy:
   role: reference
   action_on_missing: suggest
@@ -18,3 +18,4 @@ os:
   - linux
 notes:
   - Surface this reference when product line values must be translated into stable field-filling behavior
+  - Resolve this reference through a local opencli-plugin-company-pm-lab checkout exposed via OPENCLI_PLUGIN_PM_LAB_PATH

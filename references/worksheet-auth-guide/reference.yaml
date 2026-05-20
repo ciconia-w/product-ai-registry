@@ -4,7 +4,7 @@ version: 0.1.0
 description: Reference for credentials and auth prerequisites of the product feedback platform used by company-pm commands
 source:
   kind: reference
-  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+  url: file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md
 policy:
   role: reference
   action_on_missing: suggest
@@ -19,3 +19,4 @@ os:
 notes:
   - Surface this reference whenever product-requirements or collect-requirements is used against the feedback platform
   - Required credentials include COMPANY_PM_APP_KEY and COMPANY_PM_SIGN
+  - Resolve this reference through a local opencli-plugin-company-pm-lab checkout exposed via OPENCLI_PLUGIN_PM_LAB_PATH

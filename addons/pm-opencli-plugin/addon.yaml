@@ -4,17 +4,19 @@ version: 0.1.0
 description: Local OpenCLI plugin for PMS or Zentao browser automation, product feedback collection, BI export, Changxie or UDoc document operations, and internal PM workflows
 source:
   kind: external_git
-  url: file:///home/aaa/opencli-plugin-company-pm-lab
+  url: file://${OPENCLI_PLUGIN_PM_LAB_PATH}
   ref: refactor/auth-fetch-keychain
   install_method: opencli_plugin_install
-  docs_url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+  docs_url: file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md
 install:
   commands:
-    - opencli plugin install file:///home/aaa/opencli-plugin-company-pm-lab
+    - test -n "$OPENCLI_PLUGIN_PM_LAB_PATH" || (echo "Set OPENCLI_PLUGIN_PM_LAB_PATH to your local opencli-plugin-company-pm-lab checkout" && exit 1)
+    - opencli plugin install "file://${OPENCLI_PLUGIN_PM_LAB_PATH}"
   verify:
     - opencli plugin list
     - opencli company-pm --help -f yaml
   post_install:
+    - This addon currently assumes a local checkout of opencli-plugin-company-pm-lab; set OPENCLI_PLUGIN_PM_LAB_PATH before installation
     - For PMS and UDoc style browser-backed commands, ensure opencli-browser-bridge is available and the target browser profile is already logged in
 policy:
   role: optional
@@ -32,3 +34,4 @@ notes:
   - Changxie or UDoc capability belongs to this addon as part of the same plugin install surface, not as a separate install unit
   - Read and preview paths are the default posture; write commands stay guarded
   - It depends on addon:opencli and browser-backed flows also depend on addon:opencli-browser-bridge
+  - The upstream plugin path is machine-local today; configure OPENCLI_PLUGIN_PM_LAB_PATH instead of relying on a hard-coded absolute path

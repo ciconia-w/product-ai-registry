@@ -49,6 +49,6 @@ description: 用本地 company-pm OpenCLI 插件处理 PMS或禅道、产品需�
 
 ## 参考
 
-- 插件仓库：`/home/aaa/opencli-plugin-company-pm-lab`
-- 详细命令行为：`/home/aaa/opencli-plugin-company-pm-lab/README.md`
+- 插件仓库：本地 `OPENCLI_PLUGIN_PM_LAB_PATH`
+- 详细命令行为：`$OPENCLI_PLUGIN_PM_LAB_PATH/README.md`
 - 畅写 / UDoc：`skill:changxie-ops`
