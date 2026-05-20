@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add reference:mattpocock-skills for composable engineering-skill discovery around grilling, TDD, diagnosis, triage, and PRD workflows
 - Add addon:wx-cli for optional local WeChat data access and agent-facing message-query workflows
 - Add reference:guizang-ppt-skill for Swiss-style and editorial HTML deck workflow discovery
 - Raise `claude-code` support to `A`, set `gemini-cli` and `opencode` to `B`, and require root-cause analysis before issue filing via `triage-issue`

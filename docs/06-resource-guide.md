@@ -279,6 +279,10 @@ deepin v20 / v25 的兼容性和环境约束说明。
 
 外部网页 PPT / 演讲 deck skill 参考，适合单文件 HTML slides、瑞士风版式、电子杂志风版式和封面生成场景。
 
+### `mattpocock-skills`
+
+外部工程与生产力 skill 库，覆盖 grilling、TDD、诊断、分诊、PRD/issue 工作流和架构改进。
+
 ### `khazix-skills`
 
 外部实战型 skill 库，覆盖清理、研究、写作等。
@@ -555,7 +559,19 @@ bootstrap 与辅助脚本的设计说明。
 - 查联系人、群成员、收藏、公众号文章
 - 在本机上把微信数据提供给 agent 做检索或整理
 
-### 12. 不知道先用哪个入口
+### 12. 想要工程化的 grilling / TDD / diagnose / triage skill
+
+先看：
+
+- `reference:mattpocock-skills`
+
+适合的任务：
+
+- 通过 grilling 先把需求和边界问透
+- 给 agent 加 TDD、diagnose、triage 这类工程工作流
+- 参考 PRD、issue 拆解和架构改进类 skill 设计
+
+### 13. 不知道先用哪个入口
 
 可以按这条简单规则：
 
