@@ -35,11 +35,15 @@ description: 当需要执行 Linux 桌面操作系统需求的采集、分析和
 - 本地 `lark-cli` 授权要复用，不要反复清空；如果缺少新的 scope，需要重新授权，并明确告诉用户这是补权限，不是授权丢失。
 - 最终写飞书前，必须经过 `finalize-delivery.py`。
 - 如果存在非中文内容，由 agent 在 finalize 阶段把它改成“原文 + 中文翻译”后，再允许写飞书。
+- finalize 之后生成最终 Markdown 报告，并把飞书报告链接写入 `M` 列。
 - `K/L/M` 三列未补齐时，不允许写飞书。
 
 ## 详细说明
 
 - 工作流：见 `references/workflow.md`
+- 本地配置：见 `references/local-config.md`
 - 分析规则：见 `references/analysis-rules.md`
+- 并行分析：见 `references/parallel-analysis.md`
+- 批次输出契约：见 `references/batch-contract.md`
 - 采集命令：见 `scripts/commands.md`
 - 飞书流程：见 `scripts/feishu_flow.md`

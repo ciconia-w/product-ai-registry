@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import subprocess
 from datetime import datetime
 from pathlib import Path
@@ -28,6 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--deepin-home-page-size", type=int, default=20)
     parser.add_argument("--deepin-home-pages", type=int, default=1)
     parser.add_argument("--skip-feishu-write", action="store_true")
+    parser.add_argument("--translations", help="可选，translations.json 路径；当 finalize 检测到外语队列时使用")
     return parser.parse_args()
 
 
@@ -35,6 +37,10 @@ def main() -> int:
     args = parse_args()
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    run(["python3", str(SCRIPT_DIR / "check-larkcli.py")])
+    run(["python3", str(SCRIPT_DIR / "check-feishu-access.py")])
+    run(["python3", str(SCRIPT_DIR / "check-feishu-table-schema.py")])
 
     forum_path = OUTPUT_DIR / f"forum_{stamp}.json"
     feedback_path = OUTPUT_DIR / f"feedback_{stamp}.json"
@@ -44,6 +50,7 @@ def main() -> int:
     delivery_path = OUTPUT_DIR / f"delivery_{stamp}.json"
     finalized_delivery_path = OUTPUT_DIR / f"delivery_final_{stamp}.json"
     translation_queue_path = OUTPUT_DIR / f"translation_queue_{stamp}.json"
+    report_publish_path = OUTPUT_DIR / f"report_publish_{stamp}.json"
 
     run(["python3", str(SCRIPT_DIR / "fetch-forum-requirements.py"), str(args.days), str(args.forum_max), "--all", "--output", str(forum_path)])
     run(["python3", str(SCRIPT_DIR / "fetch-feedback-platform-requirements.py"), str(args.days), str(args.feedback_max), "--all", "--output", str(feedback_path)])
@@ -55,12 +62,36 @@ def main() -> int:
         "--input", str(delivery_path),
         "--output", str(finalized_delivery_path),
         "--translation-queue", str(translation_queue_path),
+        *([ "--translations", str(args.translations) ] if args.translations else []),
     ])
     if finalize.returncode == 10:
-        raise SystemExit("存在非中文内容，需 agent 完成 translation_queue 后再继续写飞书。")
+        raise SystemExit(f"存在非中文内容，需 agent 完成 translation_queue 后再继续写飞书: {translation_queue_path}")
     if finalize.returncode != 0:
         raise SystemExit(finalize.returncode)
-    run(["python3", str(SCRIPT_DIR / "check-feishu-table-schema.py")])
+    publish = subprocess.run(
+        [
+            "python3", str(SCRIPT_DIR / "publish-feishu-report.py"),
+            "--file", str(report_path),
+            "--name", report_path.name,
+        ],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    report_publish_path.write_text(publish.stdout, encoding="utf-8")
+    report_payload = json.loads(publish.stdout)
+    report_link = (((report_payload.get("data") or {}).get("url")) or "")
+    if report_link:
+        finalize_with_link = subprocess.run([
+            "python3", str(SCRIPT_DIR / "finalize-delivery.py"),
+            "--input", str(delivery_path),
+            "--output", str(finalized_delivery_path),
+            "--translation-queue", str(translation_queue_path),
+            "--report-link", report_link,
+            *([ "--translations", str(args.translations) ] if args.translations else []),
+        ])
+        if finalize_with_link.returncode != 0:
+            raise SystemExit(finalize_with_link.returncode)
     if not args.skip_feishu_write:
         run(["python3", str(SCRIPT_DIR / "write-feishu-table.py"), "--input", str(finalized_delivery_path)])
 
@@ -69,6 +100,7 @@ def main() -> int:
     print(f"deepin_home={deepin_home_path}")
     print(f"merged={merged_path}")
     print(f"report={report_path}")
+    print(f"report_publish={report_publish_path}")
     print(f"delivery={delivery_path}")
     print(f"finalized_delivery={finalized_delivery_path}")
     print(f"translation_queue={translation_queue_path}")

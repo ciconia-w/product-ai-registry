@@ -7,6 +7,10 @@
 - 飞书相关操作只允许使用本地 `lark-cli`。
 - 不要尝试 OpenClaw 插件、OpenClaw 凭据绑定或其他替代通道。
 
+本地配置与授权路径统一说明见：
+
+`references/local-config.md`
+
 ## 前置检查
 
 1. 运行：
@@ -14,6 +18,7 @@
 ```bash
 python3 scripts/check-larkcli.py
 python3 scripts/check-feishu-access.py
+python3 scripts/check-feishu-table-schema.py
 ```
 
 2. 如果返回 `missing`：
@@ -33,13 +38,14 @@ lark-cli config init --new
 如果是首次为本 skill 配置飞书能力，用户授权时应一次性拿够当前流程需要的 scope：
 
 ```bash
-lark-cli auth login --scope "wiki:wiki wiki:wiki:readonly wiki:node:read wiki:space:retrieve sheets:spreadsheet:read sheets:spreadsheet.meta:read sheets:spreadsheet:write_only"
+lark-cli auth login --scope "wiki:wiki wiki:wiki:readonly wiki:node:read wiki:space:retrieve sheets:spreadsheet:read sheets:spreadsheet.meta:read sheets:spreadsheet:write_only drive:drive drive:file:upload docx:document:create docx:document:readonly docs:permission.setting:write_only"
 ```
 
 如果后续执行时提示缺少新的 scope，需要重新触发 `lark-cli auth login`。原因要明确告知用户：
 
 - 本地 `lark-cli` 授权仍然存在，但当前 app 的 user scope 不足以覆盖新动作。
 - 例如从“读取 wiki / 表头”切换到“实际写入 spreadsheet”时，需要补 `sheets:spreadsheet:write_only`。
+- 例如从“能创建报告”切换到“把报告改成公网链接可见”时，需要补 `docs:permission.setting:write_only`。
 - 这类“重新授权”是补权限，不是本地授权丢失。
 
 授权说明：
@@ -51,6 +57,12 @@ lark-cli auth login --scope "wiki:wiki wiki:wiki:readonly wiki:node:read wiki:sp
 - 如果是飞书开放平台 scope 不足，优先根据 `check-feishu-access.py` 输出中的 `console_url` 去补权限，不要误判为本地授权丢失。
 
 ## 每次执行前必须先做的事
+
+职责边界：
+
+- `check-feishu-access.py`：检查本地 `lark-cli` 是否具备读取 wiki、读取 spreadsheet、写 spreadsheet、发布分析报告、以及把报告设为公网链接可见所需的权限
+- `check-feishu-table-schema.py`：检查当前 spreadsheet 表头是否与输出契约一致
+- 两者都通过，才允许继续
 
 在采集开始前，先检查目标飞书表头是否发生变化：
 
@@ -75,6 +87,19 @@ python3 scripts/finalize-delivery.py \
   --translation-queue outputs/translation_queue.json \
   --translations outputs/translations.json
 ```
+
+发布分析报告并把链接写入最终交付 JSON：
+
+```bash
+python3 scripts/publish-feishu-report.py \
+  --file outputs/report.md \
+  --name '需求分析报告-测试.md'
+```
+
+默认行为：
+
+- 报告发布后，会把链接分享权限设为 `anyone_readable`
+- 也就是“互联网获得链接的用户都可见”
 
 确认 `K/L/M` 已补齐后，再执行正式写入：
 

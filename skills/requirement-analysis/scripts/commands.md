@@ -10,6 +10,10 @@ python3 scripts/check-feishu-table-schema.py
 
 只有检查通过后，才允许执行下面的采集命令。
 
+本地配置路径统一说明见：
+
+`references/local-config.md`
+
 ## deepin 论坛
 
 ```bash
@@ -29,7 +33,7 @@ python3 scripts/fetch-forum-requirements.py 7 50 --reset
 接口异常兜底：
 
 - 如果论坛 webhook 返回异常、拿到的不是帖子数组，先记录错误输出。
-- 如存在团队内部维护人信息，可在本地 `scripts/local_sources.json` 中补充联系提示；不要把个人联系方式直接写进对外分发包。
+- 如存在团队内部维护人信息，可在本地 `~/.config/requirement-analysis/local_sources.json` 中补充联系提示；不要把个人联系方式直接写进对外分发包。
 
 ## 产品需求反馈平台
 
@@ -48,7 +52,7 @@ python3 scripts/fetch-feedback-platform-requirements.py 7 50 --reset
 
 前置配置：
 
-- 需要在 `scripts/local_sources.json` 或环境变量中提供 `app_key`、`sign`、`worksheet_id`、`view_id`
+- 需要在 `~/.config/requirement-analysis/local_sources.json` 或环境变量中提供 `app_key`、`sign`、`worksheet_id`、`view_id`
 
 ## deepin Home 开放接口
 
@@ -64,7 +68,7 @@ python3 scripts/fetch-deepin-home-openapi.py --view requirement_feedback --page-
 
 前置配置：
 
-- 需要在 `scripts/local_sources.json` 或环境变量中提供 `app_key`、`sign`、`worksheet_id` 以及 `view_ids`
+- 需要在 `~/.config/requirement-analysis/local_sources.json` 或环境变量中提供 `app_key`、`sign`、`worksheet_id` 以及 `view_ids`
 
 ## 合并原始数据
 

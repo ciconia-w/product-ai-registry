@@ -9,9 +9,11 @@
 5. 生成分析报告与基础交付 JSON
 6. `finalize-delivery.py` 补链接、检测非中文、生成翻译队列
 7. 如果存在翻译队列，先由 agent 生成 `translations.json`，再重新执行 finalize
-8. 确认 `K/L/M` 三列完整
-9. 写入飞书
-10. 只有在以上都通过后，才允许打包、入 registry、产出 showcase
+8. 生成最终 Markdown 分析报告并发布到飞书
+9. 把分析报告链接写入 `M` 列
+10. 确认 `K/L/M` 三列完整
+11. 写入飞书
+12. 只有在以上都通过后，才允许打包、入 registry、产出 showcase
 
 全流程入口：
 

@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 """
 检查本地 lark-cli 对目标飞书资源的访问能力与 scope 完整性。
+
+注意：
+- 这里只检查访问和运行所需权限
+- 不负责判断表头是否与当前输出契约一致
+- 表头一致性由 check-feishu-table-schema.py 负责
 """
 
 from __future__ import annotations
@@ -115,11 +120,37 @@ def main() -> int:
             "result": parse_json_blob(out or err),
         })
 
+        for scope_name, label in [
+            ("drive:drive", "drive_scope"),
+            ("drive:file:upload", "drive_upload_scope"),
+            ("docx:document:create", "docx_create_scope"),
+            ("docx:document:readonly", "docx_read_scope"),
+        ]:
+            code, out, err = run([
+                "lark-cli", "auth", "check",
+                "--scope", scope_name,
+            ])
+            checks.append({
+                "name": label,
+                "ok": code == 0,
+                "result": parse_json_blob(out or err),
+            })
+
+        code, out, err = run([
+            "lark-cli", "auth", "check",
+            "--scope", "docs:permission.setting:write_only",
+        ])
+        checks.append({
+            "name": "public_link_scope",
+            "ok": code == 0,
+            "result": parse_json_blob(out or err),
+        })
+
     all_ok = all(item["ok"] for item in checks)
     print(json.dumps({
         "ok": all_ok,
         "checks": checks,
-        "message": "飞书访问检查通过" if all_ok else "飞书访问检查未通过，请根据每项 result 中的缺失 scope 或 console_url 处理",
+        "message": "飞书访问与运行权限检查通过；如需继续执行请再运行表头一致性检查" if all_ok else "飞书访问检查未通过，请根据每项 result 中的缺失 scope 或 console_url 处理",
     }, ensure_ascii=False, indent=2))
     return 0 if all_ok else 4
 

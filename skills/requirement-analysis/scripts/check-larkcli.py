@@ -15,7 +15,7 @@ import sys
 INSTALL_HINTS = [
     "npm install -g @larksuite/cli",
     "lark-cli config init --new",
-    "lark-cli auth login --scope \"wiki:wiki wiki:wiki:readonly wiki:node:read wiki:space:retrieve sheets:spreadsheet:read sheets:spreadsheet.meta:read sheets:spreadsheet:write_only\"",
+    "lark-cli auth login --scope \"wiki:wiki wiki:wiki:readonly wiki:node:read wiki:space:retrieve sheets:spreadsheet:read sheets:spreadsheet.meta:read sheets:spreadsheet:write_only drive:drive drive:file:upload docx:document:create docx:document:readonly docs:permission.setting:write_only\"",
 ]
 
 

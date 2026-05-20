@@ -64,5 +64,5 @@ def require_keys(config: dict[str, Any], keys: list[str], source_name: str) -> N
     if missing:
         joined = ", ".join(missing)
         raise RuntimeError(
-            f"{source_name} 缺少必要配置: {joined}。请在 scripts/local_sources.json 或环境变量中提供。"
+            f"{source_name} 缺少必要配置: {joined}。请在 ~/.config/requirement-analysis/local_sources.json 或环境变量中提供。"
         )

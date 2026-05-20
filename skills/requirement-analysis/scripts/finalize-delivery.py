@@ -53,6 +53,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", required=True)
     parser.add_argument("--translation-queue", required=True)
     parser.add_argument("--translations", help="agent 翻译结果 JSON，可选")
+    parser.add_argument("--report-link", help="飞书中的分析报告链接，可选")
     return parser.parse_args()
 
 
@@ -90,6 +91,7 @@ def main() -> int:
                     "link": row.get("链接", ""),
                     "original_text": raw_content,
                 })
+        row["分析报告链接"] = args.report_link or row.get("分析报告链接", "")
         finalized.append(row)
 
     Path(args.output).write_text(json.dumps(finalized, ensure_ascii=False, indent=2), encoding="utf-8")
