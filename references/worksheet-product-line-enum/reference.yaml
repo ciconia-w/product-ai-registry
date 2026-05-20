@@ -4,7 +4,7 @@ version: 0.1.0
 description: Reference mapping for stable product line identifiers used by company-pm product feedback commands
 source:
   kind: reference
-  url: file:///home/aaa/opencli-plugin-company-pm-lab/product-line-enum.json
+  url: file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-enum.json
 policy:
   role: reference
   action_on_missing: suggest
@@ -18,3 +18,4 @@ os:
   - linux
 notes:
   - Surface this reference when a workflow needs stable product-line values for feedback operations
+  - Resolve this reference through a local opencli-plugin-company-pm-lab checkout exposed via OPENCLI_PLUGIN_PM_LAB_PATH

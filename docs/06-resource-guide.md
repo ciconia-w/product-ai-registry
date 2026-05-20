@@ -70,6 +70,7 @@ OpenCLI 浏览器桥接层。需要复用登录态、走浏览器命令、抓已
 ### `pm-opencli-plugin`
 
 本地 OpenCLI 插件。它是 PMS / 禅道、产品反馈平台、BI、畅写 / UDoc 这批能力的统一安装入口。
+当前按本地 checkout 引用，使用前需要先设置 `OPENCLI_PLUGIN_PM_LAB_PATH` 指向自己的 `opencli-plugin-company-pm-lab` 目录。
 
 ### `superpowers`
 
@@ -294,6 +295,7 @@ deepin v20 / v25 的兼容性和环境约束说明。
 ### `pm-batch-config-example`
 
 PM batch JSON 配置示例，含 `$prev...` 风格串联说明。
+当前从 `OPENCLI_PLUGIN_PM_LAB_PATH` 指向的本地插件仓库读取。
 
 ### `pms-browser-login-model`
 
@@ -314,6 +316,7 @@ UI / 设计工程 skill 目录参考。
 ### `worksheet-auth-guide`
 
 产品反馈平台凭据与认证说明。
+当前从 `OPENCLI_PLUGIN_PM_LAB_PATH` 指向的本地插件仓库读取。
 
 ### `worksheet-product-line-enum`
 
@@ -378,6 +381,7 @@ bootstrap 与辅助脚本的设计说明。
 - `addon:pm-opencli-plugin`
 - `addon:opencli-browser-bridge`
 - `reference:pms-browser-login-model`
+- 已设置 `OPENCLI_PLUGIN_PM_LAB_PATH`
 
 适合的任务：
 
@@ -448,6 +452,7 @@ bootstrap 与辅助脚本的设计说明。
 - `reference:worksheet-product-line-enum`
 - `reference:worksheet-product-line-rule-notes`
 - `reference:worksheet-product-line-uos-ai-mapping`
+- 已设置 `OPENCLI_PLUGIN_PM_LAB_PATH`
 
 适合的任务：
 
