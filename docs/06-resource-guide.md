@@ -187,6 +187,10 @@ Issue 分诊入口。查重复、做分类、给下一步动作建议。
 
 统信 AI 埋点/积分提取入口，依赖真实登录页面。
 
+### `uniontech-core-data-compare`
+
+统信 datan 核心 workbook 取数与核对入口。要求用户已登录 datan，可按 workbook 结构实时取数、核对并输出最终 Excel，也支持按单块、时间窗和版本条件定向取数。
+
 ### `worksheet-write-guarded`
 
 产品反馈平台写入口。默认 preview-first，适合新增、编辑、删除记录。

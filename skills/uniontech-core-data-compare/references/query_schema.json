@@ -1,0 +1,17 @@
+{
+  "mode": "default_table_or_custom_query",
+  "workbook": "/abs/path/to/core_data_summary.xlsx",
+  "blocks": [
+    {
+      "block_name": "任务栏模式配置",
+      "route": "#/point/personalization",
+      "edition": "Professional",
+      "major_version": "20",
+      "minor_version": "107x",
+      "date_type": "日",
+      "date_from": "2026-05-10",
+      "date_to": "2026-05-10"
+    }
+  ],
+  "output_excel": "/abs/path/to/final_table.xlsx"
+}

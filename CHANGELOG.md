@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add skill:uniontech-core-data-compare for logged-in datan core workbook extraction, validation, and Excel output
 - Remove placeholder benchmark/bootstrap scripts and retire the wrapper resource surface from the non-Linglong registry contract
 - Remove `pack` as a first-class registry resource type and migrate composition guidance toward workflow documentation
 - Add docs/FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation
