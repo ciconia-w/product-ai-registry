@@ -1,0 +1,81 @@
+sheet1:
+  - name: 产品分布
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched
+  - name: 架构分布
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched_after_request_fix
+  - name: 专业版日新增用户数
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched
+  - name: 专业版累计用户数
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched
+  - name: 专业版1070u5累计用户数
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched
+  - name: 专业版V25累计用户数
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched
+  - name: 专业版版本系列用户分布
+    route: "#/point/point-overview"
+    endpoint: "/v1/dream-io/app-store/overview"
+    status: matched
+  - name: 任务栏模式配置
+    route: "#/point/personalization"
+    endpoint: "/v1/dream-io/system-events/personalized-configuration"
+    sql_template_id: 107
+    status: matched_after_request_fix
+  - name: 单个插件的被移除率
+    route: "#/point/personalization"
+    endpoint: "/v1/dream-io/system-events/personalized-configuration"
+    sql_template_id: 109
+    status: matched_after_request_fix
+  - name: 专业版用户-保险箱功能开启率
+    route: "#/point/file-manager"
+    endpoint: "/v1/dream-io/system-events/file-manager"
+    sql_template_id: 115
+    status: matched
+  - name: 专业版用户-全文搜索功能开启率
+    route: "#/point/file-manager"
+    endpoint: "/v1/dream-io/system-events/file-manager"
+    sql_template_id: 118
+    status: matched
+
+sheet2:
+  - name: 专业版应用启动排行Top50-周累计
+    route: "#/point/application-launch"
+    endpoint: "/v1/dream-io/system-events/app-start"
+    sql_template_id: 113
+    status: matched
+  - name: 教育版应用启动排行Top50-周累计
+    route: "#/point/application-launch"
+    endpoint: "/v1/dream-io/system-events/app-start"
+    sql_template_id: 113
+    status: matched
+  - name: 专业版检查更新失败率-周累计
+    route: "#/point/system-update"
+    endpoint: "/v1/dream-io/system-events/system-update"
+    sql_template_id: 106
+    status: matched
+  - name: 检查更新失败原因分布-周累计
+    route: "#/point/system-update"
+    endpoint: "/v1/dream-io/system-events/system-update"
+    sql_template_id: 122
+    status: matched
+  - name: smb挂载失败率-周累计
+    route: "#/point/file-manager"
+    endpoint: "/v1/dream-io/system-events/file-manager"
+    sql_template_id: 117
+    status: matched
+  - name: smb挂载失败原因分布-周累计
+    route: "#/point/file-manager"
+    endpoint: "/v1/dream-io/system-events/file-manager"
+    sql_template_id: 116
+    status: matched

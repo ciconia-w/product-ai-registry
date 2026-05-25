@@ -2690,6 +2690,38 @@
         "role": "optional",
         "action_on_missing": "install"
       }
+    },
+    {
+      "type": "skill",
+      "id": "uniontech-core-data-compare",
+      "version": "0.1.0",
+      "path": "skills/uniontech-core-data-compare",
+      "description": "使用 OpenCLI 对 datan.uniontech.com 的核心 workbook 数据块取数、对照并输出最终 Excel。适用于按原表结构直接出表、只取某一块或某时间/条件，以及基于 workbook 参考值做页面值与请求值核对。默认只处理 workbook 已提及块，不继续探索额外页面。",
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
     }
   ]
 }

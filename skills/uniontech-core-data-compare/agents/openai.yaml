@@ -1,0 +1,4 @@
+interface:
+  display_name: "统信核心数据取数核对"
+  short_description: "登录 datan 后按 workbook 结构实时取数、核对并输出 Excel"
+  default_prompt: "使用 $uniontech-core-data-compare 在已登录 datan 的前提下，按 workbook 结构实时取数、核对并输出最终 Excel。"
