@@ -3,6 +3,11 @@
 ## Unreleased
 
 - Add skill:uniontech-core-data-compare for logged-in datan core workbook extraction, validation, and Excel output
+- Replace hard-coded /home/aaa file URLs in company-pm addon and related references with OPENCLI_PLUGIN_PM_LAB_PATH placeholders
+- Add reference:mattpocock-skills for composable engineering-skill discovery around grilling, TDD, diagnosis, triage, and PRD workflows
+- Add addon:wx-cli for optional local WeChat data access and agent-facing message-query workflows
+- Add reference:guizang-ppt-skill for Swiss-style and editorial HTML deck workflow discovery
+- Raise `claude-code` support to `A`, set `gemini-cli` and `opencode` to `B`, and require root-cause analysis before issue filing via `triage-issue`
 - Remove placeholder benchmark/bootstrap scripts and retire the wrapper resource surface from the non-Linglong registry contract
 - Remove `pack` as a first-class registry resource type and migrate composition guidance toward workflow documentation
 - Add docs/FIELD_NOTES.md as a lightweight human-oriented experience notebook and expose it through README navigation

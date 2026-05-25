@@ -70,10 +70,15 @@ OpenCLI 浏览器桥接层。需要复用登录态、走浏览器命令、抓已
 ### `pm-opencli-plugin`
 
 本地 OpenCLI 插件。它是 PMS / 禅道、产品反馈平台、BI、畅写 / UDoc 这批能力的统一安装入口。
+当前按本地 checkout 引用，使用前需要先设置 `OPENCLI_PLUGIN_PM_LAB_PATH` 指向自己的 `opencli-plugin-company-pm-lab` 目录。
 
 ### `superpowers`
 
 通用增强插件层，适合多个编码 Agent 共用。
+
+### `wx-cli`
+
+本地微信数据 CLI。适合在已登录的桌面微信环境里查询会话、聊天记录、联系人、收藏、公众号文章等。
 
 ---
 
@@ -275,6 +280,14 @@ BI 的三种输出模式说明：`raw / template / custom`。
 
 deepin v20 / v25 的兼容性和环境约束说明。
 
+### `guizang-ppt-skill`
+
+外部网页 PPT / 演讲 deck skill 参考，适合单文件 HTML slides、瑞士风版式、电子杂志风版式和封面生成场景。
+
+### `mattpocock-skills`
+
+外部工程与生产力 skill 库，覆盖 grilling、TDD、诊断、分诊、PRD/issue 工作流和架构改进。
+
 ### `khazix-skills`
 
 外部实战型 skill 库，覆盖清理、研究、写作等。
@@ -286,6 +299,7 @@ deepin v20 / v25 的兼容性和环境约束说明。
 ### `pm-batch-config-example`
 
 PM batch JSON 配置示例，含 `$prev...` 风格串联说明。
+当前从 `OPENCLI_PLUGIN_PM_LAB_PATH` 指向的本地插件仓库读取。
 
 ### `pms-browser-login-model`
 
@@ -306,6 +320,7 @@ UI / 设计工程 skill 目录参考。
 ### `worksheet-auth-guide`
 
 产品反馈平台凭据与认证说明。
+当前从 `OPENCLI_PLUGIN_PM_LAB_PATH` 指向的本地插件仓库读取。
 
 ### `worksheet-product-line-enum`
 
@@ -370,6 +385,7 @@ bootstrap 与辅助脚本的设计说明。
 - `addon:pm-opencli-plugin`
 - `addon:opencli-browser-bridge`
 - `reference:pms-browser-login-model`
+- 已设置 `OPENCLI_PLUGIN_PM_LAB_PATH`
 
 适合的任务：
 
@@ -440,6 +456,7 @@ bootstrap 与辅助脚本的设计说明。
 - `reference:worksheet-product-line-enum`
 - `reference:worksheet-product-line-rule-notes`
 - `reference:worksheet-product-line-uos-ai-mapping`
+- 已设置 `OPENCLI_PLUGIN_PM_LAB_PATH`
 
 适合的任务：
 
@@ -518,7 +535,52 @@ bootstrap 与辅助脚本的设计说明。
 - `script:check-linglong-retrospective`
 - `reference:linglong-deepin-color-correction-example`
 
-### 10. 不知道先用哪个入口
+### 10. 想做网页 PPT / 演讲 deck / 封面
+
+先看：
+
+- `reference:guizang-ppt-skill`
+
+如果需要本地 slide 工作区，再配：
+
+- `addon:open-slide`
+
+适合的任务：
+
+- 生成单文件 HTML 横向翻页 PPT
+- 参考瑞士国际主义或电子杂志风版式
+- 做公众号头图、分享卡或演讲封面
+
+### 11. 想查本地微信数据 / 聊天记录
+
+先看：
+
+- `addon:wx-cli`
+
+使用前要确认：
+
+- 当前机器上已经登录桌面微信
+- 按上游说明完成 `wx init`
+
+适合的任务：
+
+- 查最近会话、未读消息和聊天历史
+- 查联系人、群成员、收藏、公众号文章
+- 在本机上把微信数据提供给 agent 做检索或整理
+
+### 12. 想要工程化的 grilling / TDD / diagnose / triage skill
+
+先看：
+
+- `reference:mattpocock-skills`
+
+适合的任务：
+
+- 通过 grilling 先把需求和边界问透
+- 给 agent 加 TDD、diagnose、triage 这类工程工作流
+- 参考 PRD、issue 拆解和架构改进类 skill 设计
+
+### 13. 不知道先用哪个入口
 
 可以按这条简单规则：
 

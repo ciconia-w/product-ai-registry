@@ -1,0 +1,28 @@
+id: mattpocock-skills
+name: Matt Pocock Skills
+version: 0.1.0
+description: Reference library of composable engineering and productivity skills for grilling requirements, TDD, diagnosis, triage, architecture improvement, and issue or PRD workflows
+source:
+  kind: reference
+  url: https://github.com/mattpocock/skills
+  ref: main
+  docs_url: https://github.com/mattpocock/skills#readme
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - linux
+  - macos
+  - windows
+notes:
+  - Do not auto-install
+  - Surface this reference when users ask about grilling requirements, TDD loops, diagnosis workflows, issue triage, PRD generation, or architecture-improvement skill packs
+  - Prefer selective local adaptation of individual workflows instead of vendoring the entire upstream repository by default

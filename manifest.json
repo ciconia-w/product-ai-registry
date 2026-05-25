@@ -6,16 +6,16 @@
       "support_level": "A"
     },
     "claude-code": {
-      "support_level": "B"
+      "support_level": "A"
     },
     "cursor": {
       "support_level": "B"
     },
     "gemini-cli": {
-      "support_level": "A"
+      "support_level": "B"
     },
     "opencode": {
-      "support_level": "A"
+      "support_level": "B"
     },
     "openclaw": {
       "support_level": "C"
@@ -68,10 +68,10 @@
       "description": "Local OpenCLI plugin for PMS or Zentao browser automation, product feedback collection, BI export, Changxie or UDoc document operations, and internal PM workflows",
       "source": {
         "kind": "external_git",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab",
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}",
         "ref": "refactor/auth-fetch-keychain",
         "install_method": "opencli_plugin_install",
-        "docs_url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "docs_url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "optional",
@@ -464,6 +464,53 @@
       "checksum": "TBD"
     },
     {
+      "type": "addon",
+      "id": "wx-cli",
+      "version": "0.1.0",
+      "path": "addons/wx-cli",
+      "description": "Optional local WeChat data CLI for querying sessions, chat history, contacts, favorites, and article metadata from a signed-in desktop WeChat installation",
+      "source": {
+        "kind": "external_git",
+        "url": "https://github.com/jackwener/wx-cli",
+        "ref": "main",
+        "install_method": "external_package",
+        "docs_url": "https://github.com/jackwener/wx-cli#readme"
+      },
+      "install": {
+        "commands": [
+          "npm install -g @jackwener/wx-cli"
+        ],
+        "verify": [
+          "wx --help"
+        ],
+        "post_install": [
+          "Initialize with wx init on a machine where desktop WeChat is already signed in, and follow the upstream OS-specific setup notes before relying on message queries"
+        ]
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "external_upstream"
+        },
+        "claude-code": {
+          "mode": "external_upstream"
+        },
+        "cursor": {
+          "mode": "external_upstream"
+        },
+        "gemini-cli": {
+          "mode": "external_upstream"
+        },
+        "opencode": {
+          "mode": "external_upstream"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
       "type": "reference",
       "id": "agent-skills",
       "version": "0.1.0",
@@ -634,7 +681,7 @@
       "description": "Reference for the batch JSON structure and $prev style parameter chaining used by company-pm batch execution",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -667,7 +714,7 @@
       "description": "Reference for the raw, template, and custom output modes supported by the company-pm BI export chain",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -700,7 +747,7 @@
       "description": "Reference for how company-pm PMS commands reuse an existing browser login state through OpenCLI browser bridge",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -733,7 +780,7 @@
       "description": "Reference for credentials and auth prerequisites of the product feedback platform used by company-pm commands",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -766,7 +813,7 @@
       "description": "Reference mapping for stable product line identifiers used by company-pm product feedback commands",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-enum.json"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-enum.json"
       },
       "policy": {
         "role": "reference",
@@ -799,7 +846,7 @@
       "description": "Reference notes describing stable product line mapping rules and field-filling conventions used by company-pm",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-rule-notes.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-rule-notes.md"
       },
       "policy": {
         "role": "reference",
@@ -832,7 +879,7 @@
       "description": "Reference mapping between stable company-pm product line identifiers and the UOS AI related product lines used in feedback workflows",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/product-line-uos-ai-mapping.json"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/product-line-uos-ai-mapping.json"
       },
       "policy": {
         "role": "reference",
@@ -865,7 +912,7 @@
       "description": "Reference-only record of the verified Changxie or UDoc capability matrix currently documented in the local plugin README",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -898,7 +945,7 @@
       "description": "Reference for the preview-first and explicit-apply safety model of company-pm write commands",
       "source": {
         "kind": "reference",
-        "url": "file:///home/aaa/opencli-plugin-company-pm-lab/README.md"
+        "url": "file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md"
       },
       "policy": {
         "role": "reference",
@@ -952,6 +999,88 @@
           "mode": "reference_only"
         },
         "opencode": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "guizang-ppt-skill",
+      "version": "0.1.0",
+      "path": "references/guizang-ppt-skill",
+      "description": "Reference skill repository for single-file HTML slide decks, Swiss-style presentation systems, editorial magazine layouts, and presentation-cover generation",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/op7418/guizang-ppt-skill",
+        "ref": "main",
+        "docs_url": "https://github.com/op7418/guizang-ppt-skill#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
+          "mode": "reference_only"
+        }
+      },
+      "checksum": "TBD"
+    },
+    {
+      "type": "reference",
+      "id": "mattpocock-skills",
+      "version": "0.1.0",
+      "path": "references/mattpocock-skills",
+      "description": "Reference library of composable engineering and productivity skills for grilling requirements, TDD, diagnosis, triage, architecture improvement, and issue or PRD workflows",
+      "source": {
+        "kind": "reference",
+        "url": "https://github.com/mattpocock/skills",
+        "ref": "main",
+        "docs_url": "https://github.com/mattpocock/skills#readme"
+      },
+      "policy": {
+        "role": "reference",
+        "action_on_missing": "suggest"
+      },
+      "support": {
+        "codex": {
+          "mode": "reference_only"
+        },
+        "claude-code": {
+          "mode": "reference_only"
+        },
+        "cursor": {
+          "mode": "reference_only"
+        },
+        "gemini-cli": {
+          "mode": "reference_only"
+        },
+        "opencode": {
+          "mode": "reference_only"
+        },
+        "openclaw": {
+          "mode": "reference_only"
+        },
+        "hermes": {
           "mode": "reference_only"
         }
       },

@@ -187,8 +187,8 @@ GitHub 仓库是唯一事实来源。
 
 | 等级 | 含义 |
 |---|---|
-| `A` | 有官方或主仓文档支持，且有明确的本地资源落地方式 |
-| `B` | 可通过适配实现，但不是官方原生分发格式 |
+| `A` | 当前 registry 视为可交付支持：适配路径明确，且已有足够验证证据支撑交付口径 |
+| `B` | 当前 registry 视为可用但未到交付级：路径存在，但验证范围或交付成熟度仍不足以升为 `A` |
 | `C` | 只有部分能力或生态线索，视为实验性支持 |
 
 ## 8. 多 Agent 兼容矩阵
@@ -198,10 +198,10 @@ GitHub 仓库是唯一事实来源。
 | Agent | 官方/主仓原生指令入口 | 官方/主仓原生扩展面 | 推荐适配方式 | 支持等级 |
 |---|---|---|---|---|
 | `codex` | `AGENTS.md` | `SKILL.md` / Codex Skills | 原生 `SKILL.md` + `AGENTS.md` | `A` |
-| `claude-code` | `CLAUDE.md` | `.claude/agents/*.md`、hooks、settings | 生成 `CLAUDE.md` 导航 + 可选 `.claude/agents` | `B` |
+| `claude-code` | `CLAUDE.md` | `.claude/agents/*.md`、hooks、settings | 生成 `CLAUDE.md` 导航 + 可选 `.claude/agents` | `A` |
 | `cursor` | `AGENTS.md` 或 `.cursor/rules` | `.mdc` 规则文件 | 生成 `.cursor/rules/*.mdc` 或 repo-root `AGENTS.md`，以项目作用域为主 | `B` |
-| `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `A` |
-| `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `A` |
+| `gemini-cli` | `GEMINI.md` | `gemini-extension.json`、`skills/`、`agents/` | 原生 Gemini Extension | `B` |
+| `opencode` | `AGENTS.md` | `.opencode/skills/*/SKILL.md` | 原生 `SKILL.md` 或兼容目录 | `B` |
 | `openclaw` | `AGENTS.md` | ClawHub / plugin / skill 生态 | 第二阶段再验证 | `C` |
 | `hermes` | `AGENTS.md` / workspace instructions | `~/.hermes/skills` 与技能生态 | 第二阶段再验证 | `C` |
 
@@ -218,25 +218,29 @@ GitHub 仓库是唯一事实来源。
 
 为了确保“真的能用”，MVP 不追求一次性覆盖所有 Agent。
 
-### 9.1 Phase 1 硬支持
+### 9.1 Phase 1 交付级支持
 
 - `codex`
+- `claude-code`
+
+这两类当前作为对外可交付的支持对象维护。
+
+### 9.2 Phase 1 可用但未到交付级支持
+
+- `cursor`
 - `gemini-cli`
 - `opencode`
 
-这三类有较明确的本地扩展或技能能力，最适合先打通。
+这三类当前可用，但仍保留在 `B` 档：
 
-### 9.2 Phase 1 适配支持
-
-- `claude-code`
-- `cursor`
-
-这两类通过适配实现，但不能假设它们原生支持统一的 skill 安装机制。
+- `cursor` 主要依赖项目作用域规则适配，不应设计成“全局技能目录”
+- `gemini-cli` 虽有原生 extension 路径，但当前验证口径仍不足以升为 `A`
+- `opencode` 虽有原生 skill 路径，但当前验证口径仍不足以升为 `A`
 
 其中：
 
-- `claude-code` 主要依赖 memory 与 subagent 适配
-- `cursor` 主要依赖项目作用域规则适配，不应设计成“全局技能目录”
+- `claude-code` 当前已按可交付适配路径维护
+- `cursor` 仍主要依赖项目作用域规则适配
 
 ### 9.3 Phase 2 实验支持
 
@@ -405,9 +409,9 @@ MVP 必须包含：
 MVP 完成的判据不是“文档写完”，而是：
 
 1. `codex` 能成功消费一个 `skill`
-2. `gemini-cli` 能通过 extension 方式消费一个资源包
-3. `opencode` 能发现一个本地 skill
-4. `claude-code` 或 `cursor` 至少有一个完成适配式落地验证
+2. `claude-code` 能通过既定适配路径成功消费一组仓库资源
+3. `gemini-cli` 或 `opencode` 至少有一个能成功消费一项原生资源
+4. `cursor` 至少有一次规则式适配落地验证
 
 ## 19. 验收标准
 
@@ -416,4 +420,3 @@ MVP 完成的判据不是“文档写完”，而是：
 - manifest 能表达按 Agent 的支持矩阵
 - 状态文件不要求保存共享密钥
 - 至少一条 workflow 说明文档可以被真实执行并验证
-

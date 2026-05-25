@@ -4,7 +4,7 @@ version: 0.1.0
 description: Reference for the batch JSON structure and $prev style parameter chaining used by company-pm batch execution
 source:
   kind: reference
-  url: file:///home/aaa/opencli-plugin-company-pm-lab/README.md
+  url: file://${OPENCLI_PLUGIN_PM_LAB_PATH}/README.md
 policy:
   role: reference
   action_on_missing: suggest
@@ -18,3 +18,4 @@ os:
   - linux
 notes:
   - Surface this reference whenever an agent needs to prepare or review a company-pm batch config file
+  - Resolve this reference through a local opencli-plugin-company-pm-lab checkout exposed via OPENCLI_PLUGIN_PM_LAB_PATH

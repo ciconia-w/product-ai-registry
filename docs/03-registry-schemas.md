@@ -105,6 +105,11 @@ Supported `source.kind` values:
 - `external_package`
 - `reference`
 
+When an item points to a machine-local checkout instead of a public remote,
+prefer a documented environment-variable placeholder such as
+`file://${OPENCLI_PLUGIN_PM_LAB_PATH}` over a hard-coded absolute path.
+That keeps the registry portable while still making the local dependency explicit.
+
 ### policy
 
 Example:
@@ -143,4 +148,3 @@ Example:
   }
 }
 ```
-

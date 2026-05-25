@@ -102,6 +102,7 @@ GitHub 仓库中的资源定义是唯一事实来源。
   - 生成 `CLAUDE.md` 导航或导入
   - 视需要生成 `.claude/agents/*.md`
   - 把脚本落到本地受控路径
+- 在当前 registry 中，`claude-code` 的交付等级按 `A` 维护
 
 ### 4.3 Cursor
 
@@ -133,7 +134,8 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `gemini-cli` 是一等支持对象
+- `gemini-cli` 有明确的原生 extension 落地路径
+- 但当前 registry 中，`gemini-cli` 的交付等级保留为 `B`
 - registry 可以为 Gemini 输出原生 extension 包
 
 ### 4.5 OpenCode
@@ -146,7 +148,8 @@ GitHub 仓库中的资源定义是唯一事实来源。
 
 因此：
 
-- `opencode` 是一等支持对象
+- `opencode` 有明确的原生 skill 落地路径
+- 但当前 registry 中，`opencode` 的交付等级保留为 `B`
 - canonical `skill` 可直接 materialize 成 `SKILL.md`
 
 ### 4.6 OpenClaw 与 Hermes
@@ -188,15 +191,15 @@ GitHub 仓库中的资源定义是唯一事实来源。
 第一阶段正式支持：
 
 - `codex`
+- `claude-code`
+
+### 6.2 可用但未到交付级的支持对象
+
+第一阶段可用但未到交付级的支持对象：
+
+- `cursor`
 - `gemini-cli`
 - `opencode`
-
-### 6.2 适配支持对象
-
-第一阶段适配支持：
-
-- `claude-code`
-- `cursor`
 
 ### 6.3 实验对象
 
@@ -309,7 +312,7 @@ product-ai-registry/
 
 ```yaml
 agent_id: claude-code
-support_level: B
+support_level: A
 instruction_mode: claude_md
 skill_mode: generated_subagent
 script_mode: local_copy
@@ -392,10 +395,10 @@ paths:
   "generated_at": "2026-04-29T00:00:00Z",
   "agents": {
     "codex": { "support_level": "A" },
-    "claude-code": { "support_level": "B" },
+    "claude-code": { "support_level": "A" },
     "cursor": { "support_level": "B" },
-    "gemini-cli": { "support_level": "A" },
-    "opencode": { "support_level": "A" },
+    "gemini-cli": { "support_level": "B" },
+    "opencode": { "support_level": "B" },
     "openclaw": { "support_level": "C" },
     "hermes": { "support_level": "C" }
   },
@@ -586,4 +589,3 @@ MVP 真正完成的标准：
 - Google Gemini CLI `GEMINI.md`、extensions、skills、agents
 - OpenCode 官方 `AGENTS.md` 与 Skills 文档
 - OpenClaw 与 Hermes 主仓公开资料
-

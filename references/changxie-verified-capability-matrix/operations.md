@@ -5,7 +5,7 @@
 
 当前信息来源：
 
-- `/home/aaa/opencli-plugin-company-pm-lab/README.md`
+- `$OPENCLI_PLUGIN_PM_LAB_PATH/README.md`
 - `/home/aaa/.codex/log/codex-tui.log`
 
 ## 已发现的真实入口形态
