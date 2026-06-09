@@ -154,7 +154,7 @@ UOS / Deepin 风格的桌面 UI 设计 skill，偏 QML / DTK。
 
 ### `pms-cli`
 
-独立的 PMS / 禅道 Python CLI 路线。自带脚本、登录模块和批处理能力，适合不走 OpenCLI 插件、想直接查改任务 / Bug / 需求 / 产品 / 项目，或者要跑批量操作与已保存搜索查询时使用。
+独立的 PMS / 禅道 Python CLI 路线。自带脚本、登录模块和批处理能力，适合不走 OpenCLI 插件、想直接查改任务 / Bug / 需求 / 产品 / 项目，或者要跑批量操作与已保存搜索查询时使用。它不自带 `preview-first` 写保护，更适合已经明确要直连 Python CLI 的场景。
 
 ### `pms-read`
 
@@ -430,6 +430,7 @@ bootstrap 与辅助脚本的设计说明。
 - 已安装 `beautifulsoup4`
 - 如果要自动登录，再安装 `playwright` 和 Chromium
 - 可访问目标 ZenTao / PMS 地址
+- 如果你要走受保护写入，优先改用 `skill:pms-write-guarded`
 
 适合的任务：
 
