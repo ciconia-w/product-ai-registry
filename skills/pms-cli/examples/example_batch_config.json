@@ -1,0 +1,22 @@
+{
+  "base_url": "https://pms.uniontech.com",
+  "cookie": "zentaosid=YOUR_SESSION_ID",
+  "operations": [
+    {
+      "action": "my_tasks",
+      "comment": "List all tasks assigned to current user"
+    },
+    {
+      "action": "list_products",
+      "comment": "List all products"
+    },
+    {
+      "action": "list_projects",
+      "comment": "List all projects"
+    },
+    {
+      "action": "my_bugs",
+      "comment": "List all bugs assigned to current user"
+    }
+  ]
+}
