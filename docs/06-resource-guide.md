@@ -152,6 +152,10 @@ UOS / Deepin 风格的桌面 UI 设计 skill，偏 QML / DTK。
 
 需求收集入口。聚合论坛和产品反馈平台的数据。
 
+### `pms-cli`
+
+独立的 PMS / 禅道 Python CLI 路线。自带脚本、登录模块和批处理能力，适合不走 OpenCLI 插件、想直接查改任务 / Bug / 需求 / 产品 / 项目，或者要跑批量操作与已保存搜索查询时使用。
+
 ### `pms-read`
 
 PMS / 禅道只读入口。查产品、项目、任务、Bug、Story、构建、团队、动态。
@@ -414,7 +418,26 @@ bootstrap 与辅助脚本的设计说明。
 - preview 或创建任务
 - preview 或创建 Story
 
-### 3. 想导出 BI 数据
+### 3. 想用独立 Python CLI 直接操作 PMS / 禅道
+
+先看：
+
+- `skill:pms-cli`
+
+同时要确认：
+
+- 本机可用 `python3`
+- 已安装 `beautifulsoup4`
+- 如果要自动登录，再安装 `playwright` 和 Chromium
+- 可访问目标 ZenTao / PMS 地址
+
+适合的任务：
+
+- 不依赖 `addon:pm-opencli-plugin` 直接查改 PMS
+- 批量执行任务 / Bug / 需求 / 产品 / 项目操作
+- 跑已保存查询、`bySearch` 查询和脚本化流水线
+
+### 4. 想导出 BI 数据
 
 先看：
 
@@ -436,7 +459,7 @@ bootstrap 与辅助脚本的设计说明。
 - 导出统信 BI 数据
 - 走 `raw / template / custom` 输出模式
 
-### 4. 想收集产品需求反馈平台的数据
+### 5. 想收集产品需求反馈平台的数据
 
 先看：
 
@@ -464,7 +487,7 @@ bootstrap 与辅助脚本的设计说明。
 - 聚合论坛和产品反馈来源
 - 受保护地新增/编辑/删除反馈记录
 
-### 5. 想处理畅写 / UDoc
+### 6. 想处理畅写 / UDoc
 
 先看：
 
@@ -482,7 +505,7 @@ bootstrap 与辅助脚本的设计说明。
 
 - `reference:changxie-verified-capability-matrix`
 
-### 6. 想做 AI 日报
+### 7. 想做 AI 日报
 
 先看：
 
@@ -494,7 +517,7 @@ bootstrap 与辅助脚本的设计说明。
 - `skill:send-email`
 - `script:send-email`
 
-### 7. 想做需求分析和优先级排序
+### 8. 想做需求分析和优先级排序
 
 先看：
 
@@ -507,7 +530,7 @@ bootstrap 与辅助脚本的设计说明。
 - `skill:pm-requirement-collection`
 - `skill:deepin-requirement-crawler`
 
-### 8. 想处理 deepin / UOS 桌面开发问题
+### 9. 想处理 deepin / UOS 桌面开发问题
 
 先看：
 
@@ -520,7 +543,7 @@ bootstrap 与辅助脚本的设计说明。
 - `reference:ui-skills-catalog`
 - `reference:awesome-design-md`
 
-### 9. 想做灵珑打包
+### 10. 想做灵珑打包
 
 先看：
 
@@ -535,7 +558,7 @@ bootstrap 与辅助脚本的设计说明。
 - `script:check-linglong-retrospective`
 - `reference:linglong-deepin-color-correction-example`
 
-### 10. 想做网页 PPT / 演讲 deck / 封面
+### 11. 想做网页 PPT / 演讲 deck / 封面
 
 先看：
 
@@ -551,7 +574,7 @@ bootstrap 与辅助脚本的设计说明。
 - 参考瑞士国际主义或电子杂志风版式
 - 做公众号头图、分享卡或演讲封面
 
-### 11. 想查本地微信数据 / 聊天记录
+### 12. 想查本地微信数据 / 聊天记录
 
 先看：
 
@@ -568,7 +591,7 @@ bootstrap 与辅助脚本的设计说明。
 - 查联系人、群成员、收藏、公众号文章
 - 在本机上把微信数据提供给 agent 做检索或整理
 
-### 12. 想要工程化的 grilling / TDD / diagnose / triage skill
+### 13. 想要工程化的 grilling / TDD / diagnose / triage skill
 
 先看：
 
@@ -580,7 +603,7 @@ bootstrap 与辅助脚本的设计说明。
 - 给 agent 加 TDD、diagnose、triage 这类工程工作流
 - 参考 PRD、issue 拆解和架构改进类 skill 设计
 
-### 13. 不知道先用哪个入口
+### 14. 不知道先用哪个入口
 
 可以按这条简单规则：
 

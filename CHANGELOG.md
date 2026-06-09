@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add skill:pms-cli for standalone ZenTao PMS automation via bundled Python CLI, multi-mode login, CRUD operations, batch execution, and saved-search queries
 - Add skill:uniontech-core-data-compare for logged-in datan core workbook extraction, validation, and Excel output
 - Replace hard-coded /home/aaa file URLs in company-pm addon and related references with OPENCLI_PLUGIN_PM_LAB_PATH placeholders
 - Add reference:mattpocock-skills for composable engineering-skill discovery around grilling, TDD, diagnosis, triage, and PRD workflows
