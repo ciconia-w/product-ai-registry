@@ -1,0 +1,32 @@
+{
+  "base_url": "https://pms.uniontech.com",
+  "cookie": "zentaosid=YOUR_SESSION_ID",
+  "operations": [
+    {
+      "action": "create_task",
+      "params": {
+        "project_id": "123",
+        "task_name": "实现登录功能",
+        "task_type": "devel",
+        "description": "详细描述任务内容...",
+        "assignee": "zhangsan",
+        "estimate_hours": "8",
+        "start_date": "2026-05-07",
+        "deadline": "2026-05-14"
+      },
+      "comment": "Create a development task"
+    },
+    {
+      "action": "create_story",
+      "params": {
+        "product_id": "456",
+        "story_title": "用户登录优化",
+        "specification": "作为用户，我希望...",
+        "verification": "验收标准...",
+        "assignee": "lisi",
+        "estimate_hours": "16"
+      },
+      "comment": "Create a user story"
+    }
+  ]
+}

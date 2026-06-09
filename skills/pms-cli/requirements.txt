@@ -1,0 +1,11 @@
+# === 必需依赖 ===
+# beautifulsoup4: pms_search.py 的 HTML 解析（list-saved-queries、browse-by-search 功能必需）
+beautifulsoup4>=4.9
+
+# === 推荐依赖（自动登录） ===
+# playwright: Playwright 自动登录（推荐方式），未安装时回退到浏览器回调
+playwright>=1.40
+
+# === 可选依赖 ===
+# keyring: 系统密钥环安全存储凭据，未安装时回退到明文文件存储
+keyring>=21.0

@@ -2073,6 +2073,43 @@
     },
     {
       "type": "skill",
+      "id": "pms-cli",
+      "version": "0.1.0",
+      "path": "skills/pms-cli",
+      "description": "通过自然语言与 ZenTao PMS 系统交互的 CLI 工具，支持 Playwright 自动登录、浏览器回调、手动 Cookie 三种登录方式；提供任务/缺陷/需求/产品/项目 CRUD、备注、批量操作和已保存搜索查询。内附完整 Python 脚本，开箱即用。",
+      "requires": {
+        "cli": [
+          "python3"
+        ]
+      },
+      "support": {
+        "codex": {
+          "mode": "native_skill_dir"
+        },
+        "opencode": {
+          "mode": "native_skill_dir"
+        },
+        "claude-code": {
+          "mode": "generated_subagent"
+        },
+        "cursor": {
+          "mode": "generated_rules"
+        },
+        "gemini-cli": {
+          "mode": "extension_bundle"
+        }
+      },
+      "checksum": "TBD",
+      "source": {
+        "kind": "local"
+      },
+      "policy": {
+        "role": "optional",
+        "action_on_missing": "install"
+      }
+    },
+    {
+      "type": "skill",
       "id": "pms-read",
       "version": "0.1.0",
       "path": "skills/pms-read",
