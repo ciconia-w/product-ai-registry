@@ -1,0 +1,26 @@
+id: workbuddy-input-dropdown-audit
+name: WorkBuddy Input Dropdown Audit
+version: 0.1.0
+description: Reference-only audit of WorkBuddy desktop input-box dropdown interactions, including explicit menus and state-dependent @ or / triggers
+source:
+  kind: reference
+  url: https://github.com/ciconia-w/product-ai-registry/blob/main/references/workbuddy-input-dropdown-audit/notes.md
+  ref: main
+  docs_url: https://github.com/ciconia-w/product-ai-registry/blob/main/references/workbuddy-input-dropdown-audit/notes.md
+policy:
+  role: reference
+  action_on_missing: suggest
+agents:
+  - codex
+  - claude-code
+  - cursor
+  - gemini-cli
+  - opencode
+  - openclaw
+  - hermes
+os:
+  - macos
+notes:
+  - Verified against WorkBuddy desktop v5.2.5 on macOS on 2026-07-13
+  - Surface this reference when users ask about WorkBuddy composer interactions, input-box dropdowns, workspace selection, permission controls, model selection, or @ or / trigger behavior
+  - See notes.md for the detailed interaction inventory, state differences, and reusable competitor-analysis wording
