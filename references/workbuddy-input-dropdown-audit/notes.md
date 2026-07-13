@@ -6,7 +6,7 @@ Verified on `2026-07-13` against `WorkBuddy` macOS desktop `v5.2.5`.
 
 Observed explicit dropdowns inside or directly attached to the composer:
 
-1. `更多操作`
+1. `+号菜单` (`更多操作`)
 2. `选择工作空间`
 3. `默认权限`
 4. `自动` model selector
@@ -18,7 +18,7 @@ Observed dynamic triggers:
 
 ## Verified behaviors
 
-### 1. More actions
+### 1. `+` menu (`更多操作`)
 
 - Trigger: click the `+` button at the lower-left corner of the composer.
 - Open result: a floating menu above the composer.
